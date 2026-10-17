@@ -795,6 +795,19 @@ body.co-pan main#app{margin-top:26px}
 .ld-id{font:700 11px var(--font-mono);color:#5FCB73;letter-spacing:.1em;margin-right:8px}
 .ld-row{position:relative}.ld-row:before{content:"";position:absolute;left:-1px;top:20px;bottom:20px;width:3px;background:#5FCB73;border-radius:3px}
 .ld-own div{position:relative}.ld-own div:not(:last-child):after{content:"\2192";position:absolute;right:-7px;top:50%;transform:translateY(-50%);font:700 11px var(--font-mono);color:#5FCB73;background:#16161c;border-radius:50%;line-height:1;z-index:1;display:none}
+/* systems layer: console accents on top of the Panorama theme */
+body.co-pan main#app{background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:28px 28px;background-position:-1px -1px}
+body.co-pan main#app .eyebrow{display:flex;align-items:center;gap:9px;font-family:var(--font-mono);color:#5FCB73}
+body.co-pan main#app .eyebrow:before{content:"";width:8px;height:8px;border-radius:50%;background:#5FCB73;box-shadow:0 0 0 3px #5FCB7426;flex:none;animation:sysp 2.4s ease-in-out infinite}
+@keyframes sysp{50%{opacity:.35}}
+body.co-pan main#app .hubsec>h2:before{content:"// ";font-family:var(--font-mono);font-size:.7em;color:#5FCB73;font-weight:700;letter-spacing:.04em}
+body.co-pan main#app .cards{counter-reset:mod}
+body.co-pan main#app .cards>.card{counter-increment:mod;position:relative}
+body.co-pan main#app .cards>.card:before{content:"MODULE " counter(mod,decimal-leading-zero) "  \00B7  READY";font:700 10.5px var(--font-mono);letter-spacing:.1em;color:#5FCB73;border-bottom:1px dashed #34332F;padding-bottom:8px;margin-bottom:2px}
+body.co-pan main#app .pgfoot:before{content:"\25CF  ALL MODULES LOADED";display:block;font:700 10.5px var(--font-mono);letter-spacing:.1em;color:#5FCB73;margin-bottom:8px}
+body.co-pan main#app .pghead h1{position:relative}
+body.co-pan main#app .abc,body.co-pan main#app .rpcard,body.co-pan main#app .wfwrap{border-color:#34332F}
+@media(prefers-reduced-motion:reduce){body.co-pan main#app .eyebrow:before{animation:none}}
 .eqq{display:grid;grid-template-columns:1.1fr 1fr;gap:6px}
 .eqq-q{background:#8ED8EC;color:#191919;padding:34px 34px 30px;border-radius:6px 90px 6px 6px;display:flex;flex-direction:column;justify-content:center}
 .eqq-ey{font:700 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
