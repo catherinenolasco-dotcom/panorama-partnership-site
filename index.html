@@ -780,6 +780,13 @@ body.co-pan main#app{margin-top:26px}
 .cdn-n{font:800 clamp(56px,9vw,96px)/.9 var(--font-body)}
 .cdn-t{flex:1;min-width:200px}.cdn-t b{display:block;font-size:20px;margin-bottom:4px}.cdn-t span{font-size:14.5px;line-height:1.45}
 .cdn-note{display:block;font-style:normal;font-size:13px;line-height:1.45;margin-top:8px;opacity:.85}.cdn-u{display:flex;gap:8px;font:700 13px var(--font-mono)}.cdn-u span{display:flex;flex-direction:column;align-items:center;gap:5px}.cdn-u i{font-style:normal;background:#191919;color:#fff;border-radius:6px;padding:8px 10px;min-width:54px;text-align:center}.cdn-u small{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.ld{margin-top:6px}.ld-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--accent);color:#191919;border-radius:6px 6px 6px 60px;padding:16px 26px 16px 24px}.ld-top b{font-size:18px}.ld-top span{font:700 12px var(--font-mono);letter-spacing:.06em;text-transform:uppercase}
+.ld-row{background:#23232c;border:1px solid #3a3a48;border-radius:6px 6px 6px 34px;padding:16px 18px 18px 22px;margin-top:10px;color:#e8e8f0}
+.ld-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}.ld-h h3{margin:0;font-size:17px}.ld-h p{margin:2px 0 0;font-size:13.5px;opacity:.8}
+.ld-wk{font:700 12px var(--font-mono);display:flex;align-items:center;gap:7px;white-space:nowrap}.ld-wk i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.ld-own{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.ld-own div{background:#191919;border-radius:6px 6px 6px 18px;padding:10px 12px 12px}.ld-own small{display:block;font:700 10.5px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}.ld-own span{font-size:13.5px;line-height:1.4}
+.ld-note{font-size:12.5px;opacity:.75;margin:10px 2px 0}
+@media(max-width:760px){.ld-own{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .eqq{display:grid;grid-template-columns:1.1fr 1fr;gap:6px}
 .eqq-q{background:#8ED8EC;color:#191919;padding:34px 34px 30px;border-radius:6px 90px 6px 6px;display:flex;flex-direction:column;justify-content:center}
 .eqq-ey{font:700 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
@@ -1090,6 +1097,24 @@ var PLANS_ = {
     }).join("");
     return '<div class="qvo">' + rows + '</div><div class="qvleg"><span><i></i>Owns or drives it</span></div>';
   }
+  function lifeDash() {
+    var n = new Date(), mon = new Date(n.getFullYear(), n.getMonth(), n.getDate() - ((n.getDay() + 6) % 7));
+    var wk = mon.toLocaleDateString("en-US", { month: "long", day: "numeric" });
+    var W = [["People Ops", "#5FCB73"], ["HRBP", "#FF8EC8"], ["IT", "#7084FF"], ["Payroll + Finance", "#FFC857"]];
+    var L = [
+      ["Offer to day one", "Signed offer, I-9, accounts, laptop and pay set up before the first day", ["Triggers it from the signed offer and checks the I-9", "Preps the leader and the intros", "Accounts, laptop and access by day one", "Pay and deductions set up"], "3 starting, 1 item open", "#5FCB73"],
+      ["Pay, role and manager changes", "One form, the approval path, and the signed record behind each change", ["Owns the form, the path and the record", "Brings judgment on the change", "Access follows the change", "Signs off last"], "4 in approval, 1 waiting on Finance", "#FFC857"],
+      ["Leave of absence", "Start and return dates, benefits and pay during leave, access while out", ["Tracks dates and the paperwork", "Supports the leader and the person", "Adjusts access if needed", "Pay and deductions during leave"], "2 on leave, 1 returning", "#5FCB73"],
+      ["Offboarding", "Last day, final pay, access removal, laptop return and the exit conversation", ["Starts it when status changes", "Handles the leader and the exit conversation", "Removes access, collects the laptop", "Final pay and deductions"], "2 leaving, 1 laptop outstanding", "#FF8AA0"],
+      ["Exceptions and audit trail", "Every exception logged with a reason, an approver and a date", ["Keeps the log and the trail", "Brings leader requests early", "Flags access exceptions", "Flags pay exceptions"], "2 open, 0 overdue", "#5FCB73"]
+    ];
+    return '<section class="hubsec"><h2>Shared lifecycle dashboard</h2><p class="sub">What we manage together across the employee lifecycle, and what each owner is responsible for, on one page.</p><div class="ld"><div class="ld-top"><b>Week of ' + wk + '</b><span>Refreshed every Monday</span></div>' +
+      L.map(function (r) {
+        return '<div class="ld-row"><div class="ld-h"><div><h3>' + esc(r[0]) + "</h3><p>" + esc(r[1]) + '</p></div><span class="ld-wk"><i style="background:' + r[4] + '"></i>' + esc(r[3]) + '</span></div><div class="ld-own">' +
+          W.map(function (w, i) { return '<div style="border-top:3px solid ' + w[1] + '"><small style="color:' + w[1] + '">' + esc(w[0]) + "</small><span>" + esc(r[2][i]) + "</span></div>"; }).join("") + "</div></div>";
+      }).join("") +
+      '<p class="ld-note">The counts here are sample numbers to show the idea. In practice a short Rippling report would feed each Monday&rsquo;s refresh, and the four owners would review it together in the weekly sync.</p></div></section>';
+  }
   function vennSection() {
     var d = VEN[vsel] || VEN.all;
     var g = d.c.length === 1 ? d.c[0] : "linear-gradient(90deg," + d.c.join(",") + ")";
@@ -1098,7 +1123,7 @@ var PLANS_ = {
     var chips = [["cat", "⚙️ Cat"], ["ang", "🤝 Angela"], ["eri", "🔐 Eric"], ["ca", "🔄 Cat + Angela"], ["ce", "🔑 Cat + Eric"], ["ae", "⚖️ Angela + Eric"], ["all", "🎯 All three"]].map(function (c) { return '<button class="chip' + (vsel === c[0] ? " on" : "") + '" data-act="vsel" data-v="' + c[0] + '">' + c[1] + "</button>"; }).join("");
     return '<div class="qvwrap"><div class="venwrap">' + vennSvg() + '</div></div><div class="toolrow" style="margin-top:12px">' + chips + "</div>" +
       '<section class="rpcard" style="margin-top:6px"><div class="rphead" style="background:' + g + '"><small>Selected area</small><b>' + esc(d.t) + '</b></div><div class="rpbody"><h4 style="margin-top:0">Owns or does together</h4><ul>' + own + '</ul><h4>What is needed</h4><p style="margin:0">' + esc(d.need) + '</p><h4>A question Cat would bring</h4><p style="margin:0;font-style:italic">&ldquo;' + esc(d.ask) + '&rdquo;</p></div></section>' +
-      '<section class="hubsec"><h2>How we could stay in sync</h2><p class="sub">A proposed rhythm, for us to agree on together.</p><div class="wfwrap" style="padding:4px 16px;color:#e8e8f0">' + rh + "</div></section>";
+      '<section class="hubsec"><h2>How we could stay in sync</h2><p class="sub">A proposed rhythm, for us to agree on together.</p><div class="wfwrap" style="padding:4px 16px;color:#e8e8f0">' + rh + "</div></section>" + lifeDash();
   }
   function timelineSection() {
     var P = window.PLANS;
