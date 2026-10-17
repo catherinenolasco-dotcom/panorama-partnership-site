@@ -1,0 +1,1567 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Partnering on People Ops and Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&family=Inter:wght@400;500;600&family=Platypi:wght@400;500;600&family=Nunito+Sans:wght@400;600;700&display=swap">
+<style id="base-css">
+/* Palette follows the LaunchDarkly portfolio: dark ground, lime and blue accents, paper slabs. Layout: sticky top bar, one centered reading column. Topic tiles lead to question lists, then a single question page with STAR breakdown, spoken answer and tracking. */
+:root {
+  --bg: #191919;
+  --surface: #222428;
+  --surface2: #26282d;
+  --ink: #F8F8F8;
+  --muted: #B4B6BD;
+  --line: #34363D;
+  --accent: #5FCB73;
+  --accent-ink: #191919;
+  --accent-soft: #17301D;
+  --accent-line: #2F6B3D;
+  --link: #7084FF;
+  --blue: #405BFF;
+  --good: #5BE26C;
+  --good-soft: #1C3324;
+  --warn: #FFA23A;
+  --warn-soft: #3A2A14;
+  --bad: #FF6A6A;
+  --bad-soft: #3A1D20;
+  --gap: #FFE84D;
+  --gap-ink: #191919;
+  --paper: #F8F8F8;
+  --paper-ink: #191919;
+  --paper-mut: #4A4D57;
+  --font-display: "Inter Tight", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 16px/1.55 var(--font-body); }
+button { font: inherit; color: inherit; cursor: pointer; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.barin { max-width: 960px; margin: 0 auto; display: flex; align-items: center; gap: 12px; padding-block: 10px; flex-wrap: wrap; }
+.brand { background: none; border: 0; padding: 4px 0; font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; margin-right: auto; }
+.brand span { color: var(--accent); }
+.nav { display: flex; gap: 4px; }
+.nav button { background: none; border: 1px solid transparent; border-radius: 8px; padding: 6px 12px; font-weight: 500; color: var(--muted); }
+.nav button[aria-current="page"] { color: var(--ink); background: var(--surface2); }
+.status { font: 500 12px var(--font-mono); color: var(--muted); letter-spacing: 0.02em; }
+
+main { max-width: 960px; margin: 0 auto; padding-block: 28px 64px; }
+.eyebrow { font: 500 12px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lede { color: var(--muted); max-width: 62ch; margin-top: 10px; }
+.crumb { background: none; border: 0; padding: 0; color: var(--accent); font-weight: 500; margin-bottom: 14px; }
+.crumb:hover { text-decoration: underline; }
+
+.hero h1 { font-size: clamp(34px, 7vw, 52px); }
+.prep { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 22px 0 18px; font-size: 14px; color: var(--muted); }
+.prep b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 14px; }
+.tile { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.tile:hover { border-color: var(--accent); }
+.tile h3 { font-size: 22px; }
+.tile p { color: var(--muted); font-size: 14px; }
+.tag { font: 500 11px var(--font-mono); letter-spacing: 0.1em; color: var(--accent); }
+.meter { display: flex; height: 6px; border-radius: 3px; background: var(--surface2); overflow: hidden; margin-top: auto; }
+.meter i { background: var(--good); display: block; }
+.meter b { background: var(--accent); opacity: 0.55; display: block; }
+.tmeta { display: flex; gap: 14px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.quizcta { margin-top: 26px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.quizcta div { flex: 1 1 260px; min-width: 0; }
+.quizcta h3 { font-size: 22px; margin-bottom: 4px; }
+.quizcta p { color: var(--muted); font-size: 14px; }
+
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 10px 16px; font-weight: 600; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+.btn.small { padding: 6px 12px; font-size: 14px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+.topichead { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+.topichead h1 { font-size: clamp(30px, 6vw, 42px); }
+details.story { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 4px 16px; margin-bottom: 14px; }
+details.story summary { cursor: pointer; font-weight: 600; padding: 12px 0; }
+details.story .star { padding-bottom: 12px; }
+.qlist { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+.qrow { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; gap: 12px; align-items: center; justify-content: space-between; }
+.qrow:hover { border-color: var(--accent); }
+.qrow span.qt { font-weight: 500; min-width: 0; }
+.badges { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; flex: none; }
+.badge { font: 500 11px var(--font-mono); letter-spacing: 0.04em; padding: 3px 8px; border-radius: 999px; background: var(--surface2); color: var(--muted); white-space: nowrap; }
+.badge.ask { background: var(--accent-soft); color: var(--accent); }
+.badge.r-nailed { background: var(--good-soft); color: var(--good); }
+.badge.r-shaky { background: var(--warn-soft); color: var(--warn); }
+.badge.r-missed { background: var(--bad-soft); color: var(--bad); }
+
+.qhead h1 { font-size: clamp(26px, 5vw, 36px); margin: 8px 0 12px; }
+.ask-line { color: var(--muted); max-width: 62ch; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-top: 18px; }
+.panel h2 { font-size: 19px; margin-bottom: 12px; }
+.star { display: flex; flex-direction: column; gap: 12px; }
+.srow { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; }
+.srow .l { font: 500 22px var(--font-mono); color: var(--accent); line-height: 1.3; }
+.srow .w { font: 500 11px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.srow p { max-width: 68ch; }
+.script { font-size: 17px; line-height: 1.65; max-width: 66ch; }
+.planday { margin-top: 22px; }
+.planday h2 { margin: 0 0 4px; font-size: 20px; }
+.planday .pd { color: var(--muted); font-size: 14px; margin: 0 0 10px; }
+.pitem { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px; margin-top: 10px; }
+.pitem.done { opacity: .6; }
+.pitem.done .pt { text-decoration: line-through; }
+.pck { flex: none; width: 28px; height: 28px; border-radius: 8px; border: 2px solid var(--accent-line); background: transparent; color: var(--accent-ink); font-weight: 800; cursor: pointer; padding: 0; }
+.pitem.done .pck { background: var(--accent); border-color: var(--accent); }
+.pbody { flex: 1; min-width: 0; }
+.pwhen { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; color: var(--accent); letter-spacing: .06em; text-transform: uppercase; }
+.pt { font-weight: 700; margin: 2px 0 4px; }
+.pdsc { color: var(--muted); font-size: 15px; line-height: 1.5; margin: 0; }
+.pitem .btn { margin-top: 8px; }
+.pbar { height: 8px; border-radius: 6px; background: var(--line); overflow: hidden; margin: 10px 0 4px; }
+.pbar i { display: block; height: 100%; background: var(--accent); }
+.askgrp { margin-top: 26px; }
+.askgrp h2 { margin: 0 0 2px; font-size: 22px; }
+.askgrp .ag { color: var(--muted); font-size: 14px; margin: 0 0 10px; }
+.askc { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-top: 10px; }
+.askc.pick { border-color: var(--accent-line); background: var(--accent-soft); }
+.askc .aq { font-weight: 700; font-size: 17px; line-height: 1.45; margin: 0 0 8px; }
+.askc .am { color: var(--muted); font-size: 15px; line-height: 1.5; margin: 4px 0 0; }
+.askc .am b { color: var(--text, #fff); }
+.askc .arow { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.askc.asked .aq { opacity: .6; }
+.shortl { margin: 6px 0 0; padding-left: 20px; }
+.shortl li { margin: 4px 0; }
+.abh { margin: 0 0 4px; font-size: 22px; }
+.abwf { margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--line); }
+.abwf .ey { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.abwf h2 { margin: 4px 0 6px; font-size: 22px; }
+.abp { color: var(--muted); font-size: 15px; line-height: 1.55; margin: 0; max-width: 70ch; }
+.abstage { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-top: 14px; }
+.abtag { display: inline-block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; font-weight: 700; padding: 4px 10px; border-radius: 100px; margin-bottom: 8px; background: #2c2e36; color: var(--muted); }
+.abtag.fut { background: var(--accent); color: var(--accent-ink); }
+.abstage svg { display: block; width: 100%; height: auto; max-width: 720px; margin-left: auto; margin-right: auto; }
+.abstage .wfsvg { max-width: none; }
+@media (prefers-reduced-motion: reduce) { .abstage svg .mo, .wfsvg .mo { display: none; } }
+.abcap { color: var(--muted); font-size: 14px; line-height: 1.5; margin: 8px 0 0; }
+.abcall { margin-top: 12px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 8px; padding: 10px 14px; font-size: 14.5px; line-height: 1.55; }
+.abwin { margin: 10px 0 0; font-weight: 700; color: var(--accent); }
+.abchips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.abchip { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 100px; background: #2c2e36; }
+.abgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+@media (max-width: 620px) { .abgrid { grid-template-columns: 1fr; } }
+.abcard { border-radius: 14px; padding: 16px; border: 1px solid var(--line); background: var(--surface); }
+.abcard.hi { background: var(--accent-soft); border-color: var(--accent-line); }
+.abcard.bl { background: #1d2250; border-color: #405BFF; }
+.abcard h3 { margin: 0 0 8px; font-size: 17px; }
+.abcard ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 14.5px; line-height: 1.5; }
+.abstep { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 14px; }
+.abs { border-radius: 14px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); }
+.abs .n { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: .06em; color: var(--accent); font-weight: 700; }
+.abs h4 { margin: 4px 0; font-size: 15px; }
+.abs p { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.45; }
+.abs .ev { margin-top: 6px; font-size: 13px; color: var(--text, #fff); }
+.zblk { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-top: 14px; }
+.zblk h3 { margin: 0 0 10px; font-size: 17px; }
+.zst { display: flex; gap: 12px; padding-bottom: 12px; }
+.zst .zn { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.zst .zn.t { background: #405BFF; color: #fff; }
+.zst .zn.if { background: #43E0D3; color: #191919; font-size: 11px; }
+.zst b { font-size: 14.5px; }
+.zst span.zs { display: block; color: var(--muted); font-size: 13.5px; line-height: 1.45; }
+.zprompt { background: #0e0e12; border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12.5px; line-height: 1.6; }
+.zprompt .zl { display: block; color: var(--accent); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+.ctab { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+.ctab th, .ctab td { text-align: left; padding: 10px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.ctab th { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.ctag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px; }
+.ctag.pv { background: var(--accent); color: var(--accent-ink); }
+.ctag.dt { background: #405BFF; color: #fff; }
+.ctabwrap { overflow-x: auto; }
+.sbul { margin: 0; padding-left: 22px; list-style: disc; }
+.sbul li { margin: 0 0 8px; padding-left: 2px; }
+.sbul li::marker { color: var(--paper-mut, #888); }
+.scriptmeta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; color: var(--muted); font-size: 14px; }
+.tip { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--line); color: var(--muted); font-size: 15px; max-width: 66ch; }
+.tip b { color: var(--ink); }
+mark.gap { background: var(--gap); color: var(--gap-ink); border-radius: 4px; padding: 0 5px; font-size: 0.88em; font-weight: 600; }
+strong.filled { background: var(--accent-soft); color: var(--ink); border-radius: 4px; padding: 0 4px; font-weight: 600; }
+
+.gapbox { background: var(--surface2); border-radius: 12px; padding: 14px; margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
+.gapbox .gh { font-weight: 600; font-size: 15px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 13px; color: var(--muted); }
+input[type="text"], textarea { width: 100%; font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+textarea { min-height: 96px; resize: vertical; }
+
+.toggle { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 8px 16px 8px 10px; font-weight: 600; }
+.toggle .box { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-size: 13px; line-height: 1; color: transparent; }
+.toggle[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.toggle[aria-pressed="true"] .box { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.seg { display: flex; flex-wrap: wrap; gap: 8px; }
+.seg button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 7px 14px; font-weight: 500; font-size: 15px; }
+.seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.seg button.r-nailed[aria-pressed="true"] { background: var(--good); border-color: var(--good); color: var(--bg); }
+.seg button.r-shaky[aria-pressed="true"] { background: var(--warn); border-color: var(--warn); color: var(--bg); }
+.seg button.r-missed[aria-pressed="true"] { background: var(--bad); border-color: var(--bad); color: var(--bg); }
+.pn { display: flex; justify-content: space-between; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+
+.setup h1 { font-size: clamp(30px, 6vw, 42px); }
+.modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.mode { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 4px; }
+.mode[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); background: var(--accent-soft); }
+.mode b { font-family: var(--font-display); font-size: 18px; }
+.mode span { color: var(--muted); font-size: 14px; }
+.sec { margin-top: 24px; }
+.sec h2 { font-size: 18px; margin-bottom: 10px; }
+.sec .aux { font-size: 14px; color: var(--muted); margin-left: 8px; font-weight: 400; font-family: var(--font-body); }
+.ready { margin-top: 28px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.ready p { color: var(--muted); }
+.ready p b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+.prog { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; font: 500 13px var(--font-mono); color: var(--muted); }
+.prog .pb { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+.prog .pb i { display: block; height: 100%; background: var(--accent); }
+.qcard h2 { font-size: clamp(24px, 4.5vw, 32px); margin: 8px 0 14px; }
+.opts { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.opt { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; font-weight: 500; }
+.opt:hover:not([disabled]) { border-color: var(--accent); }
+.opt.right { border-color: var(--good); background: var(--good-soft); }
+.opt.wrong { border-color: var(--bad); background: var(--bad-soft); }
+.hidepart { border: 2px dashed var(--line); border-radius: 10px; padding: 12px; color: var(--muted); font-style: italic; }
+.verdict { margin-top: 14px; padding: 12px 14px; border-radius: 10px; background: var(--surface2); max-width: 66ch; }
+.sum h1 { font-size: clamp(30px, 6vw, 42px); margin: 6px 0 8px; }
+.sumrows { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+.empty { color: var(--muted); padding: 18px 0; }
+
+.co { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.co select { font: 500 14px var(--font-body); padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); max-width: 200px; }
+.qt small { display: block; color: var(--muted); font-weight: 400; font-size: 13px; margin-top: 2px; }
+.jdline { color: var(--muted); font-size: 15px; max-width: 66ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 6px; }
+.fact { font: 500 12px var(--font-mono); background: var(--surface2); color: var(--ink); padding: 5px 10px; border-radius: 999px; }
+.hubsec { margin-top: 34px; }
+.hubsec > h2 { font-size: 24px; margin-bottom: 6px; }
+.hubsec > .sub { color: var(--muted); max-width: 64ch; margin-bottom: 14px; }
+.fitlist { display: flex; flex-direction: column; gap: 10px; }
+.fitrow { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.fithead { display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+.fithead b { font-weight: 600; flex: 1 1 240px; min-width: 0; }
+.fitrow p { font-size: 15px; max-width: 70ch; }
+.fitrow .lbl { font: 500 11px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-right: 6px; }
+.badge.fit-strong { background: var(--good-soft); color: var(--good); }
+.badge.fit-partial { background: var(--warn-soft); color: var(--warn); }
+.badge.fit-gap { background: var(--bad-soft); color: var(--bad); }
+.pcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.pcard { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.prow2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 480px) { .prow2 { grid-template-columns: 1fr; } }
+.ext { font-size: 14px; color: var(--accent); font-weight: 500; }
+.askq { display: flex; flex-direction: column; gap: 8px; }
+.askq .toggle { border-radius: 12px; text-align: left; align-items: flex-start; font-weight: 500; width: 100%; }
+.askq .toggle .box { flex: none; margin-top: 1px; }
+.needs { margin: 6px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; max-width: 64ch; }
+.srcs { font-size: 14px; color: var(--muted); margin-top: 28px; }
+.srcs a { color: var(--accent); }
+
+/* ---- LaunchDarkly portfolio treatment ---- */
+body { font-size: 16px; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-weight: 700; letter-spacing: -0.04em; }
+:focus-visible { outline-color: var(--link); }
+.bar { background: #0C0C0C; border-bottom: 1px solid #2B2B2B; }
+.brand { font-weight: 700; letter-spacing: -0.04em; font-size: 22px; }
+.nav button { color: #F2F2F2; }
+.nav button[aria-current="page"] { background: var(--surface2); color: var(--ink); }
+.co select { background: var(--bg); }
+.crumb, .ext { color: var(--link); }
+.hero { background-color: #111; background-image: linear-gradient(#222 1px, transparent 1px), linear-gradient(90deg, #222 1px, transparent 1px); background-size: 86px 86px; background-position: center top; border: 1px solid #2B2B2B; border-radius: 28px; padding: 40px 32px 34px; }
+@media (max-width: 520px) { .hero { padding: 28px 20px; } }
+.hero h1 { letter-spacing: -0.05em; }
+.tagline { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.04em; font-size: clamp(22px, 3vw, 32px); line-height: 1.1; color: var(--accent); margin-top: 14px; }
+.band { position: relative; overflow: hidden; margin: 18px 0 24px; border-radius: 28px; padding: 28px 20px; background: linear-gradient(100deg, #FFD0F0 0, #FF6FB5 38%, #FF4D6D 78%); }
+.band::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(25,25,25,.16) 1px, transparent 1px), linear-gradient(90deg, rgba(25,25,25,.16) 1px, transparent 1px); background-size: 86px 86px; pointer-events: none; }
+.stats { position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.stat { background: #191919; border-radius: 18px; padding: 20px 18px; min-width: 0; }
+.stat b { display: block; font-family: var(--font-display); font-size: clamp(36px, 5vw, 52px); line-height: 0.95; letter-spacing: -0.05em; color: #fff; font-variant-numeric: tabular-nums; }
+.stat span { display: block; margin-top: 10px; color: var(--muted); font-size: 14px; line-height: 1.35; }
+.tag, .srow .l { color: var(--accent); }
+.tile, .qrow, .fitrow, .pcard, .quizcta, details.story, .mode, .opt { border-radius: 18px; }
+.tile { background: var(--surface); }
+.tile:hover, .qrow:hover, .btn:hover, .opt:hover:not([disabled]) { border-color: var(--accent); }
+.meter b { background: var(--link); opacity: 1; }
+.prog .pb i { background: var(--accent); }
+.btn { border-radius: 8px; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.primary:not(.small)::after { content: "\2192"; margin-left: 10px; font-size: 18px; }
+.btn.primary:hover { filter: none; background: #EAFF7A; border-color: #EAFF7A; }
+.fact { border: 1px solid var(--line); background: transparent; color: #F2F2F2; border-radius: 10px 10px 10px 22px; padding: 6px 14px; }
+.badge { border-radius: 8px 14px 8px 8px; background: var(--surface2); color: var(--muted); }
+.badge.ask { background: var(--blue); color: #fff; }
+.seg button { border-radius: 8px 18px 8px 8px; }
+.seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.mode[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent-line); box-shadow: none; }
+.mode[aria-pressed="true"] b { color: var(--accent); }
+.toggle[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent-line); }
+.gapbox { background: var(--bg); border: 1px solid var(--line); border-radius: 14px; }
+input[type="text"], textarea { background: var(--bg); border-color: var(--line); }
+input[type="text"]::placeholder, textarea::placeholder { color: #8E9099; }
+strong.filled { background: var(--accent-soft); color: var(--accent); }
+.verdict { border-radius: 14px; }
+.hidepart { border-color: var(--accent-line); }
+.panel { border-radius: 18px; }
+.panel.paper { background: var(--paper); color: var(--paper-ink); border-color: var(--paper); border-radius: 24px; }
+.paper h2, .paper .script { color: var(--paper-ink); }
+.paper .scriptmeta { color: var(--paper-mut); }
+.paper .btn { background: transparent; color: var(--paper-ink); border-color: var(--paper-ink); }
+.paper .btn:hover { background: var(--paper-ink); color: var(--paper); border-color: var(--paper-ink); }
+.paper .tip { color: var(--paper-mut); border-top-color: #C9CBD2; }
+.paper .tip b { color: var(--paper-ink); }
+.paper strong.filled { background: var(--accent); color: #191919; }
+.paper mark.gap { background: var(--gap); color: #191919; }
+.fitrow { border-radius: 18px; }
+.badge.fit-strong { background: var(--good-soft); color: var(--good); }
+.badge.fit-partial { background: var(--warn-soft); color: var(--warn); }
+.badge.fit-gap { background: var(--bad-soft); color: var(--bad); }
+@media (prefers-reduced-motion: no-preference) { .tile, .qrow, .opt, .btn { transition: border-color 0.15s ease; } }
+
+/* ---- iPad and iPhone layout ---- */
+html { -webkit-text-size-adjust: 100%; }
+button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.barin { max-width: 1280px; }
+.searchrow { max-width: 1280px; margin: 0 auto; padding-bottom: 12px; }
+.searchin { position: relative; }
+.searchin > svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: var(--muted); pointer-events: none; }
+#search { width: 100%; height: 48px; font: 500 17px var(--font-body); color: var(--ink); background: #1D1E22; border: 1px solid #3A3D45; border-radius: 14px; padding: 0 46px 0 44px; -webkit-appearance: none; appearance: none; }
+#search::placeholder { color: #8E9099; }
+#search:focus { outline: none; border-color: var(--link); box-shadow: 0 0 0 3px rgba(112,132,255,.35); }
+.sclear { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: 0; background: #3A3D45; color: #fff; font-size: 18px; line-height: 1; padding: 0; }
+.sclear[hidden] { display: none; }
+.shell { display: block; max-width: 1280px; margin: 0 auto; }
+.side { display: none; }
+.hubsec { scroll-margin-top: calc(var(--barh, 112px) + 12px); }
+@media (min-width: 768px) {
+  .shell { display: grid; grid-template-columns: 252px minmax(0, 1fr); gap: 28px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .side { display: block; position: sticky; top: calc(var(--barh, 112px) + 8px); align-self: start; max-height: calc(100vh - var(--barh, 112px) - 24px); overflow: auto; padding: 20px 0 24px; }
+  .shell main { max-width: none; margin: 0; padding-left: 0; padding-right: 0; }
+}
+.sgroup { font: 500 11px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 20px 10px 6px; }
+.sitem { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 46px; padding: 6px 10px; border: 0; background: none; border-radius: 14px; text-align: left; color: #F2F2F2; font-weight: 500; font-size: 15px; }
+.sitem:hover { background: #222428; }
+.sitem[aria-current="page"] { background: var(--surface2); box-shadow: inset 3px 0 0 var(--accent); }
+.sitem .sl { flex: 1; min-width: 0; line-height: 1.2; }
+.sitem .sc { font: 500 12px var(--font-mono); color: var(--muted); }
+
+.sq { display: grid; place-items: center; width: 84px; height: 84px; border-radius: 22.5%; flex: none; box-shadow: inset 0 1px 0 rgba(255,255,255,.4), inset 0 -3px 8px rgba(0,0,0,.18), 0 8px 18px rgba(0,0,0,.5); }
+.sq svg { width: 46%; height: 46%; }
+.sq.sm { width: 34px; height: 34px; box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 2px 6px rgba(0,0,0,.4); }
+.apps { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 22px 10px; margin-top: 14px; justify-items: center; }
+.app { position: relative; display: flex; flex-direction: column; align-items: center; gap: 9px; width: 100%; max-width: 136px; background: none; border: 0; padding: 6px 4px 4px; border-radius: 20px; transition: transform .12s ease; }
+.app:active, .ibtn:active { transform: scale(.94); }
+.app:hover .sq { filter: brightness(1.08); }
+.app .al { font: 500 13.5px/1.2 var(--font-body); text-align: center; color: #F2F2F2; text-wrap: balance; }
+.app .nb { position: absolute; top: 0; right: calc(50% - 50px); min-width: 24px; height: 24px; padding: 0 7px; border-radius: 12px; background: #FF3B30; color: #fff; font: 600 13px/24px var(--font-body); text-align: center; box-shadow: 0 0 0 2px var(--bg); }
+@media (min-width: 768px) {
+  .apps { grid-template-columns: repeat(auto-fill, minmax(122px, 1fr)); gap: 28px 12px; }
+  .app .sq { width: 92px; height: 92px; }
+  .app .nb { right: calc(50% - 54px); }
+}
+.ibtns { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 14px; }
+.ibtn { display: flex; align-items: center; gap: 14px; text-align: left; padding: 14px 16px; min-height: 84px; border-radius: 24px; border: 1px solid #34363D; background: linear-gradient(180deg, #2A2C31, #202226); box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 6px 16px rgba(0,0,0,.35); transition: transform .12s ease; }
+.ibtn:hover { border-color: var(--accent); }
+.ibtn .sq { width: 56px; height: 56px; }
+.ibtn .it { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ibtn .it b { font: 700 19px var(--font-display); letter-spacing: -.03em; }
+.ibtn .it small { color: var(--muted); font-size: 13px; }
+.ibtn .ic { font: 600 15px var(--font-body); color: var(--muted); display: flex; align-items: center; gap: 10px; }
+.chv { width: 9px; height: 9px; border-right: 2.5px solid #7B7E88; border-top: 2.5px solid #7B7E88; transform: rotate(45deg); display: inline-block; flex: none; }
+
+details.qd { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+details.qd + details.qd { margin-top: 10px; }
+details.qd[open] { border-color: var(--accent-line); }
+details.qd > summary { list-style: none; display: flex; gap: 12px; align-items: center; justify-content: space-between; min-height: 60px; padding: 14px 16px; cursor: pointer; }
+details.qd > summary::-webkit-details-marker { display: none; }
+details.qd > summary .qt { font-weight: 600; font-size: 17px; min-width: 0; flex: 1; }
+details.qd > summary .chv { transition: transform .15s ease; }
+details.qd[open] > summary .chv { transform: rotate(135deg); }
+.qbody { padding: 0 16px 18px; border-top: 1px solid var(--line); }
+.qbody .panel { background: var(--bg); }
+.qbody .panel.paper { background: var(--paper); }
+.qbody .ask-line { margin-top: 14px; }
+.snip { display: block; margin-top: 6px; font-weight: 400; font-size: 14px; color: var(--muted); line-height: 1.45; }
+mark.hit { background: var(--accent); color: #191919; border-radius: 4px; padding: 0 2px; }
+.toolrow { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 16px; }
+.hints { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 16px; color: var(--muted); font-size: 14px; }
+.chip { border: 1px solid #3A3D45; background: #1D1E22; color: #F2F2F2; border-radius: 999px; padding: 7px 14px; font-weight: 500; font-size: 14px; min-height: 36px; }
+.chip:hover { border-color: var(--accent); }
+.sres { margin-top: 14px; }
+#search::-webkit-search-cancel-button, #search::-webkit-search-decoration { -webkit-appearance: none; appearance: none; display: none; }
+@media (max-width: 767px) {
+  .barin { padding-block: 8px; gap: 8px; flex-wrap: nowrap; }
+  .nav, .status, .co span { display: none; }
+  .co select { max-width: 190px; min-height: 40px; }
+  .brand { white-space: nowrap; }
+  .facts { display: none; }
+  .hero { padding: 24px 20px; }
+}
+
+/* ---- At a glance visuals ---- */
+.glance { margin-top: 16px; }
+.glance h2 { display: flex; align-items: baseline; gap: 10px; }
+.glance h2 small { font: 500 12px var(--font-body); color: var(--muted); letter-spacing: 0; }
+.gl-scene { display: flex; align-items: center; gap: 8px; margin: 2px 0 14px; }
+.gl-who { flex: none; text-align: center; font: 500 11px var(--font-mono); color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+.gl-who svg { width: 70px; height: 92px; display: block; margin: 0 auto 2px; }
+.gl-bubble { position: relative; flex: 1; min-width: 0; padding: 12px 14px; border-radius: 20px; font: 700 17px/1.2 var(--font-display); letter-spacing: -.02em; }
+.gl-bubble.q { background: #2A2C31; color: #F2F2F2; display: flex; align-items: center; gap: 10px; border-bottom-left-radius: 6px; }
+.gl-bubble.q .sq { width: 36px; height: 36px; box-shadow: none; }
+.gl-bubble.a { background: var(--accent); color: #191919; font-size: 20px; text-align: center; border-bottom-right-radius: 6px; }
+.gl-arrow { flex: none; font-size: 20px; color: var(--muted); }
+.beats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.beat { background: #222428; border: 1px solid var(--line); border-radius: 16px; padding: 12px; display: flex; gap: 10px; align-items: flex-start; font-weight: 600; font-size: 15px; line-height: 1.3; }
+.beat i { flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #191919; display: grid; place-items: center; font: 700 15px var(--font-display); font-style: normal; }
+.strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+.pan { margin: 0; background: #1D1E22; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.pan svg { display: block; width: 100%; height: auto; background: #202227; }
+.pan figcaption { padding: 8px 10px 10px; font-size: 13.5px; line-height: 1.25; font-weight: 600; }
+.pan figcaption b { color: var(--accent); font-family: var(--font-mono); margin-right: 6px; }
+@media (max-width: 720px) { .beats { grid-template-columns: 1fr; } .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } .gl-who svg { width: 54px; height: 72px; } .gl-bubble { font-size: 15px; padding: 10px 12px; } .gl-bubble.a { font-size: 17px; } .gl-scene .gl-who:first-child, .gl-bubble.q, .gl-arrow { display: none; } .gl-bubble.a { border-bottom-right-radius: 20px; } }
+
+.wfwrap { background:#1d1d26; border:1px solid #34343f; border-radius:16px; overflow:hidden; margin-top:12px; }
+.wfbar { display:flex; align-items:center; gap:10px; padding:10px 14px; border-bottom:1px solid #34343f; background:#23232d; flex-wrap:wrap; }
+.wfbar b { color:#fff; font:600 14px var(--font-sans); }
+.wfbar .grow { flex:1; }
+.wfrun { background:#EA4B71; color:#fff; border:0; border-radius:8px; padding:8px 14px; font:600 13px var(--font-sans); min-height:40px; }
+.wfrun:hover { filter:brightness(1.1); }
+.wfscroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.wfsvg { display:block; min-width:940px; width:100%; height:auto; }
+.wfsvg .tile { fill:#2f2f3b; stroke:#4b4b5c; stroke-width:2; }
+.wfsvg .nd { cursor:pointer; }
+.wfsvg .nd.ran .tile { stroke:#2FD07A; fill:#27352f; }
+.wfsvg .nd.cur .tile { stroke:#FFB347; stroke-width:3; }
+.wfsvg .nd .okb { display:none; }
+.wfsvg .nd.ran .okb { display:block; }
+.wfsvg .tt { fill:#fff; font:600 12px 'Nunito Sans',Inter,sans-serif; text-anchor:middle; }
+.wfsvg .ss { fill:#a9a9bb; font:400 10.5px 'Nunito Sans',Inter,sans-serif; text-anchor:middle; }
+.wfsvg .ed { fill:none; stroke:#7b7b90; stroke-width:2; }
+.wfsvg .ed.ran { stroke:#2FD07A; }
+.wfsvg .el { fill:#c9c9d8; font:500 10px 'Nunito Sans',Inter,sans-serif; }
+.wfnarr { padding:14px 16px; border-top:1px solid #34343f; background:#23232d; color:#e8e8f0; font-size:15px; line-height:1.5; min-height:56px; }
+.wfleg { display:flex; gap:14px; flex-wrap:wrap; padding:10px 14px; border-top:1px solid #34343f; color:#a9a9bb; font-size:12px; }
+.wfleg i { display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:6px; vertical-align:-1px; }
+.wfpts { margin:10px 0 0; padding-left:20px; }
+.wfpts li { margin:4px 0; }
+
+.tlsvg { display:block; min-width:980px; width:100%; height:auto; }
+.tlsvg .tm { fill:#a9a9bb; font:500 11px 'Nunito Sans',Inter,sans-serif; }
+.tlsvg .ln { fill:#fff; font:600 11.5px 'Nunito Sans',Inter,sans-serif; }
+.tlsvg .bt { fill:#12121a; font:600 10.5px 'Nunito Sans',Inter,sans-serif; }
+.tlsvg .mt { fill:#e8e8f0; font:500 10.5px 'Nunito Sans',Inter,sans-serif; text-anchor:middle; }
+.phase { background:#23232d; border:1px solid #34343f; border-radius:14px; margin-top:10px; color:#e8e8f0; }
+.phase summary { padding:14px 16px; font-weight:600; cursor:pointer; min-height:44px; }
+.phase .pb { padding:0 16px 14px; }
+.phase ul { margin:6px 0 10px; padding-left:20px; }
+.phase li { margin:5px 0; }
+.chips { display:flex; gap:6px; flex-wrap:wrap; margin:6px 0; }
+.chip { background:#34343f; border-radius:99px; padding:3px 10px; font-size:12px; color:#e8e8f0; }
+.pexit { border-left:3px solid #5FCB73; padding-left:10px; color:#e8e8f0; }
+.risk { display:grid; grid-template-columns:1fr 1.4fr; gap:10px; padding:10px 0; border-top:1px solid #34343f; }
+@media (max-width:640px){ .risk{grid-template-columns:1fr;gap:2px} }
+.d90 { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px; }
+@media (max-width:860px){ .d90{grid-template-columns:1fr} }
+.dcol { background:#23232d; border:1px solid #34343f; border-radius:16px; overflow:hidden; color:#e8e8f0; }
+.dhead { padding:14px 18px 14px 18px; color:#191919; clip-path:polygon(0 0,calc(100% - 22px) 0,100% 50%,calc(100% - 22px) 100%,0 100%); }
+.dhead small { display:block; font:600 11px var(--font-mono); letter-spacing:.08em; text-transform:uppercase; opacity:.75; }
+.dhead b { font:700 20px var(--font-sans); }
+.dbody { padding:12px 16px 16px; }
+.dbody h4 { margin:12px 0 4px; font:600 11px var(--font-mono); letter-spacing:.08em; text-transform:uppercase; color:#a9a9bb; }
+.dbody ul { margin:0; padding-left:18px; }
+.dbody li { margin:4px 0; }
+.dwin { margin-top:12px; padding:10px 12px; border-radius:10px; background:#2f2f3b; border-left:4px solid var(--c); }
+
+.wfsvg .aib { display:none; }
+.wfsvg.aion .aib { display:block; }
+.wfsvg .airing { display:none; fill:none; stroke:#5FCB73; stroke-width:2.5; stroke-dasharray:5 3; }
+.wfsvg.aion .airing { display:block; }
+.wfsvg.aion .nd.hasai .tile { stroke:#5FCB73; }
+.wfnarr .ai { display:block; margin-top:8px; padding:8px 12px; border-left:4px solid #5FCB73; background:#2f2f3b; border-radius:6px; }
+.btn.aion { background:#5FCB73; color:#191919; border-color:#5FCB73; }
+.aicard { display:grid; grid-template-columns:160px 1fr; gap:10px; padding:10px 0; border-top:1px solid #34343f; }
+@media (max-width:640px){ .aicard{grid-template-columns:1fr;gap:2px} }
+.aicard b { color:#fff; }
+.aicard small { color:#5FCB73; display:block; font:600 11px var(--font-mono); letter-spacing:.06em; text-transform:uppercase; }
+
+.fu { border:1px solid var(--line, #34343f); border-radius:14px; margin:8px 0; background:rgba(255,255,255,.03); }
+.fu summary { padding:12px 14px; font-weight:600; cursor:pointer; min-height:44px; }
+.fu .fb { padding:0 14px 14px; }
+.fu .fa { font-size:16px; line-height:1.6; }
+.fu .fa mark { background:var(--accent); color:#191919; border-radius:4px; padding:0 4px; }
+.fu ul.fp { margin:8px 0 0; padding-left:20px; color:var(--muted); }
+.fu .fl { font:600 11px var(--font-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+
+.dbk{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:12px 0}
+.dbk>div{background:#1d1d26;border:1px solid #34343f;border-radius:14px;padding:12px;color:#e8e8f0}.dbk small{display:block;color:#9a9aa6;font-size:12px}.dbk b{font:700 26px/1.2 "Inter Tight",Inter,sans-serif;color:#fff}.dbk i{display:block;font-style:normal;font-size:12px;color:#5FCB73}
+.dbp{background:#1d1d26;border:1px solid #34343f;border-radius:16px;padding:14px;color:#e8e8f0}.dbp h3{margin:0 0 8px;font-size:15px;color:#fff}.dbp svg{width:100%;height:auto;display:block}
+.dbg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.dbt{width:100%;border-collapse:collapse;font-size:13px}.dbt th{text-align:left;color:#9a9aa6;font-weight:600;padding:6px 8px;border-bottom:1px solid #34343f}.dbt td{padding:7px 8px;border-bottom:1px solid #2a2a36}
+.dbn{display:inline-block;letter-spacing:.04em;white-space:nowrap;background:#5FCB73;color:#191919;font:700 11px/1 Inter,sans-serif;padding:4px 8px;border-radius:999px;margin-left:8px;vertical-align:middle}
+.mkc{background:#1d1d26;border:1px solid #34343f;border-radius:16px;padding:16px;color:#e8e8f0;margin-top:12px}
+.mkwho{display:flex;align-items:center;gap:10px;margin-bottom:8px}.mkav{width:40px;height:40px;border-radius:50%;background:#405BFF;color:#fff;display:flex;align-items:center;justify-content:center;font:700 16px 'Nunito Sans',Inter,sans-serif}
+.mkq{font:600 20px/1.35 "Inter Tight",Inter,sans-serif;color:#fff;margin:6px 0 12px}.mkc textarea{width:100%;min-height:150px;background:#12121a;color:#fff;border:1px solid #4a4a58;border-radius:12px;padding:12px;font:15px/1.5 Inter,sans-serif;box-sizing:border-box}
+.mkrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}.mkmic.on{background:#FF5B8A;color:#fff;border-color:#FF5B8A}
+.mkscore{font:800 44px/1 "Inter Tight",Inter,sans-serif;color:#5FCB73}.mkchips{display:flex;gap:6px;margin:8px 0}.mkchips span{padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid #4a4a58;color:#9a9aa6}.mkchips span.ok{background:#3DDCB0;color:#111;border-color:#3DDCB0}
+.mkc h4{margin:12px 0 4px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#9a9aa6}.mkc ul{margin:0;padding-left:18px;line-height:1.5}.mkbest{background:#f4f4f0;color:#191919;border-radius:12px;padding:12px;margin-top:6px;line-height:1.55}
+.mkfu{border-left:4px solid #5FCB73;padding:6px 12px;margin-top:12px;color:#fff;font-weight:600}.mknote{font-size:12.5px;color:#9a9aa6;margin-top:8px}
+.mktimer{margin-left:auto;font:700 17px "Inter Tight",Inter,sans-serif;color:#5FCB73;background:#12121a;border:1px solid #34343f;border-radius:999px;padding:6px 12px;white-space:nowrap}.mktimer.low{color:#FFB347;border-color:#FFB347}.mktimer.over{color:#fff;background:#FF5B8A;border-color:#FF5B8A}
+.mkrec{display:inline-flex;align-items:center;gap:6px;font:700 12px 'Nunito Sans',Inter,sans-serif;color:#FF5B8A}.mkrec::before{content:"";width:9px;height:9px;border-radius:50%;background:#FF5B8A}
+@media (prefers-reduced-motion:no-preference){.mkrec::before{animation:mkp 1s infinite}@keyframes mkp{50%{opacity:.25}}}
+.mkpanel{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 12px}.mkpm{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:#9a9aa6;opacity:.55}.mkpm.on{opacity:1;color:#fff}.mkpm.on .mkav{box-shadow:0 0 0 3px #5FCB73}
+.mkstats{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.mkstats span{padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;background:#12121a;border:1px solid #34343f;color:#e8e8f0}
+.mkc audio{width:100%;margin-top:6px}
+.mkbars{display:flex;gap:8px;align-items:flex-end;justify-content:flex-start;margin:10px 0 4px}.mkbar{flex:0 1 52px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:#9a9aa6;text-align:center}.mkbar .col{height:72px;width:100%;display:flex;align-items:flex-end}.mkbar i{display:block;width:100%;background:#5FCB73;border-radius:6px 6px 0 0;min-height:3px}.mkbar b{color:#fff;font-size:12px}
+.mkd{border-top:1px solid #34343f;padding:8px 0}.mkd summary{cursor:pointer;display:flex;gap:10px;align-items:baseline;color:#fff}.mkd .mks{font:800 18px "Inter Tight",Inter,sans-serif;color:#5FCB73;min-width:20px}.mkd small{margin-left:auto;color:#9a9aa6}
+.fvz{background:#1d1d26;border:1px solid #34343f;border-radius:14px;padding:12px;margin:10px 0;color:#e8e8f0}.fvz h5{margin:0 0 8px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#9a9aa6}
+.fvs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:12px}.fvs span.st{background:#23232d;border:1px solid #4a4a58;border-radius:10px;padding:6px 10px;font-size:12.5px;font-weight:600}.fvs span.ar{color:#8a8a99}.fvs span.st.go{background:#5FCB73;color:#191919;border-color:#5FCB73}
+.fvz .tw{overflow-x:auto}.fvz table{min-width:640px}.fvz td b{color:#fff}.fvz .sc{white-space:nowrap}
+.abwrap{margin-top:12px}.abgrp{margin:22px 0 8px;font:700 12px/1 "Inter Tight",Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted,#9a9aa6)}
+.abgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.abc{background:#1d1d26;border:1px solid #34343f;border-radius:16px;padding:14px;color:#e8e8f0;display:flex;flex-direction:column;gap:6px}
+.abc .ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#191919}
+.abc h3{margin:4px 0 0;font-size:16px;color:#fff}.abc p{margin:0;font-size:13.5px;line-height:1.45;color:#c9c9d6}
+.abc .row{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}.abc .chip{font-size:11.5px;padding:3px 8px;border-radius:999px;border:1px solid #4a4a58;color:#d6d6e2}
+.abc .gapl{font-size:12px;color:#5FCB73;margin-top:2px}
+.abflow{background:#1d1d26;border:1px solid #34343f;border-radius:16px;padding:12px;overflow-x:auto}.abflow svg{min-width:760px;width:100%;height:auto;display:block}
+.mmwrap { background:#1d1d26; border:1px solid #34343f; border-radius:16px; overflow:hidden; margin-top:12px; }
+.mmsvg { display:block; min-width:1100px; width:100%; height:auto; }
+.mmsvg .leaf { cursor:pointer; }
+.mmsvg .leaf rect { fill:#2a2a35; stroke:#44445a; stroke-width:1; }
+.mmsvg .leaf:hover rect, .mmsvg .leaf:focus rect { fill:#3a3a4a; stroke:#5FCB73; }
+.mmsvg .lt { fill:#e8e8f0; font:500 12.5px 'Nunito Sans',Inter,sans-serif; }
+.mmsvg .tp { cursor:pointer; }
+.mmsvg .tpt { font:700 13px 'Nunito Sans',Inter,sans-serif; text-anchor:middle; }
+.mmsvg .rt { fill:#fff; font:700 17px Nunito Sans,Inter,sans-serif; text-anchor:middle; }
+.mmsvg .rs { fill:#5FCB73; font:600 11px 'Nunito Sans',Inter,sans-serif; text-anchor:middle; }
+
+.shhead{background:linear-gradient(135deg,#1d1d26,#23232d);border:1px solid #34343f;border-radius:18px;padding:18px 20px;margin-top:6px}
+.shhead .ey{font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:#5FCB73}
+.shhead h2{margin:8px 0 4px;font-size:26px;color:#fff;font-family:"Inter Tight",Inter,sans-serif}
+.shhead p{margin:0;color:#c9c9d6;font-size:14px;line-height:1.5}
+.shleg{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:#c9c9d6}
+.shleg i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:-2px}
+.shsec{margin-top:24px}.shsec>h3{margin:0 0 8px;font:800 13px/1 "Inter Tight",Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#5FCB73}
+.shph{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:900px){.shph{grid-template-columns:1fr}}
+.shc{background:#23232d;border:1px solid #34343f;border-radius:16px;overflow:hidden;color:#e8e8f0}
+.shc .h{padding:12px 14px;color:#191919}.shc .h small{display:block;font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;opacity:.75}.shc .h b{display:block;font:800 18px/1.2 "Inter Tight",Inter,sans-serif;margin-top:4px}
+.shc .b{padding:12px 14px 14px}.shc h4{margin:12px 0 4px;font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:#9a9aa6}.shc h4:first-child{margin-top:0}
+.shc ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.5}.shc li{margin:2px 0}
+.shc .okr{background:#1b1b24;border:1px solid #3a3a48;border-radius:10px;padding:8px 10px;font-size:13px;line-height:1.45}.shc .okr b{color:#fff}
+.shc .gate{margin-top:12px;border:2px solid #5FCB73;border-radius:12px;padding:8px 10px;font-size:13px;line-height:1.45;background:#20241a}.shc .gate b{color:#5FCB73}
+.shtag{display:inline-block;font:700 10px/1 "JetBrains Mono",monospace;padding:2px 6px;border-radius:6px;margin-left:6px;vertical-align:1px}
+.shtag.c{background:#5FCB73;color:#191919}.shtag.p{border:1px dashed #5FCB73;color:#5FCB73}.shtag.q{background:#FF5B8A;color:#fff}
+.shgn{background:#23232d;border:1px solid #34343f;border-radius:16px;overflow:hidden}
+.shgn .r{display:grid;grid-template-columns:1.1fr 1.7fr 1.2fr;gap:12px;padding:10px 14px;border-top:1px solid #34343f;color:#e8e8f0;font-size:13.5px;line-height:1.45}
+.shgn .r:first-child{border-top:0;font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:#9a9aa6}
+.shgn .r b{color:#fff}
+@media (max-width:700px){.shgn .r{grid-template-columns:1fr;gap:2px}.shgn .r:first-child{display:none}}
+.shtwo{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media (max-width:760px){.shtwo{grid-template-columns:1fr}}
+.shbox{background:#23232d;border:1px solid #34343f;border-radius:16px;padding:12px 14px;color:#e8e8f0}.shbox ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.5}
+.shbox.q{border-color:#FF5B8A}
+.rwbar{display:grid;grid-template-columns:130px 1fr 34px;gap:8px;align-items:center;margin:5px 0;font-size:13px;color:#e8e8f0}.rwbar i{display:block;height:12px;border-radius:6px;background:#405BFF}.rwbar i.b{background:#5FCB73}.rwbar .tr{display:flex;height:12px;border-radius:6px;overflow:hidden;background:#2c2c38}
+.rwgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px;margin-top:12px}
+.rwc{background:#23232d;border:1px solid #34343f;border-radius:16px;overflow:hidden}.rwc>.h{padding:10px 14px;font:800 15px/1.2 "Inter Tight",Inter,sans-serif;color:#191919;display:flex;justify-content:space-between;align-items:center}.rwc>.h small{font:700 11px/1 "JetBrains Mono",monospace;opacity:.8}.rwc .b{padding:6px 14px 12px}
+.rwc h4{margin:12px 0 4px;font:700 11px/1.2 "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:#9a9cab}
+.rwi{padding:6px 0;border-top:1px solid #2f2f3a;font-size:13.5px;line-height:1.4;color:#e8e8f0}.rwi:first-of-type{border-top:0}.rwi p{margin:2px 0 0;font-size:12px;color:#9a9cab;line-height:1.4}
+.rwp{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:99px;font:700 10px/1.5 "JetBrains Mono",monospace;vertical-align:1px}.rwp.pb{background:#5FCB73;color:#191919}.rwp.pa{background:#405BFF;color:#fff}.rwp.m{background:#FF5B8A;color:#fff}
+.rwi.rwstar{border-left:3px solid #5FCB73;padding-left:8px}.rwi.hide{display:none}
+/* ---- expand board / hide list ---- */
+.sidetog{display:none}
+@media (min-width:768px){
+  .shell{transition:grid-template-columns .4s cubic-bezier(.4,0,.2,1),column-gap .4s cubic-bezier(.4,0,.2,1),max-width .4s cubic-bezier(.4,0,.2,1);}
+  .shell.full{grid-template-columns:0px minmax(0,1fr);column-gap:0;max-width:2400px}
+  .side{transition:opacity .25s ease,transform .4s cubic-bezier(.4,0,.2,1);min-width:0;overflow-x:hidden}
+  .shell.full .side{opacity:0;transform:translateX(-48px);pointer-events:none;overflow:hidden}
+  .sidetog{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px 0 12px;border-radius:999px;border:1px solid #5A5D66;background:#26282d;color:#F8F8F8;font:600 15px var(--font-body);white-space:nowrap;cursor:pointer}
+  .sidetog:hover,.sidetog:focus-visible{border-color:#5FCB73;background:#34363D}
+  body.co-pan .sidetog{background:#F8F4E9;color:#111;border-color:#F8F4E9}
+  .sidetog svg{width:20px;height:20px;transition:transform .4s ease}
+  .shell.full ~ .sidetog svg,.sidetog[aria-pressed="true"] svg{transform:rotate(180deg)}
+}
+@media (prefers-reduced-motion:reduce){.shell,.side,.sidetog svg{transition:none!important}}
+</style>
+<style id="qv-css">
+.qvring svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
+.qvring text{font-family:Nunito Sans,Inter,sans-serif}
+.qvwrap{background:#1d1d26;border:1px solid #34343f;border-radius:16px;padding:14px 12px;margin-top:14px}
+.qvo{background:#23232d;border:1px solid #34343f;border-radius:16px;overflow:hidden;margin-top:14px}
+.qvo .r{display:grid;grid-template-columns:1.15fr repeat(4,1fr);gap:10px;padding:10px 14px;border-top:1px solid #34343f;font-size:13.5px;line-height:1.4;color:#e8e8f0;align-items:start}
+.qvo .r:first-child{border-top:0;font:700 11px/1.3 "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:#9a9aa6}
+.qvo .r>b{color:#fff}
+.qvo .c.o{background:#17301D;border:1px solid #2F6B3D;border-radius:10px;padding:6px 8px;color:#fff}
+.qvleg{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:#9a9aa6}
+.qvleg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:#17301D;border:1px solid #2F6B3D}
+@media (max-width:860px){.qvo .r{grid-template-columns:1fr;gap:6px}.qvo .r:first-child{display:none}.qvo .c::before{content:attr(data-w);display:block;font:700 10px/1 "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:#9a9aa6;margin-bottom:3px}}
+.qvstat small{display:block;margin:20px 0 8px;font:800 13px/1 "Inter Tight",Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#5FCB73}
+.evm{background:#23232d;border:1px solid #34343f;border-radius:16px;overflow:hidden;margin-top:12px}
+.evm .r{display:grid;grid-template-columns:2.2fr repeat(4,.7fr);gap:8px;padding:9px 14px;border-top:1px solid #34343f;font-size:13.5px;line-height:1.35;color:#e8e8f0;align-items:center}
+.evm .r:first-child{border-top:0;font:700 11px/1.3 "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:#9a9aa6}
+.evm .r>b{color:#fff;font-weight:600}.evm .r>b small{display:block;color:#9a9aa6;font-weight:400;font-size:12px}
+.evm .d{text-align:center;font-size:18px;color:#5FCB73}.evm .d.s{color:#8EA0FF}
+.evm .r.h>span:not(:first-child){text-align:center}
+@media (max-width:760px){.evm .r{grid-template-columns:1fr 1fr 1fr 1fr}.evm .r>b{grid-column:1/-1}.evm .r.h{display:none}.evm .d::before{content:attr(data-w);display:block;font:700 10px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:#9a9aa6;margin-bottom:4px}}
+.evtop{border-left:4px solid var(--c,#5FCB73);padding-left:14px}
+.evl{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px}
+.evl .shbox h3{margin:0 0 8px;font:800 13px/1 "Inter Tight",Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#5FCB73}
+.evl ul{margin:0;padding-left:18px;font-size:14px;line-height:1.5}.evl li{margin:4px 0}
+.evl .tg{display:inline-block;font:700 10.5px/1 "JetBrains Mono",monospace;letter-spacing:.04em;padding:3px 7px;border-radius:999px;background:#2c2e36;color:#c9c9d6;margin-left:6px;white-space:nowrap}
+.evgap{margin-top:12px;border-left:3px solid #FFA23A;background:#3A2A14;border-radius:8px;padding:10px 14px;font-size:14px;line-height:1.5;color:#f2e6d4}
+.evgap b{color:#FFA23A}
+.mmsvg .leaf.sup rect{stroke-dasharray:3 3;opacity:.8}.mmsvg .leaf.sup .lt{fill:#b4b6bd}.mmsvg .tp,.mmsvg .leaf,.mmsvg .why{cursor:pointer}
+.mmsvg .why rect{fill:#5FCB73}.mmsvg .why text{fill:#191919;font:700 13px 'Nunito Sans',Inter,sans-serif;text-anchor:middle}.mmsvg .ts{fill-opacity:.8;font:500 10.5px 'Nunito Sans',Inter,sans-serif;text-anchor:middle}
+.evsv{display:block;min-width:900px;width:100%;height:auto}
+.evsv .leaf{cursor:pointer}.evsv .leaf rect.bx{fill:#2a2a35;stroke:#44445a;stroke-width:1}
+.evsv .leaf:hover rect.bx,.evsv .leaf:focus rect.bx{fill:#3a3a4a;stroke:#5FCB73}
+.evsv .leaf.lead rect.bx{stroke:#5FCB73;stroke-width:2}
+.evsv .nt{fill:#f2f2f6;font:500 13.5px 'Nunito Sans',Inter,sans-serif}
+.evsv .pl{font:700 11px 'Nunito Sans',Inter,sans-serif}
+.evsv .bn text{font:700 12.5px 'Nunito Sans',Inter,sans-serif;text-anchor:middle}
+.evsv .rn text{text-anchor:middle}
+.abc .nums{font:700 13px/1.4 Inter,sans-serif;color:#5FCB73}
+.abc .wh{font-size:12px;color:#9a9aa6}
+.abc a.go{background:none;border:0;padding:0;color:#7084FF;font-weight:600;font-size:13px;text-align:left;cursor:pointer}
+</style>
+<style id="rp-css">
+.rpcard{background:#23232d;border:1px solid #34343f;border-radius:16px;overflow:hidden;color:#e8e8f0;margin-top:14px}
+.rphead{padding:14px 18px;color:#191919}
+.rphead small{display:block;font:600 11px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+.rphead b{font:700 22px var(--font-sans)}
+.rpbody{padding:14px 16px 18px}
+.rpbody h4{margin:18px 0 6px;font:600 11px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:#a9a9bb}
+.rpgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;margin-top:6px}
+@media(max-width:760px){.rpgrid{grid-template-columns:1fr;gap:4px}}
+.rpbody ol{margin:0;padding-left:20px}.rpbody li{margin:6px 0;line-height:1.5}
+.rpwho{display:grid;grid-template-columns:minmax(90px,auto) 1fr;gap:6px 12px;font-size:14px;line-height:1.4}.rpwho b{color:#fff}.rpwho span{color:#c9cbd2}
+.rpcks{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));column-gap:24px}
+.rpck{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-top:1px solid #34343f;line-height:1.4}
+.rpck .pck{width:24px;height:24px;border-radius:7px;font-size:14px;flex:none}
+.rpck.done span{opacity:.55;text-decoration:line-through}.rpck.done .pck{background:var(--accent);border-color:var(--accent)}
+.rpmoves{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.rpmoves .shbox{font-size:14px;line-height:1.5}.rpmoves .shbox b{display:block;margin-bottom:4px;color:#5FCB73}
+</style>
+<style id="ven-css">
+.vensvg{display:block;width:100%;max-width:760px;margin:0 auto;height:auto}
+.vc{fill-opacity:.32;stroke-opacity:.9;stroke-width:3;cursor:pointer;transition:fill-opacity .15s}.vc:hover{fill-opacity:.42}.vc.on{fill-opacity:.55;stroke-width:6}
+.vo{fill:#fff;fill-opacity:.07;cursor:pointer;transition:fill-opacity .15s}.vo:hover{fill-opacity:.25}.vo.on{fill-opacity:.5}
+.vall{fill-opacity:.14}
+.vh{fill:#fff;font:800 15px 'Nunito Sans',Inter,sans-serif;letter-spacing:.16em}.vt{fill:#F2F2F2;font:600 13px 'Nunito Sans',Inter,sans-serif}.vs{fill:#fff;font:600 11.5px 'Nunito Sans',Inter,sans-serif}.vc3{fill:#fff;font:800 12.5px 'Nunito Sans',Inter,sans-serif}
+.chip.on{background:#5FCB73;color:#191919;border-color:#5FCB73}
+</style>
+<style>.hero2{margin:28px 0 8px}.hero2 h1{font:500 clamp(28px,5vw,44px)/1.12 "Platypi",Georgia,serif;margin:6px 0 10px}.hero2 p{max-width:68ch;font-size:17px;line-height:1.55;color:var(--muted)}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+.pgfoot{margin:36px 0 40px;color:var(--muted);font-size:13px}
+body{overflow-x:hidden}a.btn{text-decoration:none;display:inline-flex;align-items:center}a.btn:not(.primary){color:#ECECEC}
+.sitenav{position:sticky;top:0;z-index:20;background:rgba(17,17,17,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin:0 -24px;padding:10px 24px;display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.sitenav::-webkit-scrollbar{display:none}
+.sitenav .btn{white-space:nowrap;min-height:40px;flex:none;text-decoration:none;display:inline-flex;align-items:center}.sitenav .btn::after{content:none!important}.sitenav a.btn:not(.primary),.card a.btn:not(.primary),.nextrow a.btn:not(.primary){color:#ECECEC}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0}
+.cards>.card:first-child{grid-column:1/-1}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:border-color .15s ease}
+.card:hover{border-color:var(--accent)}
+.card .ic{display:flex;align-items:center;gap:12px}
+.card .ic img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--line);flex:none}
+.card .ic .em{width:56px;height:56px;border-radius:50%;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:26px;flex:none}
+.card h3{font-size:21px;margin:0}
+.card p{margin:0;color:var(--muted);font-size:15px;line-height:1.5;flex:1}
+.card .btn{align-self:flex-start;text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+.card.wide{grid-column:1/-1}
+.nextrow{display:flex;flex-wrap:wrap;gap:10px;margin:34px 0 8px;padding-top:18px;border-top:1px solid var(--line)}
+.nextrow .btn{text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+.pghead h1{font:500 clamp(26px,4.5vw,38px)/1.15 "Platypi",Georgia,serif;margin:6px 0 8px}
+.pghead p{max-width:66ch;font-size:16px;line-height:1.55;color:var(--muted);margin:0}
+@media(max-width:767px){.sitenav{margin:0 -16px;padding:10px 16px}}@media(max-width:640px){.cards{grid-template-columns:1fr}}
+
+</style>
+<style id="pan-css">
+/* Panorama Education look: cream page, near-black slab, green accents, serif headings (Platypi), friendly sans body. Colors read from panoramaed.com. */
+body.co-pan { --bg:#F8F4E9; --ink:#111; --muted:#4D4D4D; --line:#E6DFCC; --surface:#fff; --surface2:#EFE9D8; --accent:#1B8A41; --accent-ink:#111; --font-body:"Nunito Sans","Proxima Nova","Helvetica Neue",Helvetica,Arial,sans-serif; --font-display:"Platypi",Georgia,"Times New Roman",serif; background:#F8F4E9; color:#111; font-family:var(--font-body); }
+body.co-pan main#app { --bg:#111; --ink:#F8F4E9; --muted:#C9C5B8; --line:#34332F; --surface:#1B1B19; --surface2:#262622; --accent:#5FCB73; --accent-ink:#111; --accent-soft:#17301D; --accent-line:#2F6B3D; --link:#5FCB73; --font-display:"Platypi",Georgia,"Times New Roman",serif; background:#111; color:#F8F4E9; border-radius:28px; padding:28px 24px 48px; margin-top:20px; margin-bottom:28px; }
+body.co-pan main#app h1, body.co-pan main#app h2, body.co-pan main#app h3 { font-family:"Platypi",Georgia,serif; font-weight:500; letter-spacing:0; }
+body.co-pan main#app .btn { border-radius:999px; }
+body.co-pan main#app .btn.primary { background:#5FCB73; border-color:#5FCB73; color:#111; }
+body.co-pan main#app .panel.paper { background:#F8F4E9; color:#111; }
+body.co-pan main#app .tile, body.co-pan main#app .qrow, body.co-pan main#app .panel { border-radius:20px; }
+@media (max-width:767px){ body.co-pan main#app { border-radius:20px; padding:20px 16px 40px; } }
+</style>
+
+<style id="shell-css">
+body.co-pan{background:#F8F4E9;margin:0}
+#topnav{position:sticky;top:12px;z-index:40;max-width:1100px;margin:12px auto 0;padding:0 12px}
+.pn{background:#fff;color:#111;border-radius:999px;box-shadow:0 2px 16px rgba(0,0,0,.14);display:flex;align-items:center;gap:14px;padding:9px 12px 9px 24px;position:relative;font-family:"Nunito Sans",Inter,sans-serif}
+.pn a,.pn button{font-family:inherit}
+.pn-brand{display:flex;flex-direction:column;line-height:1.1;color:#111;text-decoration:none;white-space:nowrap;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+.pn-brand b{font:800 15px "Nunito Sans",sans-serif;letter-spacing:.04em;text-transform:uppercase}
+.pn-brand small{font:600 11px "Nunito Sans",sans-serif;color:#4D4D4D}
+.pn-brand i{display:inline-block;width:9px;height:9px;background:#1B8A41;transform:rotate(45deg);margin-right:8px;vertical-align:1px}
+.pn-links{display:flex;gap:2px;margin:0 auto}
+.pn-link{background:none;border:0;padding:12px 14px;font:600 14.5px "Nunito Sans",sans-serif;color:#111;cursor:pointer;text-decoration:none;position:relative;min-height:44px;display:inline-flex;align-items:center}
+.pn-link:hover{color:#1B8A41}
+.pn-link.on::after{content:"";position:absolute;left:14px;right:14px;bottom:6px;height:2px;background:#1B8A41}
+.pn-ctas{display:flex;gap:8px}
+.pn-btn{border-radius:999px;padding:11px 18px;font:700 14px "Nunito Sans",sans-serif;text-decoration:none;cursor:pointer;min-height:44px;display:inline-flex;align-items:center;border:2px solid #111;background:#fff;color:#111}
+.pn-btn.g{background:#2CC56E;border-color:#2CC56E;color:#111}
+.pn-burger{display:none;margin-left:auto;background:#2CC56E;border:0;border-radius:999px;width:46px;height:46px;font-size:20px;cursor:pointer;color:#111}
+.pn-drop{position:absolute;left:0;right:0;top:calc(100% + 8px);background:#fff;color:#111;border-radius:28px 28px 90px 28px;box-shadow:0 12px 40px rgba(0,0,0,.2);padding:26px 28px;display:grid;grid-template-columns:1fr 1.2fr;gap:26px}
+.pn-drop h4{font:800 12px "Nunito Sans",sans-serif;letter-spacing:.1em;text-transform:uppercase;margin:0 0 6px;padding-bottom:10px;border-bottom:2px solid #111}
+.pn-drop h4 i{display:inline-block;width:8px;height:8px;background:#1B8A41;transform:rotate(45deg);margin-right:8px}
+.pn-drop a.row{display:block;padding:12px 0;font:700 17px "Nunito Sans",sans-serif;color:#111;text-decoration:none}
+.pn-drop a.row small{display:block;font:500 13px "Nunito Sans",sans-serif;color:#4D4D4D;margin-top:2px}
+.pn-drop a.row:hover{color:#1B8A41}
+.pn-card{background:#2CC56E;border-radius:22px 22px 70px 22px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;min-height:190px;color:#111;text-decoration:none}
+.pn-card small{font:800 11px "Nunito Sans",sans-serif;letter-spacing:.1em;text-transform:uppercase}
+.pn-card b{font:500 24px/1.2 "Platypi",Georgia,serif;display:block;margin-top:8px}
+.pn-card span{font:700 14px "Nunito Sans",sans-serif}
+.pn-mob{display:none}
+@media(max-width:900px){.pn-links,.pn-ctas{display:none}.pn-burger{display:block}.pn{border-radius:28px;padding:9px 10px 9px 18px}.pn-drop{display:none}
+.pn-mob{display:block;background:#fff;border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,.2);margin-top:8px;padding:10px 20px 18px}
+.pn-mob h4{font:800 11px "Nunito Sans",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#4D4D4D;margin:14px 0 2px}
+.pn-mob a{display:block;padding:12px 0;font:700 17px "Nunito Sans",sans-serif;color:#111;text-decoration:none;border-bottom:1px solid #E6DFCC}}
+#hero{max-width:1100px;margin:14px auto 0;padding:0 12px}
+.hg{display:grid;grid-template-columns:1fr 1fr;border-radius:0 0 0 0;overflow:hidden}
+.hg-l{background:#fff;border-radius:0 150px 0 0;padding:56px 56px 48px;display:flex;flex-direction:column;justify-content:center;min-height:430px}
+.hg-l .ey{font:800 11px "Nunito Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#111;margin-bottom:16px}
+.hg-l h1{font:500 clamp(34px,4.4vw,52px)/1.04 "Platypi",Georgia,serif;margin:0 0 18px;color:#111;letter-spacing:-.01em}
+.hg-l p{font:400 15.5px/1.7 "Nunito Sans",sans-serif;color:#2b2b2b;margin:0 0 24px;max-width:46ch}
+.hg-cta{display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;border:0;background:none;padding:0}
+.hg-cta span{background:#2CC56E;color:#111;font:700 15px "Nunito Sans",sans-serif;border-radius:999px 0 0 999px;padding:15px 24px}
+.hg-cta i{background:#111;color:#fff;border-radius:50%;width:48px;height:48px;display:inline-flex;align-items:center;justify-content:center;font-style:normal;font-size:18px;margin-left:-2px}
+.hg-r{background:linear-gradient(160deg,#cfe9d6,#a9d9b7);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:30px 24px}
+.hg-ph{display:flex;align-items:flex-start;justify-content:center}
+.hg-ph div{text-align:center;margin-left:-26px;position:relative}
+.hg-ph div:first-child{margin-left:0}
+.hg-ph img{width:clamp(110px,14vw,170px);height:clamp(110px,14vw,170px);border-radius:50%;object-fit:cover;border:5px solid #F8F4E9;display:block;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.hg-ph small{display:block;font:800 12px "Nunito Sans",sans-serif;color:#111;margin-top:8px}
+.hg-ph em{display:block;font:500 11.5px "Nunito Sans",sans-serif;font-style:normal;color:#24402d}
+.hg-b{display:grid;grid-template-columns:1fr 210px 1.2fr;min-height:200px}
+.hg-b1{background:#EFE9D8;border-radius:0 0 120px 0;padding:34px 38px;display:flex;align-items:center;font:500 22px/1.25 "Platypi",Georgia,serif;color:#111}
+.hg-b2{background:#1B9E56;color:#fff;border-radius:50%;width:210px;height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;align-self:end}
+.hg-b2 b{font:500 44px "Platypi",Georgia,serif}.hg-b2 span{font:600 13px/1.3 "Nunito Sans",sans-serif;max-width:12ch}
+.hg-b3{background:#1B9E56;border-radius:140px 0 0 140px;margin-left:-30px;padding:0 40px 0 60px;display:flex;align-items:center;justify-content:space-around;gap:14px;flex-wrap:wrap;color:#fff;font:700 15px "Nunito Sans",sans-serif;align-self:end;height:200px}
+.hg-b3 span{opacity:.95}
+@media(max-width:860px){.hg{grid-template-columns:1fr}.hg-l{border-radius:0 90px 0 0;padding:36px 26px;min-height:0}.hg-r{padding:24px 12px}.hg-b{grid-template-columns:1fr}.hg-b1{border-radius:0 0 80px 0;padding:24px}.hg-b2{margin:14px auto}.hg-b3{margin:0;border-radius:60px;height:auto;padding:22px 24px;justify-content:center}}
+@media(max-width:860px){.hg-ph em{display:none}.hg-ph div{margin-left:-12px}}
+body.co-pan main#app{margin-top:26px}
+.apphd{max-width:62ch}
+.rwbar{display:grid;grid-template-columns:130px 1fr 34px;gap:8px;align-items:center;margin:5px 0;font-size:13px;color:var(--ink)}.rwbar .tr{display:flex;height:12px;border-radius:6px;overflow:hidden;background:#2c2e36}.rwbar i{display:block;height:12px;background:var(--blue)}.rwbar i.b{background:var(--accent)}
+.rwgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:12px}
+.rwc{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}.rwc>.h{padding:10px 14px;font:800 15px/1.2 var(--font-display);color:#191919;display:flex;justify-content:space-between;align-items:center}.rwc>.h small{font:700 11px/1 var(--font-mono);opacity:.8}.rwc .b{padding:6px 14px 12px}
+.rwc h4{margin:12px 0 4px;font:700 11px/1.2 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rwi{padding:6px 0;border-top:1px solid var(--line);font-size:13.5px;line-height:1.4;color:var(--ink)}.rwi p{margin:2px 0 0;font-size:12px;color:var(--muted);line-height:1.4}
+.rwp{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:99px;font:700 10px/1.5 var(--font-mono);vertical-align:1px}.rwp.pb{background:var(--accent);color:#191919}.rwp.pa{background:var(--blue);color:#fff}.rwp.m{background:#FF5B8A;color:#fff}.rwp.ps{background:#2c2e36;color:var(--gap)}
+.rwi.rwstar{border-left:3px solid var(--accent);padding-left:8px}.rwi.hide{display:none}
+.rwscrollwrap{position:relative}
+.rwrow2{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x proximity;padding:8px 4px 14px;scrollbar-width:thin}
+.rwarr{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:34px;height:70px;border:0;border-radius:8px;background:rgba(25,25,25,.85);color:#fff;font-size:26px;cursor:pointer}.rwarr.l{left:-6px}.rwarr.r{right:-6px}.rwarr:hover{background:var(--accent);color:#191919}
+.rwpost{flex:none;scroll-snap-align:start;position:relative;width:200px;height:290px;border:2px solid transparent;border-radius:6px;padding:14px;text-align:left;cursor:pointer;color:#191919;background:linear-gradient(160deg,var(--pc),color-mix(in srgb,var(--pc) 55%,#191919));display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;font-family:var(--font-display)}
+.rwpost:hover{transform:translateY(-3px)}
+.rwpost:nth-child(odd){border-top-right-radius:84px}.rwpost:nth-child(even){border-bottom-right-radius:84px}.rwpost.on{border-color:#fff;box-shadow:0 0 0 3px var(--accent)}
+.rwpe{position:absolute;top:12px;left:14px;font-size:30px}
+.rwpn{font:900 120px/0.85 var(--font-display);color:transparent;-webkit-text-stroke:3px #191919;margin-bottom:8px;letter-spacing:-4px}
+.rwpt{font-weight:800;font-size:19px;line-height:1.15}.rwpost small{font:700 11px/1.4 var(--font-mono);margin-top:4px;opacity:.8}
+.rwdh h3{font-size:22px;margin:20px 0 4px}.rwdh small{font:700 12px var(--font-mono);color:var(--muted);margin-left:8px}
+.rwm{flex:none;scroll-snap-align:start;width:240px;min-height:300px;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.rwm-top{padding:8px 12px;font:800 11px/1.3 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:#191919}
+.rwm-b{padding:12px 14px 16px}.rwm-b h4{margin:0 0 8px;font-size:16px;line-height:1.25}.rwm-p{margin-bottom:8px}.rwm-p .rwp{margin:0 6px 4px 0}.rwm-b p{margin:0;font-size:13px;line-height:1.45;color:var(--muted)}
+.rwm.rwstar{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.eqq{display:grid;grid-template-columns:1.1fr 1fr;gap:6px}
+.eqq-q{background:#8ED8EC;color:#191919;padding:34px 34px 30px;border-radius:6px 90px 6px 6px;display:flex;flex-direction:column;justify-content:center}
+.eqq-ey{font:700 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+.eqq-q blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:clamp(20px,2.6vw,28px);line-height:1.25}
+.eqq-q cite{display:block;margin-top:16px;font:600 13px var(--font-body);font-style:normal;opacity:.8}
+.eqq-l{background:var(--accent);color:#191919;padding:30px 30px 26px;border-radius:6px 6px 6px 90px}
+.eqq-l h3{margin:0 0 12px;font-size:18px}.eqq-l p{margin:0 0 10px;font-size:14.5px;line-height:1.5}
+@media(max-width:760px){.eqq{grid-template-columns:1fr}}
+.rwstat{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:8px;font-size:13px}
+</style>
+</head><body class="co-pan">
+<header id="topnav"></header><section id="hero"></section>
+<main id="app" class="gut" style="max-width:1076px;margin:0 auto"></main>
+<script src="photos.js"></script>
+<script src="wf.js"></script>
+<script src="auto.js"></script>
+<script src="eaf.js"></script>
+<script src="ripwf.js"></script>
+<script>
+(function () {
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+/* Rippling implementation timeline and 30/60/90 plan. Month units: 0 = Oct 1, 1 = Nov 1, 2 = Dec 1, 3 = Jan 1, 4 = Feb 1, 5 = Mar 1. kind: "stated" = from the posting or Colby/panel notes, "plan" = suggested, confirm with Panorama. */
+var PLANS_ = {
+  months: ["Oct", "Nov", "Dec", "Jan", "Feb"],
+  today: 0.5,
+  note: "The dates that come from Panorama are the shadow payrolls on Nov 15, Nov 30 and Dec 15, and Rippling go-live on January 1. Erica leads the implementation today and hands it to Cat once Cat is in, so the handoff is part of the plan. Everything else is Cat’s proposal, to confirm together. Solid bars are stated, dashed bars are suggested.",
+  miles: [
+    { m: 0.62, t: "Data cleanup done", k: "plan" },
+    { m: 1.05, t: "Shadow payroll 1", k: "stated" },
+    { m: 1.55, t: "Benefits fair", k: "plan" },
+    { m: 2.0, t: "Open enrollment closes", k: "plan" },
+    { m: 2.55, t: "Go / no-go", k: "plan" },
+    { m: 3.0, t: "Cutover, go-live Jan 1", k: "stated" },
+    { m: 3.5, t: "First live payroll closed", k: "plan" },
+    { m: 4.0, t: "30-day review", k: "plan" }
+  ],
+  lanes: [
+    { name: "Erica, then Cat", col: "#7084FF", bars: [[0, 1.0, "Erica leads setup", "plan"], [1.0, 3.0, "Handoff to Cat, test + fix", "plan"], [3.0, 5.0, "Cat owns, stabilize + tune", "plan"]] },
+    { name: "Payroll + Finance", col: "#FF8A8A", bars: [[1.05, 1.6, "Shadow 1", "stated"], [1.9, 2.4, "Shadow 2", "stated"], [2.5, 2.95, "Final parallel", "stated"], [3.0, 3.15, "Cut", "stated"], [3.15, 5.0, "Live payrolls + reconcile", "plan"]] },
+    { name: "Benefits + broker", col: "#5FCB73", bars: [[0.5, 1.3, "Carrier feeds + plans", "plan"], [1.3, 1.55, "Fair", "plan"], [1.6, 2.0, "Enrollment", "plan"], [2.0, 3.0, "Elections to carriers, fix errors", "plan"]] },
+    { name: "IT", col: "#6FD3FF", bars: [[0.2, 1.2, "SSO, Okta, Slack, Google sync", "plan"], [1.2, 2.5, "Provisioning tests", "plan"], [3.0, 3.4, "Day-one watch", "plan"]] },
+    { name: "Compliance + Legal", col: "#B58CFF", bars: [[0.3, 1.5, "Multi-state tax + I-9 setup", "plan"], [2.0, 3.0, "Policies, notices, audit trail", "plan"]] },
+    { name: "Comms + training", col: "#FFB347", bars: [[1.3, 2.5, "Manager + employee comms", "plan"], [2.5, 3.0, "Training", "plan"], [3.0, 4.0, "Hypercare + office hours", "plan"]] }
+  ],
+  phases: [
+    { id: "p1", name: "Now to Oct 31: Prepare", teams: ["People Ops", "IT", "Payroll", "Finance", "Compliance"], steps: ["Confirm the plan, owners and dates with Lisa, Eric, Angela and Erica", "Sit down with Erica for the handoff: what is built, what is open, who to call, and the date she steps back", "Clean employee data: legal names, addresses, tax states, pay rates, manager lines", "Map every pay element, deduction and earning code from the old system", "Connect SSO and the Slack and Google sync with IT", "Set the approval path: manager, second-level manager, HR, Finance and, for out-of-cycle changes, the executive team in parallel, Payroll signs off last"], exit: "Data audit signed off and every owner named." },
+    { id: "p2", name: "November: Shadow payroll 1", teams: ["Payroll", "Finance", "People Ops"], steps: ["Run payroll in Rippling in parallel with the current system", "Compare line by line: gross, taxes, deductions, net, by person", "Log every variance with a cause and an owner", "Fix the data or the config, never patch around it", "Stand up the benefits fair and carrier setup"], exit: "Variances explained, trend going down." },
+    { id: "p3", name: "December: Shadow payroll 2 + open enrollment", teams: ["Benefits broker", "People Ops", "Payroll", "Managers"], steps: ["Run the second shadow payroll and aim for a clean match", "Hold the benefits fair, then open and close enrollment", "Send elections to carriers and check deduction amounts against shadow payroll", "Send manager and employee comms: what changes, what stays, where to get help", "Hold a go / no-go meeting with Payroll, Finance, IT and Legal"], exit: "Clean parallel run and a written go decision." },
+    { id: "p4", name: "Jan 1: Cutover", teams: ["Everyone"], steps: ["Freeze changes in the old system on an agreed date", "Load final balances, new hires, terminations and leaves", "Confirm every employee can log in and sees the right data", "Staff a hypercare channel and a daily check-in", "Keep a rollback and escalation list in one place"], exit: "Everyone paid correctly and on time." },
+    { id: "p5", name: "Jan to Feb: Stabilize", teams: ["Payroll", "Finance", "People Ops", "IT"], steps: ["Reconcile the first live payroll to the ledger", "Close the issue log and publish what changed", "Audit access, approvals and the audit trail", "Collect feedback from managers and employees", "Hand off to steady state: owners, runbooks, reporting"], exit: "Issue log closed, runbooks written, 30-day review held." }
+  ],
+  risks: [
+    ["Payroll does not match in shadow", "Treat each variance as a data or config question. Fix the source and rerun."],
+    ["Benefit deductions are wrong at cutover", "Compare carrier files and payroll deductions before go-live, not after."],
+    ["New hires and leavers around cutover", "Set a freeze window and a manual list for anyone who starts or leaves in it."],
+    ["Multi-state tax setup", "Confirm every work state is registered before the first live run."],
+    ["Managers lose trust in the system", "Give them one page on what changes, plus a channel with a fast answer."]
+  ]
+};
+  window.PLANS = PLANS_;
+  function todayInfo() {
+    var n = new Date(), start = new Date(2026, 9, 1), dim = new Date(n.getFullYear(), n.getMonth() + 1, 0).getDate();
+    return { dayOff: Math.floor((new Date(n.getFullYear(), n.getMonth(), n.getDate()) - start) / 864e5), months: (n.getFullYear() - 2026) * 12 + n.getMonth() - 9 + (n.getDate() - 1) / dim, label: n.toLocaleDateString("en-US", { month: "short", day: "numeric" }) };
+  }
+  function tlSvg() {
+    var P = window.PLANS, X0 = 150, MW = 170, W = X0 + MW * 5 + 20, y0 = 36, my = 128, LH = 58, H = my + 6 * LH + 16;
+    function X(m) { return X0 + m * MW; }
+    var o = '<svg class="tlsvg" viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Rippling implementation timeline from October to February"><defs><pattern id="tldots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" fill="#3a3a48"/></pattern></defs><rect width="' + W + '" height="' + H + '" fill="url(#tldots)"/>';
+    P.months.forEach(function (m, i) {
+      o += '<line x1="' + X(i) + '" y1="' + y0 + '" x2="' + X(i) + '" y2="' + H + '" stroke="#3a3a48"/><text class="tm" x="' + (X(i) + 8) + '" y="22">' + m + (i === 3 ? " 2027" : "") + "</text>";
+    });
+    o += '<line x1="' + X(5) + '" y1="' + y0 + '" x2="' + X(5) + '" y2="' + H + '" stroke="#3a3a48"/>';
+    o += '<text class="ln" x="12" y="' + (y0 + 40) + '">Milestones</text>';
+    P.miles.forEach(function (m, i) {
+      var x = X(m.m), up = i % 2 === 0, cy = y0 + 34, ty = up ? cy - 14 : cy + 24, col = m.k === "stated" ? "#5FCB73" : "none";
+      o += '<path d="M' + x + " " + (cy - 8) + "l8 8-8 8-8-8z" + '" fill="' + col + '" stroke="#5FCB73" stroke-width="2" ' + (m.k === "plan" ? 'stroke-dasharray="3 2"' : "") + "/>" + '<text class="mt" x="' + x + '" y="' + (ty + (up ? -4 : 0)) + '">' + esc(m.t) + "</text>";
+    });
+    P.lanes.forEach(function (L, i) {
+      var y = my + i * LH;
+      o += '<line x1="0" y1="' + y + '" x2="' + W + '" y2="' + y + '" stroke="#34343f"/><text class="ln" x="12" y="' + (y + 33) + '">' + esc(L.name) + "</text>";
+      L.bars.forEach(function (b) {
+        var x = X(b[0]), w = Math.max(14, (b[1] - b[0]) * MW - 3), st = b[3] === "stated";
+        o += '<rect x="' + x + '" y="' + (y + 12) + '" width="' + w + '" height="34" rx="8" fill="' + L.col + '" fill-opacity="' + (st ? 1 : .28) + '" stroke="' + L.col + '" stroke-width="2" ' + (st ? "" : 'stroke-dasharray="5 3"') + "/>" +
+          '<text class="bt" x="' + (x + 8) + '" y="' + (y + 33) + '" ' + (st ? "" : 'style="fill:#fff"') + ">" + esc(w < 60 ? "" : b[2]) + "</text>";
+      });
+    });
+    var tx = X(Math.min(5, Math.max(0, todayInfo().months)));
+    o += '<line x1="' + tx + '" y1="' + y0 + '" x2="' + tx + '" y2="' + H + '" stroke="#EA4B71" stroke-width="2"/><rect x="' + (tx - 22) + '" y="2" width="44" height="18" rx="9" fill="#EA4B71"/><text x="' + tx + '" y="15" fill="#fff" font-size="10.5" font-weight="700" font-family="Nunito Sans,Inter,sans-serif" text-anchor="middle">Today</text>';
+    return o + "</svg>";
+  }
+  function ripChart() {
+    var DM = [0, 31, 61, 92];
+    function D(m, d) { return DM[m] + d - 1; }
+    var x0 = 160, pw = 720, d0 = 15, d1 = 108;
+    function X(d) { return x0 + (d - d0) * pw / (d1 - d0); }
+    var rows = [
+      { n: "Data migration", c: "#7084FF", b: [["Clean + first load", D(0, 19), D(1, 6)], ["Deltas + reloads", D(1, 9), D(2, 11)]] },
+      { n: "Benefits", c: "#FFB86B", b: [["Plans + rates", D(0, 19), D(1, 6)], ["Open enrollment", D(1, 9), D(1, 30), "oe"], ["Elections", D(2, 1), D(2, 10)], ["Tie-out", D(2, 10), D(2, 17)]] },
+      { n: "UAT", c: "#6BD6B0", b: [["Round 1", D(0, 26), D(1, 6)], ["Round 2", D(1, 16), D(2, 4)], ["Round 3", D(2, 7), D(2, 18)]] },
+      { n: "Shadow payroll", c: "#FF8A8A", b: [["Run 1", D(1, 2), D(1, 13), "st"], ["Run 2", D(2, 1), D(2, 9)], ["Run 3", D(2, 10), D(2, 17)]] },
+      { n: "Cutover", c: "#5FCB73", b: [["Freeze", D(2, 18), D(3, 1)], ["Live payrolls", D(3, 1), D(3, 16), "st"]] }
+    ];
+    var top = 52, rh = 44, H = top + rows.length * rh + 62;
+    var o = '<svg viewBox="0 0 900 ' + H + '" style="min-width:780px;width:100%;display:block" role="img" aria-label="Rippling implementation timeline from October 16 to January 16 showing data migration, benefits and open enrollment, UAT, shadow payroll and cutover overlapping">';
+    o += '<rect x="' + X(D(1, 9)).toFixed(1) + '" y="' + (top - 8) + '" width="' + (X(D(1, 30)) - X(D(1, 9))).toFixed(1) + '" height="' + (rows.length * rh + 6) + '" fill="#FF4D6D" opacity=".13"/>';
+    o += '<text x="' + ((X(D(1, 9)) + X(D(1, 30))) / 2).toFixed(1) + '" y="' + (top - 14) + '" text-anchor="middle" font-size="12" font-weight="700" fill="#FF8AA0">4 streams at once</text>';
+    [["Oct", D(0, 1)], ["Nov", D(1, 1)], ["Dec", D(2, 1)], ["Jan", D(3, 1)]].forEach(function (m) {
+      var px = X(Math.max(m[1], d0));
+      o += '<line x1="' + px.toFixed(1) + '" y1="22" x2="' + px.toFixed(1) + '" y2="' + (top + rows.length * rh) + '" stroke="#34343f"/><text x="' + (px + 6).toFixed(1) + '" y="18" font-size="13" font-weight="700" fill="#B4B6BD">' + m[0] + "</text>";
+    });
+    rows.forEach(function (r, i) {
+      var y = top + i * rh;
+      o += '<text x="10" y="' + (y + 22) + '" font-size="14" font-weight="700" fill="#F2F2F2">' + esc(r.n) + "</text>";
+      r.b.forEach(function (b) {
+        var bx = X(b[1]), bw = X(b[2]) - bx, st = b[3] === "st", oe = b[3] === "oe";
+        o += '<rect x="' + bx.toFixed(1) + '" y="' + (y + 4) + '" width="' + bw.toFixed(1) + '" height="28" rx="7" fill="' + r.c + '" opacity="' + (st ? 1 : 0.88) + '"' + (st ? ' stroke="#fff" stroke-width="2"' : (oe ? ' stroke="#fff" stroke-dasharray="4 3" stroke-width="1.5"' : "")) + "/>";
+        if (bw > b[0].length * 5.9 + 6) o += '<text x="' + (bx + bw / 2).toFixed(1) + '" y="' + (y + 22) + '" text-anchor="middle" font-size="11.5" font-weight="700" fill="#191919">' + esc(b[0]) + "</text>";
+      });
+    });
+    var cy = top + rows.length * rh + 6;
+    o += '<text x="10" y="' + (cy + 18) + '" font-size="14" font-weight="700" fill="#F2F2F2">Calendar</text>';
+    [["Thanksgiving", D(1, 26), D(1, 28)], ["Holidays", D(2, 24), D(3, 2)]].forEach(function (h) {
+      o += '<rect x="' + X(h[1]).toFixed(1) + '" y="' + (cy + 2) + '" width="' + (X(h[2]) - X(h[1])).toFixed(1) + '" height="22" rx="6" fill="#3A3D45"/>';
+    });
+    o += '<text x="' + (X(D(1, 27)) - 4).toFixed(1) + '" y="' + (cy + 40) + '" text-anchor="end" font-size="11" fill="#B4B6BD">Thanksgiving</text><text x="' + (X(D(2, 28))).toFixed(1) + '" y="' + (cy + 40) + '" text-anchor="middle" font-size="11" fill="#B4B6BD">Holiday week</text>';
+    var lines = [[Math.min(d1, Math.max(d0, todayInfo().dayOff)), "Today", "#7084FF"], [D(2, 17), "Go / no-go", "#FF8AA0"], [D(3, 1), "Go-live Jan 1", "#5FCB73"]];
+    lines.forEach(function (l, i) {
+      var px = X(l[0]);
+      o += '<line x1="' + px.toFixed(1) + '" y1="' + (top - 4) + '" x2="' + px.toFixed(1) + '" y2="' + (cy + 26) + '" stroke="' + l[2] + '" stroke-width="2.5"' + (i === 1 ? ' stroke-dasharray="5 4"' : "") + "/>";
+      o += '<text x="' + (i === 0 ? px + 5 : px - 5).toFixed(1) + '" y="' + (cy + 54 + (i === 1 ? 0 : 0)) + '" text-anchor="' + (i === 0 ? "start" : "end") + '" font-size="12" font-weight="800" fill="' + l[2] + '">' + l[1] + "</text>";
+    });
+    return o + "</svg>";
+  }
+  var ICONS = {
+    home: '<path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/>',
+    db: '<ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6M4 11.5v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>',
+    shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 5-5"/>',
+    loop: '<path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v4.5h-4.5"/>',
+    spark: '<path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>',
+    people: '<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.5 0 4 2 4 5"/>',
+    link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+    target: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/>',
+    monitor: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+    clip: '<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12h6M9 16h4"/>',
+    play: '<path d="M8 5.5v13l11-6.5z" fill="currentColor"/>',
+    chat: '<path d="M4 5h16v11H9.5L5 20v-4H4z"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.8 3.8 5.8 3.8 9S14.5 18.2 12 21c-2.5-2.8-3.8-5.8-3.8-9S9.5 5.8 12 3z"/>',
+    box: '<path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5M12 12v9"/>',
+    table: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/>',
+    swap: '<path d="M4 8h13l-3-3M20 16H7l3 3"/>',
+    userplus: '<circle cx="10" cy="8" r="3.5"/><path d="M3 20c0-3.6 3.1-6 7-6s7 2.4 7 6M19 7v6M16 10h6"/>',
+    userminus: '<circle cx="10" cy="8" r="3.5"/><path d="M3 20c0-3.6 3.1-6 7-6s7 2.4 7 6M16 10h6"/>',
+    key: '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/>',
+    coin: '<circle cx="12" cy="12" r="9"/><path d="M15 9c-.6-1-1.7-1.5-3-1.5-1.7 0-3 .8-3 2.2s1.3 1.9 3 2.3 3 .9 3 2.3-1.3 2.2-3 2.2c-1.4 0-2.5-.5-3.2-1.6M12 6v1.5M12 16.5V18"/>',
+    merge: '<path d="M5 4c0 6 7 5 7 10v6M19 4c0 6-7 5-7 10"/>',
+    branch: '<circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="8" r="2"/><path d="M6 7v10M18 10c0 4-6 3-12 7"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+    cal: '<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+    mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/>',
+    check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+    bolt: '<path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/>',
+    flow: '<rect x="3" y="4" width="7" height="6" rx="1.5"/><rect x="14" y="14" width="7" height="6" rx="1.5"/><path d="M10 7h4a3 3 0 0 1 3 3v4"/>',
+    star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>'
+  };
+  var WF_TIMER = null;
+  function wfWrap(str, n) {
+    var w = String(str).split(" "), lines = [], cur2 = "";
+    w.forEach(function (x) { if ((cur2 + " " + x).trim().length > n && cur2) { lines.push(cur2); cur2 = x; } else cur2 = (cur2 + " " + x).trim(); });
+    if (cur2) lines.push(cur2);
+    return lines;
+  }
+  function wfSvg(key, aiOn) {
+    var W = window.WF[key], N = {}, i;
+    W.nodes.forEach(function (n) { N[n.id] = n; });
+    var out = '<svg class="wfsvg' + (aiOn ? " aion" : "") + '" id="wfsvg-' + key + '" viewBox="0 0 ' + W.w + " " + W.h + '" role="img" aria-label="' + esc(W.title) + ' workflow board"><defs><pattern id="dots-' + key + '" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#3a3a48"/></pattern>' +
+      '<marker id="ah-' + key + '" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1l8 4-8 4z" fill="#9a9ab0"/></marker>' +
+      '<marker id="ahg-' + key + '" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1l8 4-8 4z" fill="#2FD07A"/></marker></defs>' +
+      '<rect width="' + W.w + '" height="' + W.h + '" fill="url(#dots-' + key + ')"/>';
+    W.edges.forEach(function (e, ix) {
+      var a = N[e[0]], b = N[e[1]], x1 = a.cx + 34, y1 = a.cy, x2 = b.cx - 38, y2 = b.cy, dx = Math.max(30, (x2 - x1) / 2);
+      out += '<path id="wfe-' + key + "-" + ix + '" data-to="' + b.id + '" class="ed" d="M' + x1 + " " + y1 + " C" + (x1 + dx) + " " + y1 + " " + (x2 - dx) + " " + y2 + " " + x2 + " " + y2 + '" marker-end="url(#ah-' + key + ')"/>';
+      if (e[2]) out += '<text class="el" x="' + (x1 + 8) + '" y="' + (y2 > y1 ? y1 + 16 : y1 - 8) + '">' + e[2] + "</text>";
+      out += '<circle class="mo" r="4.5" fill="#5FCB73" opacity="0"><animateMotion dur="2.4s" begin="' + ((ix % 6) * 0.45) + 's" repeatCount="indefinite" calcMode="linear"><mpath href="#wfe-' + key + '-' + ix + '"/></animateMotion><animate attributeName="opacity" dur="2.4s" begin="' + ((ix % 6) * 0.45) + 's" repeatCount="indefinite" values="0;1;1;0" keyTimes="0;0.1;0.9;1"/></circle>';
+    });
+    W.nodes.forEach(function (n) {
+      var x = n.cx - 32, y = n.cy - 32, trig = n.kind === "trigger";
+      var shape = '<rect class="tile" x="' + x + '" y="' + y + '" width="64" height="64" rx="12"/>';
+      if (trig) shape = '<path class="tile" d="M' + (x + 28) + " " + y + "H" + (x + 52) + "a12 12 0 0 1 12 12v40a12 12 0 0 1-12 12H" + (x + 28) + "a28 28 0 0 1-28-28v-8a28 28 0 0 1 28-28z" + '"/>';
+      var ic = '<g transform="translate(' + (n.cx - 15) + " " + (n.cy - 15) + ') scale(1.25)" fill="none" stroke="' + n.color + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + (ICONS[n.icon] || ICONS.flow) + "</g>";
+      var bolt = trig ? '<g transform="translate(' + (x - 10) + " " + (n.cy - 9) + ') scale(.75)" fill="#EA4B71" stroke="#EA4B71" stroke-width="1.2" stroke-linejoin="round">' + ICONS.bolt + "</g>" : "";
+      var tag = n.tag ? '<g><rect x="' + (x + 28) + '" y="' + (y - 9) + '" width="' + (n.tag === "n8n" ? 30 : 44) + '" height="16" rx="8" fill="' + (n.tag === "n8n" ? "#EA4B71" : "#FF4F00") + '"/><text x="' + (x + 28 + (n.tag === "n8n" ? 15 : 22)) + '" y="' + (y + 3) + '" fill="#fff" font-size="9.5" font-weight="700" font-family="Nunito Sans,Inter,sans-serif" text-anchor="middle">' + n.tag + "</text></g>" : "";
+      var ok = '<g class="okb"><circle cx="' + (x + 64) + '" cy="' + (y + 64) + '" r="9" fill="#2FD07A"/><path d="M' + (x + 59.5) + " " + (y + 64) + "l3 3 5-6\" fill=\"none\" stroke=\"#10131a\" stroke-width=\"2\" stroke-linecap=\"round\"/></g>";
+      var lbl = wfWrap(n.title, 16).map(function (ln, k) { return '<text class="tt" x="' + n.cx + '" y="' + (n.cy + 50 + k * 14) + '">' + esc(ln) + "</text>"; }).join("");
+      var subY = n.cy + 50 + wfWrap(n.title, 16).length * 14;
+      lbl += wfWrap(n.sub, 24).map(function (ln, k) { return '<text class="ss" x="' + n.cx + '" y="' + (subY + k * 12) + '">' + esc(ln) + "</text>"; }).join("");
+      var aib = n.ai ? '<rect class="airing" x="' + (x - 5) + '" y="' + (y - 5) + '" width="74" height="74" rx="16"/><g class="aib"><circle cx="' + (x + 2) + '" cy="' + (y + 2) + '" r="12" fill="#5FCB73" stroke="#191919" stroke-width="1.5"/><circle cx="' + (x + 0) + '" cy="' + (y + 0) + '" r="4.3" fill="none" stroke="#191919" stroke-width="2"/><path d="M' + (x + 3.3) + " " + (y + 3.3) + 'l4.2 4.2" stroke="#191919" stroke-width="2.4" stroke-linecap="round"/></g>' : "";
+      out += '<g class="nd' + (n.ai ? " hasai" : "") + '" id="wfn-' + key + "-" + n.id + '" data-act="wf-node" data-v="' + key + '" data-id="' + n.id + '" tabindex="0" role="button" aria-label="' + esc(n.title + ", " + n.sub) + '">' + bolt + shape + ic + tag + ok + lbl + aib + "</g>";
+    });
+    return out + "</svg>";
+  }
+  function wfNarr(key, id) {
+    var el = document.getElementById("wfnarr-" + key); if (!el) return;
+    var W = window.WF[key], n = null;
+    W.nodes.forEach(function (x) { if (x.id === id) n = x; });
+    el.textContent = n ? n.say : "Press Test workflow to watch it run, or tap any tile to hear what it does. Swipe the board sideways to see the whole flow.";
+    var sv = document.getElementById("wfsvg-" + key);
+    if (n && n.ai && sv && sv.classList.contains("aion")) { var d = document.createElement("span"); d.className = "ai"; d.innerHTML = "<b>Where Claude fits:</b> " + esc(n.ai); el.appendChild(d); }
+  }
+  function wfMark(key, id, done) {
+    var W = window.WF[key];
+    W.nodes.forEach(function (n) { var g = document.getElementById("wfn-" + key + "-" + n.id); if (g) g.classList.remove("cur"); });
+    var g2 = document.getElementById("wfn-" + key + "-" + id); if (!g2) return;
+    g2.classList.add("ran"); if (!done) g2.classList.add("cur");
+    W.edges.forEach(function (e, ix) { if (e[1] === id && e[2] !== "false") { var pe = document.getElementById("wfe-" + key + "-" + ix); if (pe) { pe.classList.add("ran"); pe.setAttribute("marker-end", "url(#ahg-" + key + ")"); } } });
+  }
+  function wfReset(key) {
+    if (WF_TIMER) { clearTimeout(WF_TIMER); WF_TIMER = null; }
+    var W = window.WF[key];
+    W.nodes.forEach(function (n) { var g = document.getElementById("wfn-" + key + "-" + n.id); if (g) { g.classList.remove("ran"); g.classList.remove("cur"); } });
+    W.edges.forEach(function (e, ix) { var pe = document.getElementById("wfe-" + key + "-" + ix); if (pe) { pe.classList.remove("ran"); pe.setAttribute("marker-end", "url(#ah-" + key + ")"); } });
+  }
+  function wfRun(key) {
+    wfReset(key);
+    var W = window.WF[key], i = 0;
+    (function step() {
+      if (!document.getElementById("wfn-" + key + "-" + W.order[0])) return;
+      if (i >= W.order.length) { var el = document.getElementById("wfnarr-" + key); if (el) el.textContent = W.done; var last = document.getElementById("wfn-" + key + "-" + W.order[W.order.length - 1]); if (last) last.classList.remove("cur"); WF_TIMER = null; return; }
+      var id = W.order[i++];
+      wfMark(key, id, false); wfNarr(key, id);
+      WF_TIMER = setTimeout(function () { var g = document.getElementById("wfn-" + key + "-" + id); if (g) g.classList.remove("cur"); step(); }, 1500);
+    })();
+  }
+  function wfBoard(key) {
+    var W = window.WF[key];
+    return '<div class="wfwrap"><div class="wfbar"><b>' + esc(W.title) + '</b><span class="grow"></span><button class="wfrun" data-act="wf-run" data-v="' + key + '">Test workflow</button><button class="btn small" data-act="wf-reset" data-v="' + key + '">Reset</button></div>' +
+      '<div class="wfscroll">' + wfSvg(key, false) + "</div>" +
+      '<div class="wfnarr" id="wfnarr-' + key + '" aria-live="polite">Press Test workflow to watch it run, or tap any tile to hear what it does. Swipe the board sideways to see the whole flow.</div>' +
+      '<div class="wfleg"><span><i style="background:#EA4B71"></i>n8n: payroll and PII data</span><span><i style="background:#FF4F00"></i>Zapier: plain notifications</span><span><i style="background:#2FD07A"></i>Ran</span></div></div>' +
+      '<section class="hubsec"><h2>Who does what</h2><p class="sub">' + esc(W.tableHead ? W.tableHead[1] : "Each area, with the owner and what we share.") + '</p><div class="wfwrap" style="padding:4px 16px;color:#e8e8f0">' + W.table.map(function (r) { return '<div class="risk"><b>' + esc(r[0]) + "</b><span>" + esc(r[1]) + "</span></div>"; }).join("") + '</div></section>' +
+      '<section class="hubsec"><h2>In short</h2><div class="panel" style="margin-top:0"><ul class="wfpts" style="margin:0">' + W.points.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div></section>";
+  }
+
+  var pzSeq = 0;
+  function puzzleBar() {
+    var P = window.PHOTOS; if (!P) return "";
+    var id = "pz" + (pzSeq++);
+    var A = "M0,0 H120 V45 a15,15 0 0 1 0,30 V120 H0 Z", C = "M0,0 H120 V45 a15,15 0 0 1 0,30 V120 H0 V75 a15,15 0 0 0 0,-30 Z", E = "M0,0 H120 V120 H0 V75 a15,15 0 0 0 0,-30 Z";
+    function piece(x, path, key, clr, dash, tab) {
+      return '<g transform="translate(' + x + ' 0)"><g clip-path="url(#' + id + key + ')"><image href="' + P[key] + '" x="0" y="0" width="120" height="120" preserveAspectRatio="xMidYMid slice"/></g>' + (tab ? '<path d="M120,45 a15,15 0 0 1 0,30 Z" fill="' + clr + '"/>' : "") + '<path d="' + path + '" fill="none" stroke="' + clr + '" stroke-width="3"' + (dash ? ' stroke-dasharray="6 4"' : "") + '/></g>';
+    }
+    return '<div class="panel" style="margin:14px 0;display:flex;align-items:center;gap:16px;flex-wrap:wrap"><svg viewBox="-2 -2 384 124" style="width:384px;max-width:100%;flex:none" role="img" aria-label="Angela, Cat and Eric, fitting together like puzzle pieces. Angela and Eric are equal partners with Cat connecting them."><defs><clipPath id="' + id + 'angela"><path d="' + A + '"/></clipPath><clipPath id="' + id + 'cat"><path d="' + C + '"/></clipPath><clipPath id="' + id + 'eric"><path d="' + E + '"/></clipPath></defs>' +
+      piece(0, A, "angela", "#FF8EC8", false, true) + piece(120, C, "cat", "#5FCB73", true, true) + piece(240, E, "eric", "#7084FF", false, false) + '</svg>' +
+      '<div style="flex:1;min-width:200px"><div class="eyebrow" style="margin-bottom:4px">Equal partners</div><p style="margin:0;font-size:15px;line-height:1.5"><b>Angela</b> owns People Partnership and <b>Eric</b> owns IT and Security. <b>Cat</b> is the piece in the middle that connects both to People Ops: the handoffs, the record and the follow-through.</p></div></div>';
+  }
+  var vsel = "all";
+  var VRHYTHM = [["Weekly, 30 min", "All three: go-live status, open risks, decisions needed"], ["Every two weeks", "Angela and Cat: what reached HRBPs that should not have"], ["Monthly", "Eric and Cat: access review, field ownership, integrations"], ["Before go / no-go", "All three, plus Payroll and Finance: the gate list"], ["Quarterly", "All three: audit evidence and what to automate next"]];
+  var VEN = {
+    cat: { t: "⚙️ Cat: People Operations and Systems", c: ["#5FCB73"], own: ["Rippling configuration and the employee record", "Payroll and benefits process, with Finance", "Onboarding, offboarding and other lifecycle workflows", "Data quality, reporting and the audit trail", "I-9s and compliance records", "Automation and AI builds, with governance"], need: "Clear owners for each field, and partners who tell Cat early what they need.", ask: "What do you most need from People Ops in the first 90 days?" },
+    ang: { t: "🤝 Angela: People Partnership", c: ["#FF8EC8"], own: ["The relationship with business leaders", "Talent and org strategy", "Employee relations and judgment calls", "Manager coaching", "Compliance rigor and policy", "Her HRBPs' time and focus"], need: "An operational backbone so HRBPs spend their time on strategy, not system fixes or admin.", ask: "What lands on your HRBPs today that is really system or process work?" },
+    eri: { t: "🔐 Eric: IT and Security", c: ["#7084FF"], own: ["Identity, SSO and access", "Devices and SaaS management", "Security and compliance infrastructure", "Integrations and the data sync", "Access evidence for audits", "Security calls on risk"], need: "Clean triggers from the HRIS, named field owners, and no half-built HR configuration handed over.", ask: "Which system owns identity, and how do you want role changes triggered?" },
+    ca: { t: "🔄 Angela and Cat: handoffs and adoption", c: ["#5FCB73", "#FF8EC8"], own: ["Handoffs and SLAs, written down", "The Employee Action Form approval path", "Self-service for managers", "The onboarding and offboarding experience", "Manager adoption of new tools", "Exceptions: Angela brings the judgment, Cat keeps the record"], need: "Agreement on what HRBPs hand to People Ops, and how fast it comes back.", ask: "Which three handoffs would you fix first?" },
+    ce: { t: "🔑 Eric and Cat: triggers and access", c: ["#5FCB73", "#7084FF"], own: ["Rippling status change that starts IT's workflow", "Provisioning and deprovisioning", "Field ownership and the data sync", "Regular access review", "Evidence for audits, including SOX", "Slack, Google and SSO integrations, and equipment return"], need: "One source of truth for status, and automation instead of emailed requests.", ask: "What would make IT's onboarding and offboarding work reliable on day one?" },
+    ae: { t: "⚖️ Angela and Eric: risk and compliance", c: ["#FF8EC8", "#7084FF"], own: ["Data access policy for people data", "Security versus speed trade-offs", "Security and compliance posture", "Risk calls when systems and hiring collide", "Incident handling that involves employee data"], need: "Cat as the bridge: a one-page risk summary, both views fairly stated, and a clear recommendation.", ask: "How do you two decide today when security and hiring speed conflict?" },
+    all: { t: "🎯 All three of us: the shared work", c: ["#5FCB73", "#FF8EC8", "#7084FF"], own: ["Rippling go-live on January 1 and the go / no-go", "One source of truth and data governance", "What gets automated, what touches PII, what is reviewed", "Change management and manager adoption", "Audit readiness for people data", "A clear escalation path when we disagree"], need: "A weekly three-way sync, one shared issue log and one escalation path.", ask: "What would make this partnership work well for each of you?" }
+  };
+
+  function vennSvg() {
+    var A = [380, 215], B = [250, 435], C = [510, 435], R = 180;
+    var col = { cat: "#5FCB73", ang: "#FF8EC8", eri: "#7084FF" };
+    function sel(k) { return vsel === k; }
+    var o = '<svg viewBox="0 0 760 700" class="vensvg" role="img" aria-label="Venn diagram of People Operations, People Partnership and IT: what each owns and where they overlap"><defs>' +
+      '<clipPath id="vcA"><circle cx="' + A[0] + '" cy="' + A[1] + '" r="' + R + '"/></clipPath><clipPath id="vcB"><circle cx="' + B[0] + '" cy="' + B[1] + '" r="' + R + '"/></clipPath><clipPath id="vcC"><circle cx="' + C[0] + '" cy="' + C[1] + '" r="' + R + '"/></clipPath></defs>';
+    [["cat", A], ["ang", B], ["eri", C]].forEach(function (e) {
+      o += '<circle class="vc' + (sel(e[0]) ? " on" : "") + '" data-act="vsel" data-v="' + e[0] + '" tabindex="0" role="button" aria-label="' + esc(VEN[e[0]].t) + '" cx="' + e[1][0] + '" cy="' + e[1][1] + '" r="' + R + '" fill="' + col[e[0]] + '" stroke="' + col[e[0]] + '"/>';
+    });
+    function pair(k, c1, c2) {
+      return '<g clip-path="url(#' + c1 + ')"><circle class="vo' + (sel(k) ? " on" : "") + '" data-act="vsel" data-v="' + k + '" tabindex="0" role="button" aria-label="' + esc(VEN[k].t) + '" cx="' + (c2 === "vcB" ? B[0] : C[0]) + '" cy="' + (c2 === "vcB" ? B[1] : C[1]) + '" r="' + R + '"/></g>';
+    }
+    o += pair("ca", "vcA", "vcB") + pair("ce", "vcA", "vcC");
+    o += '<g clip-path="url(#vcB)"><circle class="vo' + (sel("ae") ? " on" : "") + '" data-act="vsel" data-v="ae" tabindex="0" role="button" aria-label="' + esc(VEN.ae.t) + '" cx="' + C[0] + '" cy="' + C[1] + '" r="' + R + '"/></g>';
+    o += '<g clip-path="url(#vcA)"><g clip-path="url(#vcB)"><circle class="vo vall' + (sel("all") ? " on" : "") + '" data-act="vsel" data-v="all" tabindex="0" role="button" aria-label="' + esc(VEN.all.t) + '" cx="' + C[0] + '" cy="' + C[1] + '" r="' + R + '"/></g></g>';
+    function tx(x, y, lines, cls) { return lines.map(function (l, i) { return '<text x="' + x + '" y="' + (y + i * 16) + '" text-anchor="middle" class="' + cls + (i === 0 && cls === "vt" ? "" : "") + '">' + esc(l) + "</text>"; }).join(""); }
+    o += '<g pointer-events="none">';
+    var PH = window.PHOTOS;
+    if (PH) { [["cat", A[0], 84, "#5FCB73"], ["angela", 205, 452, "#FF8EC8"], ["eric", 555, 452, "#7084FF"]].forEach(function (e, i) { o += '<clipPath id="vph' + i + '"><circle cx="' + e[1] + '" cy="' + e[2] + '" r="30"/></clipPath><image href="' + PH[e[0]] + '" x="' + (e[1] - 30) + '" y="' + (e[2] - 30) + '" width="60" height="60" preserveAspectRatio="xMidYMid slice" clip-path="url(#vph' + i + ')"/><circle cx="' + e[1] + '" cy="' + e[2] + '" r="30" fill="none" stroke="' + (e[0] === "cat" ? "#191919" : "#fff") + '" stroke-width="3"/>'; }); }
+    o += '<text x="' + A[0] + '" y="128" text-anchor="middle" class="vh">⚙️ CAT</text>' + tx(A[0], 148, ["People Ops + Systems", "Rippling, data, process", "Audit trail, automation"], "vt");
+    o += '<text x="205" y="500" text-anchor="middle" class="vh">🤝 ANGELA</text>' + tx(205, 520, ["People Partnership", "Leaders, talent strategy", "Judgment, policy"], "vt");
+    o += '<text x="555" y="500" text-anchor="middle" class="vh">🔐 ERIC</text>' + tx(555, 520, ["IT + Security", "Identity, access, SaaS", "Integrations"], "vt");
+    o += tx(296, 300, ["🔄 Handoffs, SLAs", "Self-service", "Manager adoption"], "vs");
+    o += tx(464, 300, ["🔑 HRIS triggers", "Provisioning", "Access review"], "vs");
+    o += tx(380, 528, ["⚖️ Data access policy", "Risk and compliance"], "vs");
+    o += tx(380, 362, ["🎯 Rippling go-live", "One source of truth", "Go / no-go"], "vc3");
+    return o + "</g></svg>";
+  }
+  var OWN_W, OWN_R;
+  function ownTable() {
+    var W = OWN_W = ["People Ops (Cat)", "HRBP (Angela)", "IT (Eric)", "Payroll and Finance"];
+    var R = OWN_R = [
+      ["Employee record and Rippling setup", ["Owns the record, the fields and the configuration", "Says what leaders need to see", "SSO, Slack and Google sync", "Confirms the data that feeds pay"], [0]],
+      ["Pay and status changes", ["Owns the form and the approval path", "Brings judgment on the change", "Informed, access follows the change", "Signs off last"], [0, 3]],
+      ["Onboarding handoff", ["Triggers it from the signed offer", "Preps the leader and the intros", "Accounts, laptop and access by day one", "Pay set up before day one"], [0, 2]],
+      ["Offboarding", ["Starts it when status changes", "Handles the leader and the exit conversation", "Removes access, collects the laptop", "Final pay and deductions"], [0, 2]],
+      ["Reporting and audit trail", ["Owns the data and the trail", "Uses headcount and attrition by team", "Access audit", "Reconciles to the ledger"], [0]],
+      ["Exceptions", ["Tracks each one: reason, approver, date", "Brings leader requests early", "Flags access exceptions", "Flags pay exceptions"], [0]]
+    ];
+    var rows = '<div class="r"><span>Area</span>' + W.map(function (w) { return "<span>" + esc(w) + "</span>"; }).join("") + "</div>" + R.map(function (r) {
+      return '<div class="r"><b>' + esc(r[0]) + "</b>" + r[1].map(function (c, i) { return '<span class="c' + (r[2].indexOf(i) >= 0 ? " o" : "") + '" data-w="' + esc(W[i]) + '">' + esc(c) + "</span>"; }).join("") + "</div>";
+    }).join("");
+    return '<div class="qvo">' + rows + '</div><div class="qvleg"><span><i></i>Owns or drives it</span></div>';
+  }
+  function vennSection() {
+    var d = VEN[vsel] || VEN.all;
+    var g = d.c.length === 1 ? d.c[0] : "linear-gradient(90deg," + d.c.join(",") + ")";
+    var own = d.own.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
+    var rh = VRHYTHM.map(function (r) { return '<div class="risk"><b>' + esc(r[0]) + "</b><span>" + esc(r[1]) + "</span></div>"; }).join("");
+    var chips = [["cat", "⚙️ Cat"], ["ang", "🤝 Angela"], ["eri", "🔐 Eric"], ["ca", "🔄 Cat + Angela"], ["ce", "🔑 Cat + Eric"], ["ae", "⚖️ Angela + Eric"], ["all", "🎯 All three"]].map(function (c) { return '<button class="chip' + (vsel === c[0] ? " on" : "") + '" data-act="vsel" data-v="' + c[0] + '">' + c[1] + "</button>"; }).join("");
+    return '<div class="qvwrap"><div class="venwrap">' + vennSvg() + '</div></div><div class="toolrow" style="margin-top:12px">' + chips + "</div>" +
+      '<section class="rpcard" style="margin-top:6px"><div class="rphead" style="background:' + g + '"><small>Selected area</small><b>' + esc(d.t) + '</b></div><div class="rpbody"><h4 style="margin-top:0">Owns or does together</h4><ul>' + own + '</ul><h4>What is needed</h4><p style="margin:0">' + esc(d.need) + '</p><h4>A question Cat would bring</h4><p style="margin:0;font-style:italic">&ldquo;' + esc(d.ask) + '&rdquo;</p></div></section>' +
+      '<section class="hubsec"><h2>How we could stay in sync</h2><p class="sub">A proposed rhythm, for us to agree on together.</p><div class="wfwrap" style="padding:4px 16px;color:#e8e8f0">' + rh + "</div></section>";
+  }
+  function timelineSection() {
+    var P = window.PLANS;
+    var ph = P.phases.map(function (f, i) {
+      return '<details class="phase"' + (i === 0 ? " open" : "") + "><summary>" + esc(f.name) + '</summary><div class="pb"><div class="chips">' + f.teams.map(function (t) { return '<span class="chip">' + esc(t) + "</span>"; }).join("") + "</div><ul>" + f.steps.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + '</ul><p class="pexit"><b>Done when:</b> ' + esc(f.exit) + "</p></div></details>";
+    }).join("");
+    var rk = P.risks.map(function (r) { return '<div class="risk"><b>' + esc(r[0]) + "</b><span>" + esc(r[1]) + "</span></div>"; }).join("");
+    return '<p class="lede" style="margin-top:0">' + esc(P.note) + '</p>' +
+      '<div class="wfwrap"><div class="wfscroll">' + tlSvg() + '</div><div class="wfleg"><span><i style="background:#5FCB73"></i>Solid: stated by Panorama</span><span><i style="background:#7084FF;opacity:.4"></i>Dashed: Cat&rsquo;s proposal, to confirm</span><span><i style="background:#EA4B71"></i>Today, ' + todayInfo().label + '</span></div></div>' +
+      '<p class="sub" style="margin-top:6px">Swipe the chart sideways on a phone.</p>' +
+      '<section class="hubsec"><h2>Where the streams overlap</h2><div class="qvwrap"><div class="wfscroll">' + ripChart() + '</div></div><div class="qvleg"><span>White outline: stated by Panorama (shadow payrolls, Jan 1)</span><span>Dashed: open enrollment dates are an assumption</span><span>Everything else is a proposed plan</span></div></section>' +
+      '<section class="hubsec"><h2>Steps, phase by phase</h2>' + ph + "</section>" +
+      '<section class="hubsec"><h2>What could go wrong, and Cat&rsquo;s move</h2><div class="wfwrap" style="padding:4px 16px;color:#e8e8f0">' + rk + "</div></section>";
+  }
+
+  /* ---- payroll governance ---- */
+  var ABC = { cur: ["#23232d", "#6b6d78", "#ffffff", "#9a9aa6"], fut: ["#23232d", "#5FCB73", "#ffffff", "#9a9aa6"], hub: ["#5FCB73", "#5FCB73", "#191919", "#191919"], ai: ["#405BFF", "#405BFF", "#ffffff", "#d7ddff"], warn: ["#2a1d22", "#FF5B8A", "#ffffff", "#ffb3c8"] };
+  function abNode(x, y, w, h, l, sub, k) {
+    var c = ABC[k], cx = x + w / 2;
+    var o = '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="12" fill="' + c[0] + '" stroke="' + c[1] + '" stroke-width="' + (k === "cur" ? 1.5 : 2) + '"/>';
+    if (sub) o += '<text x="' + cx + '" y="' + (y + h / 2 - 3) + '" text-anchor="middle" fill="' + c[2] + '" font-size="13" font-weight="700" font-family="Nunito Sans,Inter,sans-serif">' + esc(l) + '</text><text x="' + cx + '" y="' + (y + h / 2 + 13) + '" text-anchor="middle" fill="' + c[3] + '" font-size="11" font-family="Nunito Sans,Inter,sans-serif">' + esc(sub) + "</text>";
+    else o += '<text x="' + cx + '" y="' + (y + h / 2 + 5) + '" text-anchor="middle" fill="' + c[2] + '" font-size="13" font-weight="700" font-family="Nunito Sans,Inter,sans-serif">' + esc(l) + "</text>";
+    return o;
+  }
+  function abArrow(d, fut, id, dash) {
+    return '<path d="' + d + '" fill="none" stroke="' + (fut ? "#5FCB73" : "#6b6d78") + '" stroke-width="' + (fut ? 2 : 1.5) + '"' + (dash ? ' stroke-dasharray="5 4"' : "") + ' marker-end="url(#' + id + ')"/>';
+  }
+  function abDefs(id, fut) { return '<defs><marker id="' + id + '" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="' + (fut ? "#5FCB73" : "#6b6d78") + '"/></marker></defs>'; }
+  var abSeq = 0;
+  var PGS = {
+    pipe: [["1", "Payroll calendar", "Every pay period has dates, and leaders know the change deadlines.", "Shared calendar"], ["2", "Change form (EAF)", "Every change captures the reason, the details and the sign-off before anything touches the system.", "One completed form per change"], ["3", "Verifier", "A second person verifies each change on the payroll sheet.", "Verifier on every row"], ["4", "Slack post", "A Slack integration posts every change to a channel with the payroll team, so nothing surprises them.", "Change log in Slack"], ["5", "Reconcile before the run", "Confirm every supporting document is in that period's folder before payroll runs.", "Complete folder per pay period"], ["6", "Run and file", "Payroll goes out the same way every time, and the evidence stays together.", "100% of changes tracked with backup"]],
+    ctl: [
+      ["Change deadlines on a payroll calendar", "pv", "People Ops", "Calendar shared with every leader"],
+      ["Change form with reason, details and sign-off before the system is touched", "pv", "Requesting manager and HR", "Completed form for each change"],
+      ["Parallel approvals: manager, second-level manager, HR, Finance if comp-related, and the executive team for out-of-cycle changes", "pv", "Each approver", "Approval timestamps in one tracker"],
+      ["Validation rule owned by People Ops, reviewed every payroll before handoff to the payroll team", "dt", "People Ops", "Review record for each pay period"],
+      ["Reconciliation before each run: every document is in the period's folder", "dt", "People Ops with Payroll", "Folder complete and checklist ticked"],
+      ["Payroll signs off last, confirming the change landed as approved", "dt", "Payroll", "Sign-off in the change log"],
+      ["Shadow payroll line by line: gross, taxes, deductions and net, by person", "dt", "Payroll, Finance, People Ops", "Variance log with an owner for every item"],
+      ["Post go-live payroll review of the first live payrolls", "dt", "People Ops and Payroll", "Review notes and fixes"]
+    ]
+  };
+  function payBoard() {
+    var N = [
+      { id: "t", cx: 70, cy: 270, title: "Pay change requested", sub: "raise, correction, off-cycle", icon: "bolt", color: "#EA4B71", kind: "trigger" },
+      { id: "r", cx: 215, cy: 270, title: "Routing", sub: "sent to everyone at once", icon: "flow", color: "#fff", tag: "n8n" },
+      { id: "a1", cx: 380, cy: 50, title: "Manager approves", sub: "", icon: "check", color: "#7084FF" },
+      { id: "a2", cx: 380, cy: 160, title: "2nd-level manager", sub: "approves", icon: "check", color: "#7084FF" },
+      { id: "a3", cx: 380, cy: 270, title: "HR approves", sub: "", icon: "check", color: "#7084FF" },
+      { id: "a4", cx: 380, cy: 380, title: "Finance approves", sub: "if comp-related", icon: "coin", color: "#FFC93C" },
+      { id: "a5", cx: 380, cy: 490, title: "Executive team", sub: "out-of-cycle changes", icon: "check", color: "#FF8EC8" },
+      { id: "c", cx: 545, cy: 270, title: "Change entered", sub: "only once every approval is in", icon: "merge", color: "#5FCB73" },
+      { id: "p", cx: 695, cy: 270, title: "Payroll signs off last", sub: "confirms it is live and correct", icon: "check", color: "#5FCB73", ai: 1 },
+      { id: "m", cx: 695, cy: 440, title: "Mismatch flagged", sub: "back to Finance and People", icon: "swap", color: "#FFA23A" },
+      { id: "x", cx: 850, cy: 190, title: "External tracker", sub: "one shared audit trail", icon: "table", color: "#9AA5FF" },
+      { id: "s", cx: 850, cy: 350, title: "Slack change log", sub: "Finance and People only", icon: "chat", color: "#9AA5FF" }
+    ];
+    var E = [["t", "r"], ["r", "a1"], ["r", "a2"], ["r", "a3"], ["r", "a4"], ["r", "a5"], ["a1", "c"], ["a2", "c"], ["a3", "c"], ["a4", "c"], ["a5", "c"], ["c", "p"], ["p", "x"], ["p", "s"], ["p", "m", "mismatch"]];
+    var M = {}; N.forEach(function (n) { M[n.id] = n; });
+    var key = "pay", o = '<div class="wfwrap"><div class="wfbar"><b>Pay change approvals</b><span class="grow"></span></div><div class="wfscroll"><svg class="wfsvg" viewBox="0 0 940 600" role="img" aria-label="A pay change request routes to the manager, second-level manager, HR, Finance and, for out-of-cycle changes, the executive team in parallel. Once every approval is in, the change is entered, Payroll signs off last, and the change is logged to an external tracker and a restricted Slack log. Any mismatch is flagged back to Finance and People."><defs><pattern id="dots-pay" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#3a3a48"/></pattern><marker id="ah-pay" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1l8 4-8 4z" fill="#9a9ab0"/></marker></defs><rect width="940" height="600" fill="url(#dots-pay)"/>';
+    E.forEach(function (e, ix) {
+      var a = M[e[0]], b = M[e[1]], x1 = a.cx + 34, y1 = a.cy, x2 = b.cx - 38, y2 = b.cy, dx = Math.max(30, (x2 - x1) / 2), warn = e[2];
+      if (warn) { x1 = a.cx; y1 = a.cy + 34; x2 = b.cx; y2 = b.cy - 38; }
+      var d = warn ? "M" + x1 + " " + y1 + " L" + x2 + " " + y2 : "M" + x1 + " " + y1 + " C" + (x1 + dx) + " " + y1 + " " + (x2 - dx) + " " + y2 + " " + x2 + " " + y2;
+      o += '<path id="wfe-pay-' + ix + '" class="ed" d="' + d + '"' + (warn ? ' stroke-dasharray="5 4" style="stroke:#FFA23A"' : "") + ' marker-end="url(#ah-pay)"/>';
+      if (warn) o += '<text class="el" x="' + (x1 + 8) + '" y="' + (y1 + 46) + '">' + warn + "</text>";
+      o += '<circle class="mo" r="4.5" fill="' + (warn ? "#FFA23A" : "#5FCB73") + '" opacity="0"><animateMotion dur="2.4s" begin="' + ((ix % 6) * 0.45) + 's" repeatCount="indefinite" calcMode="linear"><mpath href="#wfe-pay-' + ix + '"/></animateMotion><animate attributeName="opacity" dur="2.4s" begin="' + ((ix % 6) * 0.45) + 's" repeatCount="indefinite" values="0;1;1;0" keyTimes="0;0.1;0.9;1"/></circle>';
+    });
+    N.forEach(function (n) {
+      var x = n.cx - 32, y = n.cy - 32, trig = n.kind === "trigger", warn = n.id === "m";
+      var shape = '<rect class="tile" x="' + x + '" y="' + y + '" width="64" height="64" rx="12"' + (warn ? ' style="stroke:#FFA23A"' : "") + "/>";
+      if (trig) shape = '<path class="tile" d="M' + (x + 28) + " " + y + "H" + (x + 52) + "a12 12 0 0 1 12 12v40a12 12 0 0 1-12 12H" + (x + 28) + "a28 28 0 0 1-28-28v-8a28 28 0 0 1 28-28z" + '"/>';
+      var ic = '<g transform="translate(' + (n.cx - 15) + " " + (n.cy - 15) + ') scale(1.25)" fill="none" stroke="' + n.color + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + ICONS[n.icon] + "</g>";
+      var bolt = trig ? '<g transform="translate(' + (x - 10) + " " + (n.cy - 9) + ') scale(.75)" fill="#EA4B71" stroke="#EA4B71" stroke-width="1.2" stroke-linejoin="round">' + ICONS.bolt + "</g>" : "";
+      var tag = n.tag ? '<g><rect x="' + (x + 28) + '" y="' + (y - 9) + '" width="30" height="16" rx="8" fill="#EA4B71"/><text x="' + (x + 43) + '" y="' + (y + 3) + '" fill="#fff" font-size="9.5" font-weight="700" font-family="Nunito Sans,Inter,sans-serif" text-anchor="middle">' + n.tag + "</text></g>" : "";
+      var ring = n.ai ? '<rect x="' + (x - 5) + '" y="' + (y - 5) + '" width="74" height="74" rx="16" fill="none" stroke="#5FCB73" stroke-width="2.5" stroke-dasharray="5 3"/>' : "";
+      var lines = wfWrap(n.title, 16), lbl = lines.map(function (ln, k) { return '<text class="tt" x="' + n.cx + '" y="' + (n.cy + 50 + k * 14) + '">' + esc(ln) + "</text>"; }).join("");
+      var subY = n.cy + 50 + lines.length * 14;
+      lbl += wfWrap(n.sub, 24).map(function (ln, k) { return '<text class="ss" x="' + n.cx + '" y="' + (subY + k * 12) + '">' + esc(ln) + "</text>"; }).join("");
+      o += '<g class="nd">' + bolt + shape + ring + ic + tag + lbl + "</g>";
+    });
+    return o + '</svg></div><div class="wfleg"><span><i style="background:#EA4B71"></i>n8n: payroll and PII data</span><span><i style="background:#5FCB73"></i>Dashed ring: Payroll has the final word</span><span><i style="background:#FFA23A"></i>Mismatch</span></div></div>';
+  }
+  function pgPage() {
+    var id1 = "pgm1", id2 = "pgm2", o = "";
+    o += '<section class="abwf" style="border-top:0;padding-top:0;margin-top:18px"><div class="ey">The control gap</div><h2>Approvals chased by hand, one at a time</h2>' +
+      '<div class="abstage"><span class="abtag">Before: manual</span><svg viewBox="0 0 900 110" role="img" aria-label="A pay change request is handled by hand: Angela reaches out to each approver individually, so approvals end up scattered with no single trail.">' + abDefs(id1, false) +
+      abNode(10, 20, 250, 66, "Pay change requested", "raise, correction, off-cycle", "cur") + abArrow("M262,53 L318,53", false, id1, true) +
+      abNode(320, 20, 260, 66, "Angela asks each approver", "one by one, by hand", "cur") + abArrow("M582,53 L638,53", false, id1, true) +
+      abNode(640, 20, 250, 66, "Approvals scattered", "no single trail to check", "warn") + '</svg><p class="abcap">As Cat understands it, this is how out-of-cycle changes work today: Angela reaches out to each approver individually, for example Finance to confirm budget, the executive team member, and the manager, each in a separate conversation. It works, but it is back and forth, it depends on one person, and there is no single record to check against.</p></div>';
+    o += '<div class="abstage"><span class="abtag fut">After: governed</span>' + payBoard() +
+      '<p class="abcap">Every approver gets the request at the same moment instead of waiting in a queue. Payroll has the final word, confirming the change landed the way it was approved, before it is logged to a tracker and a restricted Slack channel.</p></div>' +
+      '<div class="abstage"><span class="abtag fut">Next step: set it up in Rippling</span><p class="abp" style="margin-bottom:12px">Once Rippling is live, the governed flow moves into Rippling&rsquo;s approvals feature, so the approval path lives in the system of record instead of beside it. Erica is leading the implementation now, so Cat would shape this with her first and then own it after she hands off.</p><div class="abstep">' +
+      [["1", "Map the approval path with Erica", "Manager, second-level manager, HR, Finance if comp-related, and the executive team for out-of-cycle changes. The same chain as the prototype, written down once and checked against what Erica has set up so far."], ["2", "Build it in Rippling approvals", "Set up the approval policy for pay changes, with the right approvers and the comp-related condition for Finance."], ["3", "Test it in shadow payroll", "Run real changes through it alongside the prototype and compare the results line by line."], ["4", "Switch over", "Retire the Zapier and n8n approval routing once Rippling matches it. Payroll still signs off last."], ["5", "Keep the evidence", "Approval timestamps now live in Rippling. A restricted log and the audit trail stay as they are."]].map(function (x) { return '<div class="abs"><span class="n">STEP ' + x[0] + "</span><h4>" + x[1] + "</h4><p>" + x[2] + "</p></div>"; }).join("") +
+      '</div><p class="abcap">To confirm with Panorama and Rippling: exactly what the approvals feature covers for pay changes on your plan, before we commit to the switch over date.</p></div></section>';
+    o += '<section class="abwf"><div class="ey">Automation</div><h2>How the approval routing would run</h2><p class="abp">A prototype in Zapier, so we can see it working before shadow payroll. It handles comp data, so it is a bridge until the approvals are set up natively in Rippling.</p>' + zapBlock(window.AUTO.zaps[0], 0) + "</section>";
+    o += '<section class="abwf"><div class="ey">The control stack</div><h2>What happens every pay period</h2><p class="abp">How Cat would run it: accurate, auditable and easy to follow. Each step leaves evidence behind.</p><div class="abstep">' +
+      PGS.pipe.map(function (x) { return '<div class="abs"><span class="n">STEP ' + x[0] + "</span><h4>" + esc(x[1]) + "</h4><p>" + esc(x[2]) + '</p><div class="ev"><b>Evidence:</b> ' + esc(x[3]) + "</div></div>"; }).join("") + "</div></section>";
+    o += '<section class="abwf"><div class="ey">Control matrix</div><h2>Preventive and detective controls</h2><p class="abp">Preventive controls stop a bad change before it happens. Detective controls catch it before it reaches a paycheck. The owners are Cat&rsquo;s suggestions, to confirm with Panorama.</p><div class="ctabwrap"><table class="ctab"><thead><tr><th>Control</th><th>Type</th><th>Owner</th><th>Evidence</th></tr></thead><tbody>' +
+      PGS.ctl.map(function (r) { return "<tr><td>" + esc(r[0]) + '</td><td><span class="ctag ' + r[1] + '">' + (r[1] === "pv" ? "Preventive" : "Detective") + "</span></td><td>" + esc(r[2]) + "</td><td>" + esc(r[3]) + "</td></tr>"; }).join("") + "</tbody></table></div></section>";
+    var seq = [["NOV 15", "Shadow payroll 1", "Rippling runs in parallel with ADP. Automation stays out of the way."], ["NOV 30", "Shadow payroll 2", "Second parallel run, watch and validate against ADP."], ["DEC 15", "Shadow payroll 3", "Final parallel run before go-live."], ["JAN 1, 2027", "Rippling go-live", "ADP retired. In the first weeks Cat would lead the transition with Payroll and escalate risk early."], ["AFTER GO-LIVE", "Review the first live payrolls", "Keep the reconciliation and variance log running until the numbers are stable."]];
+    o += '<section class="abwf"><div class="ey">Timeline</div><h2>Where the controls get tested</h2><p class="abp">Shadow payroll dates are the ones Panorama has shared. The checks around them are Cat&rsquo;s proposal.</p><div class="abstep">' + seq.map(function (x) { return '<div class="abs"><span class="n">' + esc(x[0]) + "</span><h4>" + esc(x[1]) + "</h4><p>" + esc(x[2]) + "</p></div>"; }).join("") + "</div></section>";
+    return o;
+  }
+
+  var abSeq = 0;
+  function abFan(src, outs, fut, label) {
+    var id = "abm" + (abSeq++), n = outs.length, rh = 64, H = Math.max(n * rh + 10, 130), W = 700, sw = 170, ow = 220, ox = W - ow - 4, mid = H / 2, fromX = 4 + sw, o = abDefs(id, fut);
+    o += abNode(4, mid - 30, sw, 60, src[0], src[1], fut ? "fut" : "cur");
+    if (fut) { o += abArrow("M" + fromX + "," + mid + " L" + (232 - 3) + "," + mid, true, id); o += abNode(232, mid - 26, 108, 52, "Zapier / n8n", "", "hub"); fromX = 340; }
+    outs.forEach(function (x, i) {
+      var cy = 5 + i * rh + rh / 2, y = cy - 26, kind = x[2] === "ai" ? "ai" : (fut ? "fut" : "cur");
+      o += abArrow("M" + fromX + "," + mid + " C" + (fromX + 50) + "," + mid + " " + (ox - 50) + "," + cy + " " + ox + "," + cy, fut, id, !fut);
+      o += abNode(ox, y, ow, 52, x[0], x[1], kind);
+    });
+    return '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="' + esc(label) + '">' + o + "</svg>";
+  }
+
+
+  function zapBlock(z, zi) {
+    return '<div class="zblk"><h3>' + esc(z.t) + "</h3>" + z.steps.map(function (st, i) { return '<div class="zst"><span class="zn ' + st[0] + '">' + (st[0] === "if" ? "if" : (i + 1)) + '</span><div><b>' + esc(st[1]) + '</b><span class="zs">' + esc(st[2]) + "</span></div></div>"; }).join("") +
+      (z.note ? '<p class="abcap">' + esc(z.note) + "</p>" : "") + "</div>";
+  }
+  function autoLane(key, first) {
+    var W = window.WF[key], rows = W.nodes.filter(function (n) { return n.tag; }).map(function (n) {
+      return '<div class="risk"><b>' + esc(n.title) + '</b><span><i style="display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;background:' + (n.tag === "n8n" ? "#EA4B71" : "#FF4F00") + '"></i>' + n.tag + ": " + esc(n.sub) + "</span></div>";
+    }).join("");
+    return '<section class="hubsec"><h2>Automations in this lane</h2><p class="sub">Tiles on the board that Cat would automate. n8n where the data is employee or payroll data, Zapier for plain notifications.</p><div class="wfwrap" style="padding:4px 16px;color:#e8e8f0">' + rows + '</div>' +
+      '<div class="abcard bl" style="margin-top:12px"><h3>Later, inside Rippling</h3><p style="margin:0">Once Rippling AI is set up, some of these automations can move into Rippling Workflow Studio, so more of the work runs inside the system of record. Cat and Eric would decide together which ones move and which stay in n8n or Zapier, for example where the data is sensitive.</p></div><div class="abcard hi" style="margin-top:12px"><h3>Where Cat would start</h3><ul>' + first.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + '</ul></div><div class="toolrow" style="margin-top:12px"><a class="btn" href="#/studio" data-go="studio">Browse Rippling Workflow Studio</a><a class="btn" href="#/claude" data-go="claude">See where Claude fits</a></div></section>';
+  }
+  var CLAUDE_STEPS = [
+    ["New hire onboarding", [["New starter notice", "Claude drafts the notice from a template in the same format every time. The workflow fills in names and dates. A person approves before it sends."], ["Cohort welcome", "Claude drafts the welcome post and a week-one schedule from the role and start date."], ["I-9 steps", "Claude answers new hire questions about the I-9 steps from the policy and flags what is incomplete. It never decides eligibility."], ["Day-one checklist", "Claude tailors the checklist to the role and team from templates, so managers get a specific list."]]],
+    ["Leaver offboarding", [["Leaver notice", "Claude drafts the notice from a template, with the same wording and fields every time, for the audit record. A person approves."], ["Final pay checklist", "Claude drafts the checklist by state from the policy, for Payroll to verify. It does not see the employee's pay."], ["Exit interview", "Claude drafts the invitation and prompts based on role and tenure. The conversation stays with a person."], ["Exit themes", "Claude clusters themes across exit interviews and shows trends by team, using de-identified notes."]]],
+    ["Headcount and QBR reporting", [["Quality checks", "Claude explains in plain English why a check failed and suggests the fix, for example three records with no manager after a reorg."], ["Variance commentary", "Claude writes what moved versus plan and why, from the aggregate snapshot."], ["QBR narrative", "Claude drafts the narrative and talking points from the snapshot. The People Ops lead edits before it goes out."], ["Slack summary", "Claude drafts the headline summary from the aggregate numbers."]]],
+    ["Payroll, shadow runs and after January 1", [["Change list check", "Claude checks the change template for missing fields and odd formats, with names and amounts removed, and flags them for Payroll."], ["Shadow variances", "Claude groups variances by type, such as deductions, tax or rounding, from the comparison output with names removed."], ["Variance causes", "Claude suggests a probable cause and an owner for each type of variance. Payroll confirms."], ["Flagged anomalies", "Claude explains each flagged item in plain English and recommends an action. Payroll decides."], ["Pay day summary", "Claude drafts the pay day Slack summary and answers common pay questions from approved FAQs."]]]
+  ];
+  function claudeBoard(key) {
+    var W = window.WF[key];
+    return '<div class="wfwrap"><div class="wfbar"><b>' + esc(W.title) + '</b><span class="grow"></span><button class="btn small aion" data-act="wf-ai" data-v="' + key + '" aria-pressed="true">Where Claude fits</button><button class="wfrun" data-act="wf-run" data-v="' + key + '">Test workflow</button><button class="btn small" data-act="wf-reset" data-v="' + key + '">Reset</button></div>' +
+      '<div class="wfscroll">' + wfSvg(key, true) + "</div>" +
+      '<div class="wfnarr" id="wfnarr-' + key + '" aria-live="polite">Tap a tile with a green magnifier to read what Claude would do there. Press Test workflow to watch the flow run. Swipe the board sideways to see all of it.</div>' +
+      '<div class="wfleg"><span><i style="background:#5FCB73"></i>Magnifier: where Claude fits</span><span><i style="background:#2FD07A"></i>Ran</span></div></div>';
+  }
+  function claudePicture() {
+    var id = "cpic", T = function (x, y, t, cls) { return '<text x="' + x + '" y="' + y + '" text-anchor="middle" fill="' + cls[0] + '" font-size="' + cls[1] + '" font-weight="' + cls[2] + '" font-family="Nunito Sans,Inter,sans-serif">' + esc(t) + "</text>"; };
+    var H = ["#fff", 17, 800], B = ["#d9d9e0", 12.5, 600], D = ["#191919", 17, 800], DB = ["#191919", 12.5, 600], W2 = ["#fff", 17, 800], WB = ["#d7ddff", 12.5, 600];
+    function cp(x, y, w, h, f) {
+      var R = 70, r = 5, a = f[0] ? R : r, b = f[1] ? R : r, c = f[2] ? R : r, d = f[3] ? R : r;
+      return "M" + (x + a) + "," + y + " H" + (x + w - b) + " A" + b + "," + b + " 0 0 1 " + (x + w) + "," + (y + b) + " V" + (y + h - c) + " A" + c + "," + c + " 0 0 1 " + (x + w - c) + "," + (y + h) + " H" + (x + d) + " A" + d + "," + d + " 0 0 1 " + x + "," + (y + h - d) + " V" + (y + a) + " A" + a + "," + a + " 0 0 1 " + (x + a) + "," + y + " Z";
+    }
+    function cnode(x, y, w, h, k, f) {
+      return abNode(x, y, w, h, "", "", k).replace(/<rect ([^>]*?)rx="12"([^>]*?)\/>/, function (m, p1, p2) { return '<path d="' + cp(x, y, w, h, f) + '" ' + p1.replace(/x="[^"]*" y="[^"]*" width="[^"]*" height="[^"]*" /, "") + p2 + "/>"; });
+    }
+    var FL = [[1, 0, 1, 0], [0, 1, 0, 1], [1, 0, 1, 0]];
+    var o = '<svg viewBox="0 0 900 270" role="img" aria-label="Rippling AI answers questions about employee data inside Rippling. Claude drafts, checks and explains using templates, policy and aggregates, with no personal data in the prompt. People approve and decide.">' + abDefs(id, true);
+    o += cnode(10, 20, 260, 200, "fut", FL[0]) + T(140, 56, "Rippling AI", H) + T(140, 92, "Answers questions about", B) + T(140, 112, "employee data, inside Rippling", B) + T(140, 148, "The data stays in the", B) + T(140, 168, "system of record", B);
+    o += cnode(320, 20, 260, 200, "hub", FL[1]) + T(450, 56, "Claude", D) + T(450, 92, "Drafts, checks, explains", DB) + T(450, 112, "Templates, policy, aggregates", DB) + T(450, 148, "No personal data", DB) + T(450, 168, "in the prompt", DB);
+    o += cnode(630, 20, 260, 200, "ai", FL[2]) + T(760, 56, "People", W2) + T(760, 92, "Approve and decide", WB) + T(760, 112, "Payroll sign-off, eligibility", WB) + T(760, 148, "Pay changes, employee", WB) + T(760, 168, "relations, terminations", WB);
+    o += abArrow("M270,120 L318,120", false, id, true) + abArrow("M580,120 L628,120", true, id);
+    [[10, 0, 0], [320, 1.5, 1], [630, 3, 2]].forEach(function (b) { o += '<path class="mo" d="' + cp(b[0], 20, 260, 200, FL[b[2]]) + '" fill="none" stroke="#5FCB73" stroke-width="3" opacity="0"><animate attributeName="opacity" dur="4.5s" begin="' + b[1] + 's" repeatCount="indefinite" values="0;1;0;0" keyTimes="0;0.15;0.33;1"/></path>'; });
+    [["M270,120 L318,120", 0.9], ["M580,120 L628,120", 2.4]].forEach(function (p) { o += '<circle class="mo" r="5" fill="#5FCB73" opacity="0"><animateMotion dur="4.5s" begin="' + (p[1] - 0.9) + 's" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.2;0.34;1" path="' + p[0] + '"/><animate attributeName="opacity" dur="4.5s" begin="' + (p[1] - 0.9) + 's" repeatCount="indefinite" values="0;0;1;0;0" keyTimes="0;0.2;0.21;0.34;1"/></circle>'; });
+    o += '<text x="450" y="252" text-anchor="middle" fill="#B4B6BD" font-size="12" font-family="Nunito Sans,Inter,sans-serif">Claude hands a draft to a person. A person decides.</text></svg>';
+    return o;
+  }
+  function pgClaude() {
+    var o = head("Where Claude fits", "Where Claude fits", "The places in the People Ops workflows where Claude can draft, check or explain, and the places it stays out. This is Cat&rsquo;s proposal. Before anything is built, Cat would like to work out with Eric what data Claude can and cannot see.");
+    o += '<section class="abwf" style="border-top:0;padding-top:0;margin-top:18px"><div class="ey">The picture</div><h2>Claude drafts, people decide</h2><p class="abp">Panorama already has Claude in its stack, so the question is where it earns its place. Cat looks for steps that are repetitive writing, checking or explaining. Rippling AI answers questions about employee data inside Rippling. Claude works on templates, policy and aggregates.</p><div class="abstage">' + claudePicture() + "</div></section>";
+    o += '<section class="hubsec"><h2>On the workflow boards</h2><p class="sub">A green magnifier marks each place on the two boards. Tap a marked tile to read what Claude would do, or turn the markers off.</p>' + claudeBoard("peopleit") + '<div style="height:18px"></div>' + claudeBoard("peoplehrbp") + "</section>";
+    o += '<section class="hubsec"><h2>Step by step, in the other workflows</h2><p class="sub">Where Cat would use Claude in onboarding, offboarding, reporting and payroll. The steps are Cat&rsquo;s proposal, to adjust with you.</p>' + CLAUDE_STEPS.map(function (g) {
+      return '<h3 style="margin:18px 0 4px;font-size:18px">' + esc(g[0]) + '</h3><div class="wfwrap" style="padding:4px 16px;color:#e8e8f0">' + g[1].map(function (r) { return '<div class="aicard"><div><small>Step</small><b>' + esc(r[0]) + "</b></div><div>" + esc(r[1]) + "</div></div>"; }).join("") + "</div>";
+    }).join("") + "</section>";
+    o += '<section class="abwf"><div class="ey">Guardrails</div><h2>What stays with people</h2><div class="abgrid"><div class="abcard hi"><h3>The rules</h3><ul><li>Claude drafts, checks and explains. People decide and approve.</li><li>Decisions stay with people: payroll sign-off, eligibility, anything that changes someone&rsquo;s pay or employment.</li><li>No personal data goes into a prompt. Person-level inputs have names and IDs removed first, or Rippling AI does the step inside Rippling.</li><li>Employee relations case notes stay with people.</li></ul></div><div class="abcard bl"><h3>Where Cat would start</h3><ul><li>The new starter and leaver notices, which are templated and low risk</li><li>The headcount commentary, from aggregate numbers</li><li>Measure the time saved, then expand</li><li>Eric approves the tools and the data access for each one</li></ul></div></div></section>';
+    return o + nextRow(["payroll", "eric", "angela", ""]);
+  }
+  function flowPicture() {
+    var F = "Nunito Sans,Inter,sans-serif";
+    function pill(cx, y, t) {
+      var w = Math.round(t.length * 7.6 + 30);
+      return '<rect x="' + (cx - w / 2) + '" y="' + y + '" width="' + w + '" height="32" rx="16" fill="none" stroke="#191919" stroke-width="1.2"/><text x="' + cx + '" y="' + (y + 20) + '" text-anchor="middle" fill="#191919" font-size="10.5" font-weight="800" letter-spacing="1" font-family="' + F + '">' + esc(t) + "</text>";
+    }
+    function title(cx, y, t) { return '<text x="' + cx + '" y="' + y + '" text-anchor="middle" fill="#191919" font-size="21" font-weight="800" font-family="' + F + '">' + esc(t) + "</text>"; }
+    var o = '<svg viewBox="0 0 900 530" role="img" aria-label="What we hold in Rippling, payroll, hiring and IT flows into People Ops and Systems, which connects the three teams, catches late or wrong changes early, drafts and checks with Claude and keeps one audit trail. The result is clean payroll from January 1, starters ready on day one and audit-ready evidence.">';
+    o += '<rect x="20" y="270" width="250" height="235" rx="30" fill="#8ED8EC"/>' + title(145, 312, "What we hold");
+    ["RIPPLING RECORDS", "PAYROLL, RUN BY SYLVIA", "HIRING FROM THE ATS", "IT TICKETS AND ACCESS"].forEach(function (t, i) { o += pill(145, 336 + i * 44, t); });
+    o += '<circle cx="450" cy="200" r="175" fill="#5FCB73"/>' + title(450, 96, "People Ops + Systems");
+    ["CONNECT HR, PAYROLL AND IT", "CATCH LATE OR WRONG CHANGES EARLY", "DRAFT AND CHECK WITH CLAUDE", "KEEP ONE AUDIT TRAIL"].forEach(function (t, i) { o += pill(450, 120 + i * 46, t); });
+    o += '<rect x="630" y="270" width="250" height="235" rx="30" fill="#9AA5FF"/>' + title(755, 312, "What Panorama gets");
+    ["CLEAN PAYROLL FROM JAN 1", "STARTERS READY ON DAY ONE", "AUDIT-READY EVIDENCE"].forEach(function (t, i) { o += pill(755, 336 + i * 44, t); });
+    function flowDots(id, d) {
+      var s = '<path id="' + id + '" d="' + d + '" fill="none" stroke="#B4B6BD" stroke-width="2"/>';
+      for (var i = 0; i < 3; i++) s += '<circle r="5" fill="#B4B6BD"><animateMotion dur="3.6s" begin="-' + (i * 1.2) + 's" repeatCount="indefinite" calcMode="linear"><mpath href="#' + id + '"/></animateMotion></circle>';
+      return s;
+    }
+    o += flowDots("flowA", "M145,270 L145,160 Q145,140 165,140 L286,140");
+    o += flowDots("flowB", "M450,375 L450,420 Q450,440 470,440 L630,440");
+    return o + "</svg>";
+  }
+  function pgFlow() {
+    var items = [
+      ["1", "What we hold", "The records already living in four places: Rippling, payroll, the ATS and IT tickets. Today much of the handoff between them happens by email and by hand."],
+      ["2", "People Ops and Systems", "This role is the hub. It connects the three teams, catches late or wrong changes early, uses Claude to draft and check, and leaves one audit trail."],
+      ["3", "What Panorama gets", "Clean payroll from the Jan 1 go-live, starters with access ready on day one, and evidence that holds up for audits, including SOX."]
+    ];
+    return head("The big picture", "How the work flows", "One picture of how Cat would connect what we hold to what Panorama gets. The pieces are Cat&rsquo;s proposal, for us to shape together.") +
+      '<section class="hubsec"><div class="abstage">' + flowPicture() + '</div><p class="abcap">Each page in this site goes deeper on one part of this picture.</p></section>' +
+      '<section class="hubsec"><h2>Reading the picture</h2><div class="abstep">' + items.map(function (x) { return '<div class="abs"><span class="n">' + x[0] + "</span><h4>" + x[1] + "</h4><p>" + x[2] + "</p></div>"; }).join("") + "</div></section>" +
+      nextRow(["eric", "angela", "claude", ""]);
+  }
+  var RWC = { "Onboarding": "#5FCB73", "Offboarding": "#FF8EC8", "HR Management": "#9AA5FF", "Talent": "#FFB84D", "Payroll": "#8ED8EC", "Benefits": "#FFC1DA", "Finance": "#B8ECF8", "IT": "#C9B6FF" };
+  var RW_FIRST = ["Alert managers when their new hire signs their offer letter", "Building Access Request", "I-9 & Paperwork Audit", "Incomplete Onboarding Alert", "Alert payroll admins when an employee's compensation changes", "Alert payroll admins when a pay run's auto-approval fails", "Notify admins of an involuntary termination", "Unreturned Device Alert (Post- Term)", "Alert payroll admins of address changes"];
+  var RW_CAT = 0, RW_LV = "all";
+  var RWE = { "Onboarding": "&#128640;", "Offboarding": "&#128075;", "HR Management": "&#129309;", "Talent": "&#127942;", "Payroll": "&#128181;", "Benefits": "&#10084;&#65039;", "Finance": "&#128179;", "IT": "&#128274;" };
+  function rwData() {
+    var D = window.RIPWF || [], cats = [], by = {};
+    D.forEach(function (w) { if (!by[w.cat]) { by[w.cat] = []; cats.push(w.cat); } by[w.cat].push(w); });
+    var itAt = cats.indexOf("IT"); if (itAt > 0) { cats.splice(itAt, 1); cats.unshift("IT"); }
+    return { D: D, cats: cats, by: by };
+  }
+  function rwPill(l) { return '<span class="rwp ' + (l === "Basic" ? "pb" : l === "Advanced" ? "pa" : "pm") + '">' + esc(l === "Basic or Advanced" ? "Basic + Advanced" : l) + "</span>"; }
+  function rwDetail() {
+    var d = rwData(), c = d.cats[RW_CAT], L = (d.by[c] || []).filter(function (w) { return RW_LV === "all" || (RW_LV === "basic" ? w.level !== "Advanced" : w.level !== "Basic"); });
+    var col = RWC[c] || "#ddd";
+    var cards = L.map(function (w) {
+      var star = RW_FIRST.indexOf(w.name) >= 0;
+      return '<article class="rwm' + (star ? " rwstar" : "") + '"><div class="rwm-top" style="background:' + col + '"><span>' + esc(w.sub) + '</span></div><div class="rwm-b"><h4>' + esc(w.name) + '</h4><div class="rwm-p">' + rwPill(w.level) + (star ? '<span class="rwp ps">Start here</span>' : "") + "</div><p>" + esc(w.purpose) + "</p></div></article>";
+    }).join("");
+    return '<div class="rwdh"><h3>' + esc(c) + ' <small>' + L.length + " workflows</small></h3></div>" + (L.length ? '<div class="rwscrollwrap"><button class="rwarr l" data-act="rw-scroll" data-v="rwmov:-1" aria-label="Scroll left">&#8249;</button><div class="rwrow2" id="rwmov">' + cards + '</div><button class="rwarr r" data-act="rw-scroll" data-v="rwmov:1" aria-label="Scroll right">&#8250;</button></div>' : '<p class="abcap">No workflows at this level in this area.</p>');
+  }
+  function pgStudio() {
+    var d = rwData(), D = d.D, cats = d.cats, by = d.by;
+    var nb = D.filter(function (w) { return w.level === "Basic"; }).length, nm = D.filter(function (w) { return w.level === "Basic or Advanced"; }).length, na = D.length - nb - nm;
+    var posters = cats.map(function (c, i) {
+      var col = RWC[c] || "#ddd";
+      return '<button type="button" class="rwpost' + (i === RW_CAT ? " on" : "") + '" data-act="rw-cat" data-v="' + i + '" aria-pressed="' + (i === RW_CAT) + '" style="--pc:' + col + '"><span class="rwpe" aria-hidden="true">' + (RWE[c] || "") + '</span><span class="rwpn">' + (i + 1) + '</span><span class="rwpt">' + esc(c) + "</span><small>" + by[c].length + " workflows</small></button>";
+    }).join("");
+    function fb(k, t) { return '<button class="btn' + (RW_LV === k ? " primary" : "") + '" data-act="rw-f" data-v="' + k + '">' + t + "</button>"; }
+    return head("Rippling Workflow Studio", "What we could automate in Rippling", "Eric, since you are keen on automation: Workflow Studio is where Rippling&rsquo;s no-code automations live. Here are " + D.length + " ready-made workflows from Rippling&rsquo;s automation repository. Pick an area to see its workflows. How many advanced ones we can use depends on the Rippling platform tier, which we would confirm.") +
+      '<section class="hubsec"><div class="rwstat"><span><b>' + D.length + '</b> total</span><span><b>' + (nb + nm) + '</b> include a basic version</span><span><b>' + (na + nm) + "</b> include an advanced version</span></div>" +
+      '<h2>Pick an area</h2><div class="rwscrollwrap"><button class="rwarr l" data-act="rw-scroll" data-v="rwposters:-1" aria-label="Scroll left">&#8249;</button><div class="rwrow2 rwposters" id="rwposters">' + posters + '</div><button class="rwarr r" data-act="rw-scroll" data-v="rwposters:1" aria-label="Scroll right">&#8250;</button></div>' +
+      '<div class="toolrow" style="margin-top:18px">' + fb("all", "All") + fb("basic", "Basic") + fb("adv", "Advanced") + "</div>" +
+      '<p class="abcap" style="margin:0 0 8px">Cards marked Start here are Cat&rsquo;s suggestions for a first wave, to talk through with Eric. They are not decisions.</p>' +
+      '<div id="rwdetail">' + rwDetail() + "</div></section>" +
+      nextRow(["eric", "payroll", "claude", ""]);
+  }
+  var ROUTES = [["", "Home"], ["flow", "The big picture"],["eric", "Eric: IT"], ["angela", "Angela: HRBP"], ["overlap", "Where we overlap"], ["own", "Who owns what"], ["payroll", "Payroll governance"], ["eaf", "Sample EAF"], ["claude", "Where Claude fits"], ["studio", "Rippling Workflow Studio"], ["timeline", "Rippling timeline"]];
+  var route = "";
+  function href(r) { return "#/" + r; }
+  var NAVG = [
+    ["partners", "Partners", [["flow", "The big picture", "How the work flows"], ["eric", "Working with Eric", "People Ops and IT, with the workflow board"],["angela", "Working with Angela", "People Ops and HRBPs, with the workflow board"], ["overlap", "Where we overlap", "Three circles, one shared record"]], ["Three circles, one shared record", "overlap"]],
+    ["ownership", "Ownership", [["own", "Who owns what", "Who drives, who contributes"], ["payroll", "Payroll governance", "Controls around pay changes"], ["eaf", "Sample EAF", "The action form as a web form"]], ["Approvals that route themselves", "payroll"]],
+    ["rippling", "Rippling", [["timeline", "Rippling timeline", "October to go-live"], ["claude", "Where Claude fits", "Drafts, checks, explains"], ["studio", "Rippling Workflow Studio", "What we could automate"]], ["October to go-live, step by step", "timeline"]]
+  ];
+  var openMenu = "", mobOpen = false;
+  function grpOf(r) { for (var i = 0; i < NAVG.length; i++) for (var j = 0; j < NAVG[i][2].length; j++) if (NAVG[i][2][j][0] === r) return NAVG[i][0]; return ""; }
+  function nav() {
+    var cur = grpOf(route);
+    var links = '<a class="pn-link' + (route === "" ? " on" : "") + '" href="#/" data-go="">Home</a>' + NAVG.map(function (g) {
+      return '<button type="button" class="pn-link' + (cur === g[0] ? " on" : "") + '" data-act="navmenu" data-v="' + g[0] + '" aria-expanded="' + (openMenu === g[0]) + '">' + g[1] + "</button>";
+    }).join("");
+    var drop = "";
+    NAVG.forEach(function (g) {
+      if (openMenu !== g[0]) return;
+      drop = '<div class="pn-drop"><div><h4><i></i>' + g[1] + "</h4>" + g[2].map(function (r) { return '<a class="row" href="#/' + r[0] + '" data-go="' + r[0] + '">' + r[1] + "<small>" + r[2] + "</small></a>"; }).join("") + '</div><a class="pn-card" href="#/' + g[3][1] + '" data-go="' + g[3][1] + '"><div><small>' + g[1] + "</small><b>" + g[3][0] + "</b></div><span>Open &rarr;</span></a></div>";
+    });
+    var mob = "";
+    if (mobOpen) mob = '<div class="pn-mob"><a href="#/" data-go="">Home</a>' + NAVG.map(function (g) { return "<h4>" + g[1] + "</h4>" + g[2].map(function (r) { return '<a href="#/' + r[0] + '" data-go="' + r[0] + '">' + r[1] + "</a>"; }).join(""); }).join("") + "</div>";
+    return '<div class="pn"><a class="pn-brand" href="#/" data-go=""><b><i></i>Cat Nolasco</b><small>People Ops and Systems</small></a><nav class="pn-links" aria-label="Sections">' + links + '</nav><div class="pn-ctas"><a class="pn-btn" href="#/eaf" data-go="eaf">Sample EAF</a><a class="pn-btn g" href="#/timeline" data-go="timeline">Rippling timeline</a></div><button type="button" class="pn-burger" data-act="navburger" aria-label="Menu" aria-expanded="' + mobOpen + '">' + (mobOpen ? "&times;" : "&#9776;") + "</button>" + drop + "</div>" + mob;
+  }
+  function heroHtml() {
+    var P = window.PHOTOS || {};
+    return '<div class="hg"><div class="hg-l"><div class="ey">Partnering on People Ops and Systems</div><h1>How Cat thinks about working with you</h1><p>Eric, Angela: welcome. This is how Cat pictures us fitting together, who owns what, and how Cat would approach the Rippling timeline from now to go-live. It is a starting point for us to adjust together, not a finished plan.</p><a class="hg-cta" href="#/eric" data-go="eric"><span>Start with Eric&rsquo;s page</span><i>&rarr;</i></a></div>' +
+      '<div class="hg-r"><div class="hg-ph"><div><img src="' + P.angela + '" alt="Angela"><small>Angela</small><em>People Partnership</em></div><div><img src="' + P.cat + '" alt="Cat"><small>Cat</small><em>People Ops and Systems</em></div><div><img src="' + P.eric + '" alt="Eric"><small>Eric</small><em>IT and Security</em></div></div></div></div>' +
+      '<div class="hg-b"><div class="hg-b1">One record, three lanes, and no handoff left to memory.</div><div class="hg-b2"><b>' + (ROUTES.length - 1) + '</b><span>pages to explore</span></div><div class="hg-b3"><span>People Ops</span><span>HRBP</span><span>IT</span><span>Payroll</span></div></div>';
+  }
+  function nextRow(list) {
+    var L = { flow: "The big picture", eric: "Working with Eric: IT", angela: "Working with Angela: HRBP", overlap: "Where we overlap", own: "Who owns what", payroll: "Payroll governance", eaf: "Sample EAF", claude: "Where Claude fits", studio: "Rippling Workflow Studio", timeline: "Rippling timeline", "": "Back to the start" };
+    return '<div class="nextrow">' + list.map(function (k, i) { return '<a class="btn' + (i === 0 ? " primary" : "") + '" href="' + href(k) + '" data-go="' + k + '">' + L[k] + "" + "</a>"; }).join("") + "</div>";
+  }
+  function head(eyebrow, title, lede) { return '<header class="pghead" style="margin:26px 0 6px"><div class="eyebrow">' + eyebrow + "</div><h1>" + title + "</h1><p>" + lede + "</p></header>"; }
+  function card(r, em, title, text, btn, img) {
+    return '<div class="card" data-go="' + r + '"><div class="ic">' + (img ? '<img src="' + img + '" alt="">' : '<span class="em" aria-hidden="true">' + em + "</span>") + "<h3>" + title + "</h3></div><p>" + text + '</p><a class="btn primary" href="' + href(r) + '" data-go="' + r + '">' + btn + "</a></div>";
+  }
+  function pgHome() {
+    var P = window.PHOTOS || {};
+    return '<section class="hero2" style="margin-top:6px"><div class="eyebrow">Pick where to start</div><h1 style="font-size:clamp(26px,4vw,36px)">Everything in one place</h1></section>' +
+      '<div class="cards">' +
+      card("flow", "&#127760;", "The big picture", "One picture of how what we hold in Rippling, payroll, hiring and IT connects through People Ops and Systems to what Panorama gets.", "See the picture") +
+      card("eric","", "Working with Eric", "People Ops and IT: the workflow board for how a change in Rippling reaches accounts, access and equipment, and who owns each step.", "Open the IT page", P.eric) +
+      card("angela", "", "Working with Angela", "People Ops and HRBPs: the workflow board for how requests are routed, who leads what, and when Legal is brought in.", "Open the HRBP page", P.angela) +
+      card("overlap", "&#127919;", "Where we overlap", "A Venn of the three of us: what each person owns, where the work meets, and the questions Cat would bring.", "See the Venn") +
+      card("own", "&#128203;", "Who owns what", "People Ops, HRBP, IT and Payroll across the work we would touch first.", "See the ownership table") +
+      card("eaf", "&#9998;", "Sample EAF", "A working sample of the Employee Action Form as a web form: every status change, who must approve, signing by phone or laptop, then Rippling and Payroll.", "Try the form") +
+      card("claude", "&#9889;", "Where Claude fits", "The places in each workflow where Claude drafts, checks or explains, marked on the workflow boards, and what stays with people.", "See where Claude fits") +
+      card("studio", "&#9881;&#65039;", "Rippling Workflow Studio", "A menu of ready-made no-code workflows in Rippling, grouped by area, with a suggested first wave to pick together.", "Browse the workflows") +
+      card("payroll", "&#128737;", "Payroll governance", "The controls around pay: parallel approvals, Payroll signing off last, and the evidence left behind each pay period.", "See the controls") +
+      '<div class="card" data-go="timeline"><div class="ic"><span class="em" aria-hidden="true">&#128197;</span><h3>Rippling timeline</h3></div><p>October to go-live: milestones, the overlapping streams of work, the steps phase by phase, and what could go wrong with Cat&rsquo;s move for each.</p><a class="btn primary" href="' + href("timeline") + '" data-go="timeline">See the timeline</a></div>' +
+      "</div>" +
+      '<p class="pgfoot">Prepared by Cat Nolasco, October 16, 2026. Dates marked as proposed are suggestions to confirm with Panorama.</p>';
+  }
+  function heard(title, items) {
+    return '<section class="hubsec"><h2>' + title + '</h2><p class="sub">Here is what stood out to Cat from the conversation. Cat would love to hear if anything was missed.</p><div class="abstep">' + items.map(function (x) { return '<div class="abs"><span class="n">' + x[0] + "</span><h4>" + x[1] + "</h4><p>" + x[2] + "</p></div>"; }).join("") + "</div></section>";
+  }
+  function eqQuote() {
+    var items = [["Mindset", "Start from the shared goal and treat IT as an equal partner. Before anything is built, ask the questions first, such as which system owns identity and how role changes are triggered."], ["Standards", "One record, one dated trail, and nothing marked done until both teams have finished their part."], ["Drive", "Own the follow-through: the handoffs, the record and the dates, from the January 1 go-live through stabilization."]];
+    return '<section class="hubsec"><div class="eqq"><div class="eqq-q"><span class="eqq-ey">In Eric&rsquo;s words</span><blockquote>&ldquo;The difference between good and great was never just technical skill. It was the intangibles: the mindset, the standards, the drive.&rdquo;</blockquote><cite>Eric Williams, Director of IT</cite></div><div class="eqq-l"><h3>How Cat would carry that into the work</h3>' + items.map(function (x) { return "<p><b>" + x[0] + ".</b> " + x[1] + "</p>"; }).join("") + "</div></div></section>";
+  }
+  function pgEric() {
+    return head("Working with Eric", "People Ops and IT", window.WF.peopleit.note) + puzzleBar("eric") + eqQuote() +
+      heard("What Cat heard from Eric", [["TODAY", "One email, then automated", "From the people side, IT gets one email and the steps after it run automatically on his end. Rippling will mean rebuilding or updating some of them."], ["FIRST PRIORITY", "Automation into Okta and Jira", "The part of Rippling he is most interested in is building automation straight into his IT systems, so his team does not do manual work. Laptop notifications are the icing on the cake."], ["EQUIPMENT", "An outside vendor", "Panorama uses an outside vendor to provision laptops and track them, and to notify IT."], ["90 DAYS", "A partner who knows Rippling", "Someone on the HR side who knows Rippling as well as he does, so he can say what he needs and get access without hunting for it."]]) +
+      '<section class="hubsec"><h2>Workflow board</h2><p class="sub">One change in Rippling starts both lanes. People Ops owns the data, IT owns access and equipment.</p>' + wfBoard("peopleit") + "</section>" + autoLane("peopleit", ["The Rippling change as the trigger for both lanes, so nobody has to remember to tell the other", "One notice with the same details to everyone", "The dated audit record saved automatically once both teams finish"]) +
+      nextRow(["angela", "overlap", "timeline", ""]);
+  }
+  function pgAngela() {
+    return head("Working with Angela", "People Ops and HRBPs", window.WF.peoplehrbp.note) + puzzleBar("angela") +
+      heard("What Cat heard from Angela", [["CHANGES TODAY", "A change report, then ADP", "A VP posts changes in the people team's change report and tags the owner on the operations side, who makes the change in ADP."], ["OUT OF CYCLE", "Approvals one conversation at a time", "Changes are entered in a spreadsheet and then re-entered in another system. Approvals come from one-off conversations with Finance on budget, the executive team member and the manager, with no audit trail beyond the request she entered."], ["WHAT SHE WANTS", "A Rippling approval workflow", "She would like to enter a request, such as a manager change or an out-of-cycle comp change, and have it route for approval with an audit trail."], ["OFFBOARDING", "Ask People, then operations, then IT", "The manager and Angela email the Ask People list with the resignation letter. Operations then lets Eric's team know for systems and equipment return."], ["TOGETHER", "Cycles and audits", "Merit and promotion cycles twice a year, benchmarking, and SOX compliance are worked jointly with operations."]]) +
+      '<section class="hubsec"><h2>Workflow board</h2><p class="sub">One queue in, one record out. Judgment goes to the HRBP, process goes to People Ops.</p>' + wfBoard("peoplehrbp") + "</section>" + autoLane("peoplehrbp", ["The one intake queue, with a confirmation back to the requester within a day", "Routing to the HRBP or People Ops by the judgment-or-process question", "The monthly themes report, aggregates only"]) +
+      nextRow(["eric", "overlap", "timeline", ""]);
+  }
+  function pgOverlap() {
+    return head("Where we overlap", "Three circles, one shared record", "What each of us owns, and where the work meets. Tap any area for the detail.") +
+      '<div id="vensec" style="margin-top:14px">' + vennSection() + '</div><p class="abcap" style="margin-top:10px">This split is Cat&rsquo;s proposal. Panorama may draw these lines differently, so please correct anything that is wrong.</p>' +
+      nextRow(["own", "payroll", "eric", "angela"]);
+  }
+
+  var TEAMC = ["#5FCB73", "#FF8EC8", "#7084FF", "#FFC93C"];
+  function bx(x, y, w, h, l1, l2, col, fill) {
+    return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="10" fill="' + (fill || "#23232d") + '" stroke="' + col + '" stroke-width="2"/><text x="' + (x + w / 2) + '" y="' + (y + h / 2 + (l2 ? -3 : 5)) + '" text-anchor="middle" fill="#fff" font-size="12.5" font-weight="700" font-family="Nunito Sans,Inter,sans-serif">' + esc(l1) + "</text>" + (l2 ? '<text x="' + (x + w / 2) + '" y="' + (y + h / 2 + 13) + '" text-anchor="middle" fill="#b4b6bd" font-size="11" font-family="Nunito Sans,Inter,sans-serif">' + esc(l2) + "</text>" : "");
+  }
+  function ownVisuals() {
+    var W = OWN_W, id = "owm";
+    var T = ["People Ops", "HRBP", "IT", "Payroll"], tn = ["Cat", "Angela", "Eric", "Finance"];
+    /* 1. hub */
+    var hub = '<svg viewBox="0 0 900 330" role="img" aria-label="Rippling is the record, owned by People Ops. Angela, Eric and Payroll each take what they need from it: leaders and context, accounts and access, pay data.">' + abDefs(id, true) +
+      '<rect x="330" y="120" width="240" height="90" rx="16" fill="#5FCB73"/><text x="450" y="157" text-anchor="middle" fill="#191919" font-size="18" font-weight="800" font-family="Nunito Sans,Inter,sans-serif">Rippling</text><text x="450" y="180" text-anchor="middle" fill="#191919" font-size="12.5" font-weight="600" font-family="Nunito Sans,Inter,sans-serif">the record, owned by People Ops</text>' +
+      abArrow("M450,120 C450,90 450,80 450,66", true, id) + bx(330, 8, 240, 56, "HRBP: Angela", "leaders, context, judgment", TEAMC[1]) +
+      abArrow("M330,165 C300,165 270,165 236,165", true, id) + bx(10, 135, 224, 60, "IT: Eric", "accounts, access, equipment", TEAMC[2]) +
+      abArrow("M570,165 C600,165 630,165 664,165", true, id) + bx(666, 135, 224, 60, "Payroll and Finance", "pay data, sign-off", TEAMC[3]) +
+      abArrow("M450,210 C450,240 450,250 450,264", true, id) + bx(330, 266, 240, 56, "One change, one trigger", "nobody has to remember to tell anyone", "#5FCB73") + "</svg>";
+    /* 2. matrix */
+    var M = [["Employee record and Rippling setup", [2, 1, 1, 1]], ["Pay and status changes", [2, 1, 1, 2]], ["Onboarding handoff", [2, 1, 2, 1]], ["Offboarding", [2, 1, 2, 1]], ["Reporting and audit trail", [2, 1, 1, 1]], ["Exceptions", [2, 1, 1, 1]], ["Employee relations and performance", [1, 2, 0, 0]], ["Legal and compliance risk gate", [1, 2, 0, 0]], ["Accounts, access and equipment", [1, 0, 2, 0]]];
+    var X0 = 330, CW = 140, RH = 40, Y0 = 56, H = Y0 + M.length * RH + 46, mx = '<svg viewBox="0 0 900 ' + H + '" role="img" aria-label="Matrix of who drives and who contributes across nine areas of work for People Ops, HRBP, IT and Payroll.">';
+    T.forEach(function (t, i) { var cx = X0 + CW * i + CW / 2; mx += '<circle cx="' + cx + '" cy="8" r="5" fill="' + TEAMC[i] + '"/><text x="' + cx + '" y="30" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="Nunito Sans,Inter,sans-serif">' + t + '</text><text x="' + cx + '" y="46" text-anchor="middle" fill="#9a9aa6" font-size="11" font-family="Nunito Sans,Inter,sans-serif">' + tn[i] + "</text>"; });
+    var cnt = [0, 0, 0, 0];
+    M.forEach(function (r, ri) {
+      var y = Y0 + ri * RH;
+      if (ri % 2 === 0) mx += '<rect x="0" y="' + y + '" width="900" height="' + RH + '" fill="#ffffff" fill-opacity=".03"/>';
+      mx += '<text x="14" y="' + (y + RH / 2 + 5) + '" fill="#e8e8f0" font-size="13" font-family="Nunito Sans,Inter,sans-serif">' + esc(r[0]) + "</text>";
+      r[1].forEach(function (v, i) {
+        var cx = X0 + CW * i + CW / 2, cy = y + RH / 2;
+        if (v === 2) { cnt[i]++; mx += '<circle cx="' + cx + '" cy="' + cy + '" r="12" fill="' + TEAMC[i] + '"/>'; }
+        else if (v === 1) mx += '<circle cx="' + cx + '" cy="' + cy + '" r="9" fill="none" stroke="' + TEAMC[i] + '" stroke-width="2.2" stroke-dasharray="4 3"/>';
+      });
+    });
+    var yb = Y0 + M.length * RH + 28;
+    mx += '<line x1="0" y1="' + (yb - 20) + '" x2="900" y2="' + (yb - 20) + '" stroke="#3a3a48"/><text x="14" y="' + yb + '" fill="#9a9aa6" font-size="12" font-family="Nunito Sans,Inter,sans-serif">Areas each team drives</text>';
+    cnt.forEach(function (c, i) { mx += '<text x="' + (X0 + CW * i + CW / 2) + '" y="' + yb + '" text-anchor="middle" fill="' + TEAMC[i] + '" font-size="16" font-weight="800" font-family="Nunito Sans,Inter,sans-serif">' + c + "</text>"; });
+    mx += "</svg>";
+    /* 3. new hire swimlane */
+    var LH = 62, LX = 130, SW = '<svg viewBox="0 0 900 ' + (4 * LH + 16) + '" role="img" aria-label="A new hire from signed offer to day one across four lanes. People Ops triggers it and records it, IT, Payroll and the HRBP work in parallel, and People Ops confirms day one.">' + abDefs(id + "2", true);
+    var lanes = [["People Ops", 0], ["HRBP", 1], ["IT", 2], ["Payroll", 3]];
+    lanes.forEach(function (l, i) {
+      var y = 8 + i * LH;
+      SW += '<rect x="0" y="' + y + '" width="900" height="' + (LH - 6) + '" rx="10" fill="#ffffff" fill-opacity=".03"/><rect x="0" y="' + y + '" width="5" height="' + (LH - 6) + '" rx="2" fill="' + TEAMC[i] + '"/><text x="16" y="' + (y + 31) + '" fill="#fff" font-size="13" font-weight="700" font-family="Nunito Sans,Inter,sans-serif">' + l[0] + "</text>";
+    });
+    function by(i) { return 8 + i * LH + 6; }
+    SW += bx(LX, by(0), 150, 44, "Offer signed", "triggers the hire", TEAMC[0]) + abArrow("M" + (LX + 150) + "," + (by(0) + 22) + " L" + (LX + 190) + "," + (by(0) + 22), true, id + "2") +
+      bx(LX + 192, by(0), 150, 44, "Record and notice", "one notice, same details", TEAMC[0]);
+    var px = LX + 342, tx = 530;
+    [[1, "Leader prep", "intros and expectations"], [2, "Accounts and laptop", "ready by day one"], [3, "Pay set up", "before day one"]].forEach(function (b) {
+      SW += abArrow("M" + px + "," + (by(0) + 22) + " C" + (px + 40) + "," + (by(0) + 22) + " " + (tx - 40) + "," + (by(b[0]) + 22) + " " + tx + "," + (by(b[0]) + 22), true, id + "2") + bx(tx, by(b[0]), 170, 44, b[1], b[2], TEAMC[b[0]]);
+      SW += abArrow("M" + (tx + 170) + "," + (by(b[0]) + 22) + " C" + (tx + 210) + "," + (by(b[0]) + 22) + " " + (722 - 40) + "," + (by(0) + 22) + " 722," + (by(0) + 22), true, id + "2");
+    });
+    SW += bx(724, by(0), 170, 44, "Day-one check", "everything ready, one record", TEAMC[0], "#17301D") + "</svg>";
+    return '<section class="abwf" style="border-top:0;padding-top:0;margin-top:18px"><div class="ey">The picture</div><h2>Rippling is the record, and everyone draws from it</h2><p class="abp">People Ops owns the record. Each team takes what it needs from it, and one change starts all of them at once.</p><div class="abstage">' + hub + "</div></section>" +
+      '<section class="abwf"><div class="ey">At a glance</div><h2>Who drives, and who contributes</h2><p class="abp">A filled dot means the team owns or drives that area. A dashed ring means it contributes or is informed. The last three rows come from the workflow boards.</p><div class="abstage">' + mx + "</div></section>" +
+      '<section class="abwf"><div class="ey">An example</div><h2>A new hire, from signed offer to day one</h2><p class="abp">One trigger, three teams in parallel, then one check. This is the ownership table in motion.</p><div class="abstage">' + SW + "</div></section>" +
+      '<section class="abwf"><div class="ey">The detail</div><h2>Who owns what, area by area</h2></section>';
+  }
+
+  function pgOwn() {
+    return head("Who owns what", "Who owns what", "People Ops, HRBP, IT and Payroll across the work we would touch first. Rippling is the trigger, and each team keeps its own judgment.") +
+      (function () { var tbl = ownTable(); return ownVisuals() + '<div style="margin-top:6px">' + tbl + "</div>"; })() + nextRow(["payroll", "eric", "angela", ""]);
+  }
+  function pgPayroll() {
+    return head("Payroll governance", "Controls around payroll, not just the process", "Who can change pay, who must approve it, who signs off, and what evidence is left behind. This is where People Ops, Payroll, Finance and IT meet most directly. Sylvia runs payroll and Angela oversees it.") + pgPage() + nextRow(["timeline", "own", "overlap", ""]);
+  }
+
+  function eafFlow() {
+    var id = "eafm";
+    return '<svg viewBox="0 0 900 720" role="img" aria-label="A completed web form is routed to the required approvers in parallel by Slack with a link to sign. When every signature is in, People Ops makes the change in Rippling, Payroll signs off last, and the signed form is logged to a tracker and a restricted Slack log.">' + abDefs(id, true) +
+      abNode(300, 0, 300, 54, "Web form completed", "change type, reason, effective date", "fut") + abArrow("M450,54 L450,82", true, id) +
+      abNode(360, 84, 180, 48, "Zapier / n8n routing", "", "hub") +
+      abArrow("M450,132 C450,160 90,150 90,188", true, id) + abArrow("M450,132 C450,160 272,150 272,188", true, id) + abArrow("M450,132 C450,160 454,150 454,188", true, id) + abArrow("M450,132 C450,160 636,150 636,188", true, id) + abArrow("M450,132 C450,160 818,150 818,188", true, id) +
+      '<text x="560" y="112" fill="#B4B6BD" font-size="11" font-family="Nunito Sans,Inter,sans-serif">Slack link to the document, sent to all at once</text>' +
+      abNode(10, 190, 160, 64, "Manager signs", "phone or laptop", "fut") + abNode(192, 190, 160, 64, "2nd-level manager", "signs", "fut") + abNode(374, 190, 160, 64, "HR signs", "", "fut") + abNode(556, 190, 160, 64, "Finance or Legal", "only when required", "fut") + abNode(738, 190, 160, 64, "Executive team", "out-of-cycle pay", "fut") +
+      abArrow("M90,254 C90,300 450,290 450,336", true, id) + abArrow("M272,254 C272,300 450,290 450,336", true, id) + abArrow("M454,254 C454,300 450,290 450,336", true, id) + abArrow("M636,254 C636,300 450,290 450,336", true, id) + abArrow("M818,254 C818,300 450,290 450,336", true, id) +
+      abNode(290, 338, 320, 62, "All signatures in", "the document is complete", "fut") + abArrow("M450,400 L450,442", true, id) +
+      abNode(290, 444, 320, 62, "People Ops makes the change", "in Rippling, the HRIS", "fut") + abArrow("M450,506 L450,546", true, id) +
+      abNode(310, 548, 280, 62, "Payroll signs off last", "compares Rippling to the signed form", "ai") +
+      abArrow("M590,579 L668,579", false, id, true) + abNode(670, 552, 220, 56, "Mismatch flagged", "back to People Ops and Finance", "warn") +
+      abArrow("M450,610 C450,640 215,630 215,656", true, id) + abArrow("M450,610 C450,640 685,630 685,656", true, id) +
+      abNode(90, 658, 250, 56, "Shared tracker", "signed form and audit trail", "fut") + abNode(560, 658, 250, 56, "Slack change log", "Finance and People only", "fut") + eafDots() + "</svg>";
+  }
+  function eafDots() {
+    var T = 9, stages = [
+      [0.0, ["M450,54 L450,82"]],
+      [1.1, ["M450,132 C450,160 90,150 90,188", "M450,132 C450,160 272,150 272,188", "M450,132 C450,160 454,150 454,188", "M450,132 C450,160 636,150 636,188", "M450,132 C450,160 818,150 818,188"]],
+      [2.6, ["M90,254 C90,300 450,290 450,336", "M272,254 C272,300 450,290 450,336", "M454,254 C454,300 450,290 450,336", "M636,254 C636,300 450,290 450,336", "M818,254 C818,300 450,290 450,336"]],
+      [4.1, ["M450,400 L450,442"]],
+      [5.0, ["M450,506 L450,546"]],
+      [6.2, ["M450,610 C450,640 215,630 215,656", "M450,610 C450,640 685,630 685,656"]]
+    ], o = "", dur = 1.1;
+    stages.forEach(function (st) {
+      var a = st[0] / T, b = (st[0] + dur) / T;
+      st[1].forEach(function (d) {
+        o += '<circle class="mo" r="5" fill="#5FCB73" opacity="0"><animateMotion dur="' + T + 's" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;' + a.toFixed(3) + ';' + b.toFixed(3) + ';1" path="' + d + '"/><animate attributeName="opacity" dur="' + T + 's" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;' + a.toFixed(3) + ';' + (a + 0.005).toFixed(3) + ';' + (b - 0.005).toFixed(3) + ';' + b.toFixed(3) + ';1"/></circle>';
+      });
+    });
+    return o;
+  }
+  function pgEaf() {
+    return head("Sample EAF", "The Employee Action Form, as a web form", "Every status change in one place: what is changing, why, and who must approve. Try it below. It routes by Slack to each approver with a link to sign on a phone or laptop, then the change is made in Rippling and Payroll signs off last.") +
+      '<section class="hubsec" style="margin-top:18px"><h2>Try it</h2><p class="sub">Choose a change, fill it in, and follow it through each step. Everything here is a demonstration.</p>' + window.EAF.html() + "</section>" +
+      '<section class="abwf"><div class="ey">How it would run</div><h2>From form to final sign-off</h2><p class="abp">The same steps you just clicked through, as the real flow.</p><div class="abstage">' + eafFlow() + "</div></section>" +
+      '<section class="abwf"><div class="ey">Approval rules</div><h2>Who must approve each change</h2><p class="abp">The form reads this table. A dot means that approver is required. Payroll always signs off last. These rules are Cat&rsquo;s proposal, to adjust with Angela and Payroll. The executive team applies to out-of-cycle pay changes, as Angela described. Some of those executives may also be the HR and Finance approvers under different titles (for example the CPO and CFO). If so, one person can satisfy both, and we would confirm that with Angela. Merit and promotion cycles would run on their own approvals.</p>' + window.EAF.rules() + "</section>" +
+      '<section class="abwf"><div class="ey">Worth deciding together</div><h2>Signing and access</h2><div class="abgrid"><div class="abcard hi"><h3>Sign on a phone or online</h3><ul><li>The Slack message links to a mobile-friendly signing page</li><li>Each signature records who signed, and when</li><li>The signed form is saved as one document per change</li></ul></div><div class="abcard bl"><h3>For Eric and Cat to confirm</h3><ul><li>How approvers are identified when they sign</li><li>Which tool holds the signed documents</li><li>Where the form data lives, since it is employee data</li><li>When Rippling&rsquo;s approvals feature takes over steps two and three</li></ul></div></div></section>' +
+      nextRow(["payroll", "claude", "own", ""]);
+  }
+
+  function pgTimeline() {
+    return head("Rippling timeline", "October to go-live", "") + '<div style="margin-top:14px">' + timelineSection() + "</div>" +
+      '<section class="hubsec"><h2>Erica to Cat: the handoff</h2><p class="sub">Erica is leading the Rippling implementation today. She hands it to Cat once Cat is in and moves to a supporting role. Dates here are Cat&rsquo;s proposal, to confirm with her and Lisa.</p><div class="abstep"><div class="abs"><span class="n">BEFORE CAT STARTS</span><h4>Erica leads</h4><p>She is leading the Rippling implementation today.</p></div><div class="abs"><span class="n">CAT&rsquo;S FIRST WEEKS</span><h4>Learn it with her</h4><p>Walk the build together: what is configured, what is open, the decisions made and why, and who to call at Rippling.</p></div><div class="abs"><span class="n">HANDOFF</span><h4>Written and agreed</h4><p>One page of owners, open items and the date she steps back, shared with Eric and Angela so nobody is guessing who to ask.</p></div><div class="abs"><span class="n">AFTER</span><h4>Cat owns it</h4><p>Erica steps back to a supporting role, and we agree up front how involved she stays, for example around testing. Cat carries it through shadow payroll, go-live and stabilize.</p></div></div></section><section class="hubsec"><h2>Where automation lands</h2><p class="sub">After Rippling stabilizes, not before. Nothing needs to be live before year-end.</p><div class="abstep"><div class="abs"><span class="n">NOV TO JAN 1</span><h4>Rippling first</h4><p>Shadow payrolls and go-live. Automation stays out of the way.</p></div><div class="abs"><span class="n">Q1 2027</span><h4>Onboarding and meeting capture</h4><p>The quick wins, built in Zapier.</p></div><div class="abs"><span class="n">THEN</span><h4>Payroll governance layer</h4><p>Once Rippling\'s own approvals are live, wrapped around it rather than duplicating it.</p></div></div><div class="toolrow" style="margin-top:12px"><a class="btn" href="#/claude" data-go="claude">See where Claude fits</a></div></section>' + nextRow(["overlap", "eric", "angela", ""]);
+  }
+  function render() {
+    var fn = { "": pgHome, flow: pgFlow, eric: pgEric, angela: pgAngela, overlap: pgOverlap, own: pgOwn, payroll: pgPayroll, eaf: pgEaf, claude: pgClaude, studio: pgStudio, timeline: pgTimeline }[route] || pgHome;
+    document.getElementById("topnav").innerHTML = nav();
+    document.getElementById("hero").innerHTML = route === "" ? heroHtml() : "";
+    document.getElementById("app").innerHTML = fn();
+  }
+  function go(r) {
+    route = ROUTES.some(function (x) { return x[0] === r; }) ? r : "";
+    try { if (location.hash !== href(route)) history.replaceState(null, "", route ? href(route) : location.pathname + location.search); } catch (x) {}
+    render(); window.scrollTo(0, 0);
+  }
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-act]");
+    if (t) {
+      var act = t.getAttribute("data-act"), v = t.getAttribute("data-v");
+      if (act === "vsel") { vsel = v; document.getElementById("vensec").innerHTML = vennSection(); return; }
+      if (act === "navmenu") { openMenu = openMenu === v ? "" : v; document.getElementById("topnav").innerHTML = nav(); return; }
+      if (act === "navburger") { mobOpen = !mobOpen; document.getElementById("topnav").innerHTML = nav(); return; }
+      if (act === "wf-ai") { var sv2 = document.getElementById("wfsvg-" + v); if (sv2) { var on = sv2.classList.toggle("aion"); t.classList.toggle("aion", on); t.setAttribute("aria-pressed", on ? "true" : "false"); } return; }
+      if (act === "rw-f") { RW_LV = v; document.querySelectorAll('[data-act="rw-f"]').forEach(function (b) { b.classList.toggle("primary", b === t); }); document.getElementById("rwdetail").innerHTML = rwDetail(); return; }
+      if (act === "rw-cat") { RW_CAT = +v; document.querySelectorAll(".rwpost").forEach(function (b) { var on = b === t; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on ? "true" : "false"); }); document.getElementById("rwdetail").innerHTML = rwDetail(); var dt = document.getElementById("rwdetail"); if (dt && dt.scrollIntoView) dt.scrollIntoView({ behavior: "smooth", block: "nearest" }); return; }
+      if (act === "rw-scroll") { var pr = v.split(":"), el = document.getElementById(pr[0]); if (el) el.scrollBy({ left: +pr[1] * Math.max(240, el.clientWidth * 0.8), behavior: "smooth" }); return; }
+      if (act === "wf-run") { wfRun(v); return; }
+      if (act === "wf-reset") { wfReset(v); wfNarr(v, null); return; }
+      if (act === "wf-node") { wfNarr(v, t.getAttribute("data-id")); return; }
+    }
+    if (openMenu && !e.target.closest(".pn")) { openMenu = ""; document.getElementById("topnav").innerHTML = nav(); }
+    var g = e.target.closest("[data-go]");
+    if (g) { openMenu = ""; mobOpen = false; e.preventDefault(); go(g.getAttribute("data-go")); }
+  });
+  document.addEventListener("keydown", function (e) { if ((e.key === "Enter" || e.key === " ") && e.target.getAttribute && e.target.getAttribute("data-act") === "wf-node") { e.preventDefault(); wfNarr(e.target.getAttribute("data-v"), e.target.getAttribute("data-id")); } });
+  window.addEventListener("hashchange", function () { var h = (location.hash || "").replace(/^#\/?/, ""); if (h === "automation") h = "claude"; if (h !== route) { route = ROUTES.some(function (x) { return x[0] === h; }) ? h : ""; render(); window.scrollTo(0, 0); } });
+  route = (function () { var h = (location.hash || "").replace(/^#\/?/, ""); if (h === "automation") h = "claude"; return ROUTES.some(function (x) { return x[0] === h; }) ? h : ""; })();
+  render();
+})();
+</script></body></html>
+</body></html>
