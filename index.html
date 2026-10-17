@@ -776,6 +776,10 @@ body.co-pan main#app{margin-top:26px}
 .rwm-top{padding:8px 12px;font:800 11px/1.3 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:#191919}
 .rwm-b{padding:12px 14px 16px}.rwm-b h4{margin:0 0 8px;font-size:16px;line-height:1.25}.rwm-p{margin-bottom:8px}.rwm-p .rwp{margin:0 6px 4px 0}.rwm-b p{margin:0;font-size:13px;line-height:1.45;color:var(--muted)}
 .rwm.rwstar{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.cdn{display:flex;align-items:center;gap:22px;flex-wrap:wrap;background:var(--accent);color:#191919;border-radius:6px 6px 6px 70px;padding:22px 30px 22px 28px;margin-top:14px}
+.cdn-n{font:800 clamp(56px,9vw,96px)/.9 var(--font-body)}
+.cdn-t{flex:1;min-width:200px}.cdn-t b{display:block;font-size:20px;margin-bottom:4px}.cdn-t span{font-size:14.5px;line-height:1.45}
+.cdn-u{display:flex;gap:8px;font:700 13px var(--font-mono)}.cdn-u span{display:flex;flex-direction:column;align-items:center;gap:5px}.cdn-u i{font-style:normal;background:#191919;color:#fff;border-radius:6px;padding:8px 10px;min-width:54px;text-align:center}.cdn-u small{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
 .eqq{display:grid;grid-template-columns:1.1fr 1fr;gap:6px}
 .eqq-q{background:#8ED8EC;color:#191919;padding:34px 34px 30px;border-radius:6px 90px 6px 6px;display:flex;flex-direction:column;justify-content:center}
 .eqq-ey{font:700 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
@@ -1524,8 +1528,25 @@ var PLANS_ = {
       nextRow(["payroll", "claude", "own", ""]);
   }
 
+  function cdParts() {
+    var ms = new Date(2027, 0, 1, 0, 0, 0) - new Date();
+    if (ms <= 0) return null;
+    var t = Math.floor(ms / 1000);
+    return { d: Math.ceil(ms / 864e5), dd: Math.floor(t / 86400), h: Math.floor(t % 86400 / 3600), m: Math.floor(t % 3600 / 60), s: t % 60 };
+  }
+  function countdown() {
+    var c = cdParts();
+    if (!c) return '<div class="cdn"><div class="cdn-t"><b>Rippling is live</b><span>Go-live was January 1, 2027.</span></div></div>';
+    return '<div class="cdn" id="cdn"><div class="cdn-n" id="cdn-d">' + c.d + '</div><div class="cdn-t"><b>' + (c.d === 1 ? "day" : "days") + ' until Rippling goes live</b><span>January 1, 2027. Panorama is not renewing ADP, so this date is fixed.</span></div><div class="cdn-u" id="cdn-u" aria-hidden="true">' + cdUnits(c) + "</div></div>";
+  }
+  function cdUnits(c) { return [[c.h, "hrs"], [c.m, "min"], [c.s, "sec"]].map(function (x) { return "<span><i>" + String(x[0]).padStart(2, "0") + "</i><small>" + x[1] + "</small></span>"; }).join(""); }
+  setInterval(function () {
+    var u = document.getElementById("cdn-u"); if (!u) return;
+    var c = cdParts(); if (!c) { render(); return; }
+    u.innerHTML = cdUnits(c); document.getElementById("cdn-d").textContent = c.d;
+  }, 1000);
   function pgTimeline() {
-    return head("Rippling timeline", "October to go-live", "") + '<div style="margin-top:14px">' + timelineSection() + "</div>" +
+    return head("Rippling timeline", "October to go-live", "") + countdown() + '<div style="margin-top:14px">' + timelineSection() + "</div>" +
       '<section class="hubsec"><h2>Erica to Cat: the handoff</h2><p class="sub">Erica is leading the Rippling implementation today. She hands it to Cat once Cat is in and moves to a supporting role. Dates here are Cat&rsquo;s proposal, to confirm with her and Lisa.</p><div class="abstep"><div class="abs"><span class="n">BEFORE CAT STARTS</span><h4>Erica leads</h4><p>She is leading the Rippling implementation today.</p></div><div class="abs"><span class="n">CAT&rsquo;S FIRST WEEKS</span><h4>Learn it with her</h4><p>Walk the build together: what is configured, what is open, the decisions made and why, and who to call at Rippling.</p></div><div class="abs"><span class="n">HANDOFF</span><h4>Written and agreed</h4><p>One page of owners, open items and the date she steps back, shared with Eric and Angela so nobody is guessing who to ask.</p></div><div class="abs"><span class="n">AFTER</span><h4>Cat owns it</h4><p>Erica steps back to a supporting role, and we agree up front how involved she stays, for example around testing. Cat carries it through shadow payroll, go-live and stabilize.</p></div></div></section><section class="hubsec"><h2>Where automation lands</h2><p class="sub">After Rippling stabilizes, not before. Nothing needs to be live before year-end.</p><div class="abstep"><div class="abs"><span class="n">NOV TO JAN 1</span><h4>Rippling first</h4><p>Shadow payrolls and go-live. Automation stays out of the way.</p></div><div class="abs"><span class="n">Q1 2027</span><h4>Onboarding and meeting capture</h4><p>The quick wins, built in Zapier.</p></div><div class="abs"><span class="n">THEN</span><h4>Payroll governance layer</h4><p>Once Rippling\'s own approvals are live, wrapped around it rather than duplicating it.</p></div></div><div class="toolrow" style="margin-top:12px"><a class="btn" href="#/claude" data-go="claude">See where Claude fits</a></div></section>' + nextRow(["overlap", "eric", "angela", ""]);
   }
   function render() {
