@@ -183,13 +183,6 @@ window.RIPWF = [
 },
 {
 "cat": "Offboarding",
-"sub": "Canadian terminations",
-"name": "ROE reminders for terminated Canadian employees",
-"purpose": "Automatically reminds admins to send Record of Employment (ROE) documents to terminated Canadian employees. This ensures compliance with Canadian employment standards and timely delivery of required documentation for employment insurance claims.",
-"level": "Advanced"
-},
-{
-"cat": "Offboarding",
 "sub": "COBRA",
 "name": "COBRA/Benefits Continuation Notice",
 "purpose": "Notifies the Benefits Administrator to send COBRA or benefits continuation paperwork to the employeeʼs personal email on their last day.",
