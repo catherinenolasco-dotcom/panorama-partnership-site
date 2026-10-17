@@ -787,6 +787,14 @@ body.co-pan main#app{margin-top:26px}
 .ld-own{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.ld-own div{background:#191919;border-radius:6px 6px 6px 18px;padding:10px 12px 12px}.ld-own small{display:block;font:700 10.5px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}.ld-own span{font-size:13.5px;line-height:1.4}
 .ld-note{font-size:12.5px;opacity:.75;margin:10px 2px 0}
 @media(max-width:760px){.ld-own{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ld{position:relative;background-image:linear-gradient(#ffffff0d 1px,transparent 1px),linear-gradient(90deg,#ffffff0d 1px,transparent 1px);background-size:24px 24px;border-radius:6px 6px 6px 40px;padding:10px;border:1px solid #3a3a48;background-color:#16161c}
+.ld-top{font-family:var(--font-mono)}.ld-top b{font:800 15px var(--font-mono);letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.ld-led{width:10px;height:10px;border-radius:50%;background:#191919;box-shadow:0 0 0 3px #19191933;animation:ldp 2s ease-in-out infinite}
+@keyframes ldp{50%{opacity:.35}}@media(prefers-reduced-motion:reduce){.ld-led{animation:none}}
+.ld-sys{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0;font:600 11px var(--font-mono);color:#c9c9d6}.ld-sys b{color:#5FCB73;letter-spacing:.08em}.ld-sys span{border:1px solid #4a4a5a;border-radius:4px;padding:3px 8px;background:#191919}
+.ld-id{font:700 11px var(--font-mono);color:#5FCB73;letter-spacing:.1em;margin-right:8px}
+.ld-row{position:relative}.ld-row:before{content:"";position:absolute;left:-1px;top:20px;bottom:20px;width:3px;background:#5FCB73;border-radius:3px}
+.ld-own div{position:relative}.ld-own div:not(:last-child):after{content:"\2192";position:absolute;right:-7px;top:50%;transform:translateY(-50%);font:700 11px var(--font-mono);color:#5FCB73;background:#16161c;border-radius:50%;line-height:1;z-index:1;display:none}
 .eqq{display:grid;grid-template-columns:1.1fr 1fr;gap:6px}
 .eqq-q{background:#8ED8EC;color:#191919;padding:34px 34px 30px;border-radius:6px 90px 6px 6px;display:flex;flex-direction:column;justify-content:center}
 .eqq-ey{font:700 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
@@ -1102,16 +1110,16 @@ var PLANS_ = {
     var wk = mon.toLocaleDateString("en-US", { month: "long", day: "numeric" });
     var W = [["People Ops", "#5FCB73"], ["HRBP", "#FF8EC8"], ["IT", "#7084FF"], ["Payroll + Finance", "#FFC857"]];
     var L = [
-      ["Offer to day one", "Signed offer, I-9, accounts, laptop and pay set up before the first day", ["Triggers it from the signed offer and checks the I-9", "Preps the leader and the intros", "Accounts, laptop and access by day one", "Pay and deductions set up"], "3 starting, 1 item open", "#5FCB73"],
-      ["Pay, role and manager changes", "One form, the approval path, and the signed record behind each change", ["Owns the form, the path and the record", "Brings judgment on the change", "Access follows the change", "Signs off last"], "4 in approval, 1 waiting on Finance", "#FFC857"],
-      ["Leave of absence", "Start and return dates, benefits and pay during leave, access while out", ["Tracks dates and the paperwork", "Supports the leader and the person", "Adjusts access if needed", "Pay and deductions during leave"], "2 on leave, 1 returning", "#5FCB73"],
-      ["Offboarding", "Last day, final pay, access removal, laptop return and the exit conversation", ["Starts it when status changes", "Handles the leader and the exit conversation", "Removes access, collects the laptop", "Final pay and deductions"], "2 leaving, 1 laptop outstanding", "#FF8AA0"],
-      ["Exceptions and audit trail", "Every exception logged with a reason, an approver and a date", ["Keeps the log and the trail", "Brings leader requests early", "Flags access exceptions", "Flags pay exceptions"], "2 open, 0 overdue", "#5FCB73"]
+      ["Offer to day one", "Signed offer, I-9, accounts, laptop and pay set up before the first day", ["Triggers it from the signed offer and checks the I-9", "Preps the leader and the intros", "Accounts, laptop and access by day one", "Pay and deductions set up"], "3 starting, 1 item open", "#5FCB73", ["Rippling","Okta","Google Workspace","Jamf","Slack"]],
+      ["Pay, role and manager changes", "One form, the approval path, and the signed record behind each change", ["Owns the form, the path and the record", "Brings judgment on the change", "Access follows the change", "Signs off last"], "4 in approval, 1 waiting on Finance", "#FFC857", ["Rippling","Shared tracker","Slack change log"]],
+      ["Leave of absence", "Start and return dates, benefits and pay during leave, access while out", ["Tracks dates and the paperwork", "Supports the leader and the person", "Adjusts access if needed", "Pay and deductions during leave"], "2 on leave, 1 returning", "#5FCB73", ["Rippling","Okta","Slack"]],
+      ["Offboarding", "Last day, final pay, access removal, laptop return and the exit conversation", ["Starts it when status changes", "Handles the leader and the exit conversation", "Removes access, collects the laptop", "Final pay and deductions"], "2 leaving, 1 laptop outstanding", "#FF8AA0", ["Rippling","Okta","Google Workspace","Jamf"]],
+      ["Exceptions and audit trail", "Every exception logged with a reason, an approver and a date", ["Keeps the log and the trail", "Brings leader requests early", "Flags access exceptions", "Flags pay exceptions"], "2 open, 0 overdue", "#5FCB73", ["Rippling","Shared tracker","Slack change log"]]
     ];
-    return '<section class="hubsec"><h2>Shared lifecycle dashboard</h2><p class="sub">What we manage together across the employee lifecycle, and what each owner is responsible for, on one page.</p><div class="ld"><div class="ld-top"><b>Week of ' + wk + '</b><span>Refreshed every Monday</span></div>' +
+    return '<section class="hubsec"><h2>Shared lifecycle dashboard</h2><p class="sub">What we manage together across the employee lifecycle, and what each owner is responsible for, on one page.</p><div class="ld"><div class="ld-top"><b><i class="ld-led"></i>People systems status &middot; week of ' + wk + '</b><span>Auto-refresh: every Monday</span></div>' +
       L.map(function (r) {
-        return '<div class="ld-row"><div class="ld-h"><div><h3>' + esc(r[0]) + "</h3><p>" + esc(r[1]) + '</p></div><span class="ld-wk"><i style="background:' + r[4] + '"></i>' + esc(r[3]) + '</span></div><div class="ld-own">' +
-          W.map(function (w, i) { return '<div style="border-top:3px solid ' + w[1] + '"><small style="color:' + w[1] + '">' + esc(w[0]) + "</small><span>" + esc(r[2][i]) + "</span></div>"; }).join("") + "</div></div>";
+        return '<div class="ld-row"><div class="ld-h"><div><h3><span class="ld-id">LC-0' + (L.indexOf(r) + 1) + "</span>" + esc(r[0]) + "</h3><p>" + esc(r[1]) + '</p></div><span class="ld-wk"><i style="background:' + r[4] + '"></i>' + esc(r[3]) + '</span></div><div class="ld-own">' +
+          W.map(function (w, i) { return '<div style="border-top:3px solid ' + w[1] + '"><small style="color:' + w[1] + '">' + esc(w[0]) + "</small><span>" + esc(r[2][i]) + "</span></div>"; }).join("") + '</div><div class="ld-sys"><b>SYSTEMS</b>' + r[5].map(function (x) { return "<span>" + esc(x) + "</span>"; }).join("") + "</div></div>";
       }).join("") +
       '<p class="ld-note">The counts here are sample numbers to show the idea. In practice a short Rippling report would feed each Monday&rsquo;s refresh, and the four owners would review it together in the weekly sync.</p></div></section>';
   }
