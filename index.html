@@ -668,7 +668,7 @@ body{overflow-x:hidden}a.btn{text-decoration:none;display:inline-flex;align-item
 .sitenav::-webkit-scrollbar{display:none}
 .sitenav .btn{white-space:nowrap;min-height:40px;flex:none;text-decoration:none;display:inline-flex;align-items:center}.sitenav .btn::after{content:none!important}.sitenav a.btn:not(.primary),.card a.btn:not(.primary),.nextrow a.btn:not(.primary){color:#ECECEC}
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0}
-.cards>.card:first-child{grid-column:1/-1}
+.cards>.card:first-child,.cards>.card:last-child:nth-child(even){grid-column:1/-1}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:border-color .15s ease}
 .card:hover{border-color:var(--accent)}
 .card .ic{display:flex;align-items:center;gap:12px}
@@ -1390,11 +1390,11 @@ var PLANS_ = {
       card("angela", "", "Working with Angela", "People Ops and HRBPs: the workflow board for how requests are routed, who leads what, and when Legal is brought in.", "Open the HRBP page", P.angela) +
       card("overlap", "&#127919;", "Where we overlap", "A Venn of the three of us: what each person owns, where the work meets, and the questions Cat would bring.", "See the Venn") +
       card("own", "&#128203;", "Who owns what", "People Ops, HRBP, IT and Payroll across the work we would touch first.", "See the ownership table") +
-      card("eaf", "&#9998;", "Sample EAF", "A working sample of the Employee Action Form as a web form: every status change, who must approve, signing by phone or laptop, then Rippling and Payroll.", "Try the form") +
-      card("claude", "&#9889;", "Where Claude fits", "The places in each workflow where Claude drafts, checks or explains, marked on the workflow boards, and what stays with people.", "See where Claude fits") +
-      card("studio", "&#9881;&#65039;", "Rippling Workflow Studio", "A menu of ready-made no-code workflows in Rippling, grouped by area, with a suggested first wave to pick together.", "Browse the workflows") +
       card("payroll", "&#128737;", "Payroll governance", "The controls around pay: parallel approvals, Payroll signing off last, and the evidence left behind each pay period.", "See the controls") +
+      card("eaf", "&#9998;", "Sample EAF", "A working sample of the Employee Action Form as a web form: every status change, who must approve, signing by phone or laptop, then Rippling and Payroll.", "Try the form") +
       '<div class="card" data-go="timeline"><div class="ic"><span class="em" aria-hidden="true">&#128197;</span><h3>Rippling timeline</h3></div><p>October to go-live: milestones, the overlapping streams of work, the steps phase by phase, and what could go wrong with Cat&rsquo;s move for each.</p><a class="btn primary" href="' + href("timeline") + '" data-go="timeline">See the timeline</a></div>' +
+      card("studio", "&#9881;&#65039;", "Rippling Workflow Studio", "A menu of ready-made no-code workflows in Rippling, grouped by area, with a suggested first wave to pick together.", "Browse the workflows") +
+      card("claude", "&#9889;", "Where Claude fits", "The places in each workflow where Claude drafts, checks or explains, marked on the workflow boards, and what stays with people.", "See where Claude fits") +
       "</div>" +
       '<p class="pgfoot">Prepared by Cat Nolasco, October 16, 2026. Dates marked as proposed are suggestions to confirm with Panorama.</p>';
   }
