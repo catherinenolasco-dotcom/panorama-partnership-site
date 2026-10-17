@@ -779,7 +779,7 @@ body.co-pan main#app{margin-top:26px}
 .cdn{display:flex;align-items:center;gap:22px;flex-wrap:wrap;background:var(--accent);color:#191919;border-radius:6px 6px 6px 70px;padding:22px 30px 22px 28px;margin-top:14px}
 .cdn-n{font:800 clamp(56px,9vw,96px)/.9 var(--font-body)}
 .cdn-t{flex:1;min-width:200px}.cdn-t b{display:block;font-size:20px;margin-bottom:4px}.cdn-t span{font-size:14.5px;line-height:1.45}
-.cdn-u{display:flex;gap:8px;font:700 13px var(--font-mono)}.cdn-u span{display:flex;flex-direction:column;align-items:center;gap:5px}.cdn-u i{font-style:normal;background:#191919;color:#fff;border-radius:6px;padding:8px 10px;min-width:54px;text-align:center}.cdn-u small{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.cdn-note{display:block;font-style:normal;font-size:13px;line-height:1.45;margin-top:8px;opacity:.85}.cdn-u{display:flex;gap:8px;font:700 13px var(--font-mono)}.cdn-u span{display:flex;flex-direction:column;align-items:center;gap:5px}.cdn-u i{font-style:normal;background:#191919;color:#fff;border-radius:6px;padding:8px 10px;min-width:54px;text-align:center}.cdn-u small{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
 .eqq{display:grid;grid-template-columns:1.1fr 1fr;gap:6px}
 .eqq-q{background:#8ED8EC;color:#191919;padding:34px 34px 30px;border-radius:6px 90px 6px 6px;display:flex;flex-direction:column;justify-content:center}
 .eqq-ey{font:700 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
@@ -1537,7 +1537,7 @@ var PLANS_ = {
   function countdown() {
     var c = cdParts();
     if (!c) return '<div class="cdn"><div class="cdn-t"><b>Rippling is live</b><span>Go-live was January 1, 2027.</span></div></div>';
-    return '<div class="cdn" id="cdn"><div class="cdn-n" id="cdn-d">' + c.d + '</div><div class="cdn-t"><b>' + (c.d === 1 ? "day" : "days") + ' until Rippling goes live</b><span>January 1, 2027. Panorama is not renewing ADP, so this date is fixed.</span></div><div class="cdn-u" id="cdn-u" aria-hidden="true">' + cdUnits(c) + "</div></div>";
+    return '<div class="cdn" id="cdn"><div class="cdn-n" id="cdn-d">' + c.d + '</div><div class="cdn-t"><b>' + (c.d === 1 ? "day" : "days") + ' until Rippling goes live</b><span>January 1, 2027. Panorama is not renewing ADP, so this date is fixed.</span><em class="cdn-note">That is about ' + Math.max(1, Math.round(c.d / 7)) + ' weeks from today, with Thanksgiving and the December 24 to January 1 closure inside it. From Cat&rsquo;s experience, a typical Rippling implementation runs 4 to 6 months, including extra time for UAT so all data and workflows are configured and tested properly. The window here is shorter, so the plan is built around scope and sequencing.</em></div><div class="cdn-u" id="cdn-u" aria-hidden="true">' + cdUnits(c) + "</div></div>";
   }
   function cdUnits(c) { return [[c.h, "hrs"], [c.m, "min"], [c.s, "sec"]].map(function (x) { return "<span><i>" + String(x[0]).padStart(2, "0") + "</i><small>" + x[1] + "</small></span>"; }).join(""); }
   setInterval(function () {
