@@ -1399,7 +1399,7 @@ var PLANS_ = {
   }
   function eqQuote() {
     var items = [["Mindset", "Start from the shared goal and treat IT as an equal partner. Before anything is built, ask the questions first, such as which system owns identity and how role changes are triggered."], ["Standards", "One record, one dated trail, and nothing marked done until both teams have finished their part."], ["Drive", "Own the follow-through: the handoffs, the record and the dates, from the January 1 go-live through stabilization."]];
-    return '<section class="hubsec"><div class="eqq"><div class="eqq-q"><span class="eqq-ey">In Eric&rsquo;s words</span><blockquote>&ldquo;The difference between good and great was never just technical skill. It was the intangibles: the mindset, the standards, the drive.&rdquo;</blockquote><cite>Eric Williams, Director of IT</cite></div><div class="eqq-l"><h3>How Cat would carry that into the work</h3>' + items.map(function (x) { return "<p><b>" + x[0] + ".</b> " + x[1] + "</p>"; }).join("") + "</div></div></section>";
+    return '<section class="hubsec"><div class="eqq"><div class="eqq-q"><span class="eqq-ey">From Eric&rsquo;s LinkedIn</span><blockquote>&ldquo;The difference between good and great was never just technical skill. It was the intangibles: the mindset, the standards, the drive.&rdquo;</blockquote><cite>Eric Williams, Director of IT, in a LinkedIn post</cite></div><div class="eqq-l"><h3>How Cat would carry that into the work</h3>' + items.map(function (x) { return "<p><b>" + x[0] + ".</b> " + x[1] + "</p>"; }).join("") + "</div></div></section>";
   }
   function pgEric() {
     return head("Working with Eric", "People Ops and IT", window.WF.peopleit.note) + puzzleBar("eric") + eqQuote() +
