@@ -20,7 +20,6 @@
     { id: "mgr", grp: "Job", name: "Manager change", ap: [M, HR], cur: "Current manager", nw: "New manager", ph: ["Manager A", "Manager B"] },
     { id: "loc", grp: "Job", name: "Work location change", ap: [M, HR], cur: "Current location", nw: "New location", ph: ["California", "Texas"], note: "A new location can change tax withholding, so Payroll checks it at the end." },
     { id: "ftpt", grp: "Status", name: "Full-time to part-time, or back", comp: true, ap: [M, L2, HR, FIN], cur: "Current status", nw: "New status", ph: ["Full-time, 40 hours", "Part-time, 24 hours"], note: "Hours can change pay and benefits eligibility." },
-    { id: "flsa", grp: "Status", name: "Exempt to non-exempt, or back", comp: true, ap: [M, L2, HR, FIN], cur: "Current classification", nw: "New classification", ph: ["Exempt", "Non-exempt"], note: "Classification affects overtime, so HR confirms it before it is signed." },
     { id: "loa", grp: "Leave", name: "Leave of absence starts", ap: [M, HR], cur: "Current status", nw: "New status", ph: ["Active", "On leave"] },
     { id: "rtw", grp: "Leave", name: "Return from leave", ap: [M, HR], cur: "Current status", nw: "New status", ph: ["On leave", "Active"] },
     { id: "resign", grp: "Separation", name: "Resignation", ap: [M, HR], cur: "Current status", nw: "Last day of work", ph: ["Active", "Last day of the month"] },
