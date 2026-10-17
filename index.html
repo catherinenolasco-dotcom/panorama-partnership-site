@@ -808,6 +808,14 @@ body.co-pan main#app .pgfoot:before{content:"\25CF  ALL MODULES LOADED";display:
 body.co-pan main#app .pghead h1{position:relative}
 body.co-pan main#app .abc,body.co-pan main#app .rpcard,body.co-pan main#app .wfwrap{border-color:#34332F}
 @media(prefers-reduced-motion:reduce){body.co-pan main#app .eyebrow:before{animation:none}}
+.qa{margin-top:10px;background:#1B1B19;border:1px solid #34332F;border-radius:6px 6px 6px 28px;overflow:hidden}
+.qa summary{list-style:none;cursor:pointer;padding:16px 20px 16px 22px;display:flex;gap:12px;align-items:flex-start;font-weight:700;font-size:16px;line-height:1.4}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary:before{content:"Q" attr(data-n);font:700 11px var(--font-mono);color:#111;background:#5FCB73;border-radius:4px;padding:4px 7px;margin-top:2px;flex:none}
+.qa summary:after{content:"+";margin-left:auto;font:700 18px var(--font-mono);color:#5FCB73;flex:none}
+.qa[open] summary:after{content:"\2212"}
+.qa-b{padding:2px 22px 20px 22px;display:grid;gap:10px}
+.qa-b div{border-left:3px solid #5FCB73;padding:2px 0 2px 14px}.qa-b small{display:block;font:700 10.5px var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:#5FCB73;margin-bottom:3px}.qa-b p{margin:0;font-size:14.5px;line-height:1.55;color:var(--ink)}
 .eqq{display:grid;grid-template-columns:1.1fr 1fr;gap:6px}
 .eqq-q{background:#8ED8EC;color:#191919;padding:34px 34px 30px;border-radius:6px 90px 6px 6px;display:flex;flex-direction:column;justify-content:center}
 .eqq-ey{font:700 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
@@ -1451,16 +1459,49 @@ var PLANS_ = {
     var items = [["Mindset", "Start from the shared goal and treat IT as an equal partner. Before anything is built, ask the questions first, such as which system owns identity and how role changes are triggered."], ["Standards", "One record, one dated trail, and nothing marked done until both teams have finished their part."], ["Drive", "Own the follow-through: the handoffs, the record and the dates, from the January 1 go-live through stabilization."]];
     return '<section class="hubsec"><div class="eqq"><div class="eqq-q"><span class="eqq-ey">From Eric&rsquo;s LinkedIn</span><blockquote>&ldquo;The difference between good and great was never just technical skill. It was the intangibles: the mindset, the standards, the drive.&rdquo;</blockquote><cite>Eric Williams, Director of IT, in a LinkedIn post</cite></div><div class="eqq-l"><h3>How Cat would carry that into the work</h3>' + items.map(function (x) { return "<p><b>" + x[0] + ".</b> " + x[1] + "</p>"; }).join("") + "</div></div></section>";
   }
+  var ASKED = [
+    ["Walk us through a consequential HRIS implementation or transition Cat personally led. What decisions and configurations did Cat own, and what did IT and vendors do?", [
+      ["The work", "At Ridecell in 2022, Cat ran the move from ADP to Sapling while open enrollment was still in flight. At Prezent, Cat joined a live, multi-country Rippling implementation and worked through its shadow payrolls."],
+      ["What Cat owned", "The employee record structure, the change documentation, testing, and the sequencing calls. When a last-minute carrier and plan change collided with the implementation, Cat recommended pausing the HRIS work until open enrollment closed, escalated early, and told leadership and the company the date would move from early January to the end of January."],
+      ["What IT and the vendor owned", "IT owned accounts, access and devices, and worked with Cat on every onboarding and offboarding cycle and on the Sapling rollout. The vendor owned the platform and its support. Cat owned the data going in and the sign-off that it was right."],
+      ["How that carries to Panorama", "Rippling is the record and Cat owns it, IT owns identity and access, and Rippling owns the platform. Each shadow payroll is a checkpoint, not a formality."]
+    ]],
+    ["If an employee&rsquo;s salary and job level differ across the HRIS, payroll and another system, ownership is unclear, and a business decision is due tomorrow, how would Cat respond and prevent a recurrence?", [
+      ["Today", "Pause further changes to that person&rsquo;s record. Treat the HRIS as the system of record and trace the difference back to its source using the signed change record: the reason, the approver and the date. Ask Payroll to confirm what was actually paid."],
+      ["For tomorrow&rsquo;s decision", "Give the decision maker the figure that is backed by an approved record, say how confident it is, and name what is still open. If no approved record exists, escalate that to the right approver the same day instead of choosing the system with the number that looks right."],
+      ["Fix the systems", "Correct the downstream systems from the record, never the other way round, and log the discrepancy as an exception with its cause."],
+      ["Prevent a repeat", "One named owner for each field. Downstream systems fed from the HRIS instead of retyped. Every pay or level change going through a signed form with parallel approvals and Payroll signing last. A weekly comparison across the three systems so a difference surfaces in days, not at a decision point."]
+    ]],
+    ["Which workflow has Cat redesigned using self-service, automation, systems or AI? What were the before and after processes, controls, adoption needs and capacity or quality improvements?", [
+      ["Before", "At Ridecell, any pay, title or status change could be entered straight into ADP by one person, with a vague form, no second reviewer and no independent record."],
+      ["After", "The Employee Action Form captures the reason, the details and the stakeholders, and requires sign-off before any system update. That is an independent control on every high-risk change and a clean audit trail."],
+      ["Adoption", "Leaders first said it felt too process-heavy. Cat walked them through the old and new process side by side, led with the audit risk the old way carried, and showed what was in it for them. Adoption came within one to two months without a mandate."],
+      ["Quality and capacity", "Fewer disputed changes and a record Finance or an auditor can follow. Cat also built AskPeople, a self-service inquiry channel with response times by request type, so questions stopped depending on whoever was online. The same thinking shapes Panorama&rsquo;s Ask People inbox, with keyword routing so nothing sits unrouted."]
+    ]],
+    ["How does Cat work with IT and security when building tools that may have access to employee PII?", [
+      ["Start with IT", "Bring IT and security in before the build, not at review. Agree what data the tool touches, where it flows, who can see it, and who owns the access."],
+      ["Tier the tools by risk", "Scheduling and notifications that carry no PII can use the fastest tool, such as Zapier. Anything touching payroll or protected employee data goes through a stricter path, such as self-hosted n8n, so that data does not route through an outside service."],
+      ["Least access, clear owners", "The HRIS stays the system of record. IT owns identity and access through SSO. Each tool gets only the fields it needs, with a named owner and a periodic access review."],
+      ["AI and the audit trail", "Employee data goes only into AI tools the company has approved for it, and a person signs off before anything touches the system of record. Every automated step leaves a log. The rule Cat works by: automating a step never means automating the control away."]
+    ]]
+  ];
+  function asked(order) {
+    return '<section class="hubsec"><h2>Questions from the panel, answered</h2><p class="sub">Four questions Cat was asked, with the fuller answer here. Tap a question to open it.</p>' +
+      order.map(function (i, k) {
+        var q = ASKED[i];
+        return '<details class="qa"><summary data-n="' + (k + 1) + '">' + q[0] + '</summary><div class="qa-b">' + q[1].map(function (x) { return "<div><small>" + x[0] + "</small><p>" + x[1] + "</p></div>"; }).join("") + "</div></details>";
+      }).join("") + "</section>";
+  }
   function pgEric() {
     return head("Working with Eric", "People Ops and IT", window.WF.peopleit.note) + puzzleBar("eric") + eqQuote() +
       heard("What Cat heard from Eric", [["TODAY", "One email, then automated", "From the people side, IT gets one email and the steps after it run automatically on his end. Rippling will mean rebuilding or updating some of them."], ["FIRST PRIORITY", "Automation into Okta and Jira", "The part of Rippling he is most interested in is building automation straight into his IT systems, so his team does not do manual work. Laptop notifications are the icing on the cake."], ["EQUIPMENT", "An outside vendor", "Panorama uses an outside vendor to provision laptops and track them, and to notify IT."], ["90 DAYS", "A partner who knows Rippling", "Someone on the HR side who knows Rippling as well as he does, so he can say what he needs and get access without hunting for it."]]) +
-      '<section class="hubsec"><h2>Workflow board</h2><p class="sub">One change in Rippling starts both lanes. People Ops owns the data, IT owns access and equipment.</p>' + wfBoard("peopleit") + "</section>" + autoLane("peopleit", ["The Rippling change as the trigger for both lanes, so nobody has to remember to tell the other", "One notice with the same details to everyone", "The dated audit record saved automatically once both teams finish"]) +
+      asked([3, 0, 1, 2]) + '<section class="hubsec"><h2>Workflow board</h2><p class="sub">One change in Rippling starts both lanes. People Ops owns the data, IT owns access and equipment.</p>' + wfBoard("peopleit") + "</section>" + autoLane("peopleit", ["The Rippling change as the trigger for both lanes, so nobody has to remember to tell the other", "One notice with the same details to everyone", "The dated audit record saved automatically once both teams finish"]) +
       nextRow(["angela", "overlap", "timeline", ""]);
   }
   function pgAngela() {
     return head("Working with Angela", "People Ops and HRBPs", window.WF.peoplehrbp.note) + puzzleBar("angela") +
       heard("What Cat heard from Angela", [["CHANGES TODAY", "A change report, then ADP", "A VP posts changes in the people team's change report and tags the owner on the operations side, who makes the change in ADP."], ["OUT OF CYCLE", "Approvals one conversation at a time", "Changes are entered in a spreadsheet and then re-entered in another system. Approvals come from one-off conversations with Finance on budget, the executive team member and the manager, with no audit trail beyond the request she entered."], ["WHAT SHE WANTS", "A Rippling approval workflow", "She would like to enter a request, such as a manager change or an out-of-cycle comp change, and have it route for approval with an audit trail."], ["OFFBOARDING", "Ask People, then operations, then IT", "The manager and Angela email the Ask People list with the resignation letter. Operations then lets Eric's team know for systems and equipment return."], ["TOGETHER", "Cycles and audits", "Merit and promotion cycles twice a year, benchmarking, and SOX compliance are worked jointly with operations."]]) +
-      '<section class="hubsec"><h2>Workflow board</h2><p class="sub">One queue in, one record out. Judgment goes to the HRBP, process goes to People Ops.</p>' + wfBoard("peoplehrbp") + "</section>" + autoLane("peoplehrbp", ["The one intake queue, with a confirmation back to the requester within a day", "Routing to the HRBP or People Ops by the judgment-or-process question", "The monthly themes report, aggregates only"]) +
+      asked([1, 2, 0, 3]) + '<section class="hubsec"><h2>Workflow board</h2><p class="sub">One queue in, one record out. Judgment goes to the HRBP, process goes to People Ops.</p>' + wfBoard("peoplehrbp") + "</section>" + autoLane("peoplehrbp", ["The one intake queue, with a confirmation back to the requester within a day", "Routing to the HRBP or People Ops by the judgment-or-process question", "The monthly themes report, aggregates only"]) +
       nextRow(["eric", "overlap", "timeline", ""]);
   }
   function pgOverlap() {
